@@ -1,5 +1,8 @@
+'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -107,7 +110,7 @@ export default function NewsletterForm() {
             )}
         </div>
         <p className="text-[11px] text-center text-slate-500 mt-2">
-            Al suscribirte aceptas nuestra <a href="/legal/politica-privacidad" className="underline hover:text-green-700 transition-colors">política de privacidad</a>. Prometemos no enviar spam.
+            Al suscribirte aceptas nuestra <Link href="/legal/politica-privacidad" className="underline hover:text-green-700 transition-colors">política de privacidad</Link>. Prometemos no enviar spam.
         </p>
     </div>
   );
