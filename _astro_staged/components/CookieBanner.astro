@@ -1,0 +1,247 @@
+---
+---
+<div id="cookie-consent-backdrop" class="fixed inset-0 z-50 bg-black/40 hidden transition-opacity duration-300 opacity-0" aria-hidden="true"></div>
+
+<!-- Banner -->
+<div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-white z-[60] border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] transform translate-y-full transition-transform duration-500 flex flex-col justify-center min-h-[100px]">
+  <div class="container mx-auto px-4 py-6 md:py-8 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-center">
+    <div class="space-y-2 text-center lg:text-left">
+        <h2 class="text-lg font-bold text-gray-900">Valoramos tu privacidad</h2>
+        <p class="text-sm text-gray-600 leading-relaxed max-w-3xl mx-auto lg:mx-0">
+            Utilizamos cookies propias y de terceros para mejorar tu experiencia de navegación, analizar el tráfico del sitio y personalizar el contenido. 
+            Antes de continuar, puedes aceptar todas las cookies, rechazarlas (salvo las estrictamente necesarias) o configurar tus preferencias.
+            Consulta nuestra <a href="/legal/cookies" class="text-green-700 font-semibold hover:underline">Política de Cookies</a> para más información.
+        </p>
+    </div>
+    
+    <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-end w-full lg:w-auto">
+        <button id="btn-configure" class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition text-sm">
+            Configurar
+        </button>
+        <button id="btn-reject" class="px-5 py-2.5 rounded-lg border border-red-200 bg-white text-red-700 font-semibold hover:bg-red-50 transition text-sm">
+            Rechazar
+        </button>
+        <button id="btn-accept" class="px-6 py-2.5 rounded-lg bg-green-700 text-white font-bold hover:bg-green-800 shadow-md hover:shadow-lg transition text-sm">
+            Aceptar Todo
+        </button>
+    </div>
+  </div>
+</div>
+
+<!-- Preferences Modal -->
+<div id="cookie-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 hidden pointer-events-none">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto" id="cookie-modal-content">
+        <div class="sticky top-0 bg-white p-6 border-b border-gray-100 flex justify-between items-center z-10">
+            <h2 class="text-xl font-bold text-gray-900">Preferencias de Cookies</h2>
+            <button id="btn-close-modal" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        
+        <div class="p-6 space-y-6">
+            <p class="text-sm text-gray-600 mb-4">Gestiona tus preferencias de consentimiento. Puedes activar o desactivar las diferentes categorías de cookies a continuación.</p>
+
+            <!-- Necessary -->
+            <div class="flex items-start gap-4 p-4 rounded-lg bg-gray-50 border border-gray-100">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <h4 class="font-bold text-gray-900 text-sm">Estrictamente Necesarias</h4>
+                        <span class="text-[10px] uppercase tracking-wider font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded-full">Siempre Activo</span>
+                    </div>
+                    <p class="text-xs text-gray-500">Estas cookies son esenciales para el funcionamiento del sitio web y no pueden desactivarse.</p>
+                </div>
+                <div class="relative flex items-center">
+                    <input type="checkbox" checked disabled class="w-5 h-5 text-gray-400 rounded focus:ring-0 cursor-not-allowed opacity-50">
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 hover:border-green-200 transition-colors">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <h4 class="font-bold text-gray-900 text-sm">Analíticas y Rendimiento</h4>
+                    </div>
+                    <p class="text-xs text-gray-500">Nos permiten contar las visitas y fuentes de tráfico para medir y mejorar el rendimiento de nuestro sitio.</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="check-analytics" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                </label>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-xl">
+           <button id="btn-save-prefs" class="px-6 py-2.5 bg-green-700 text-white rounded-lg font-bold hover:bg-green-800 shadow-sm transition w-full sm:w-auto">
+                Guardar Preferencias
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = 'terencio_consent_v1';
+    
+    // Default config
+    const defaultConsent = {
+        necessary: true,
+        analytics: false,
+        marketing: false,
+        timestamp: null,
+        consented: false // true if user made a choice
+    };
+
+    function getConsent() {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) return JSON.parse(stored);
+        } catch(e) {}
+        return defaultConsent;
+    }
+
+    function saveConsent(consent) {
+        consent.timestamp = new Date().toISOString();
+        consent.consented = true;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
+        applyConsent(consent);
+        hideBanner();
+    }
+
+    function applyConsent(consent) {
+        // Analytics Logic
+        const GA_ID = "G-HVCHD7R86X";
+
+        if (consent.analytics) {
+            // Load Google Analytics Script dynamically
+            console.log('Loading Analytics...');
+            
+            // Check if already loaded
+            if (!document.getElementById('ga-script')) {
+                const script = document.createElement('script');
+                script.id = 'ga-script';
+                script.async = true;
+                script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+                document.head.appendChild(script);
+
+                window['dataLayer'] = window['dataLayer'] || [];
+                function gtag(...args){ window['dataLayer'].push(args); }
+                gtag('js', new Date());
+                gtag('config', GA_ID);
+            }
+            
+            // Enable if it was disabled
+            window[`ga-disable-${GA_ID}`] = false;
+        } else {
+            // Disable if previously loaded or ensure it doesn't track
+            // Disable if previously loaded or ensure it doesn't track
+            window[`ga-disable-${GA_ID}`] = true;
+            console.log('Analytics disabled');
+            // Optional: Remove cookies if we want to be very strict, but standard practice is just stopping future tracking
+        }
+    }
+
+    function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) {
+            // Small delay for animation
+            setTimeout(() => {
+                banner.classList.remove('translate-y-full');
+            }, 500);
+        }
+    }
+
+    function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        const backdrop = document.getElementById('cookie-consent-backdrop');
+        const modal = document.getElementById('cookie-modal');
+        
+        banner?.classList.add('translate-y-full');
+        
+        // Ensure modal is closed
+        backdrop?.classList.add('hidden', 'opacity-0');
+        modal?.classList.add('hidden');
+    }
+
+    function openModal() {
+        const backdrop = document.getElementById('cookie-consent-backdrop');
+        const modal = document.getElementById('cookie-modal');
+        const modalContent = document.getElementById('cookie-modal-content');
+        
+        backdrop?.classList.remove('hidden');
+        // Force reflow
+        void backdrop?.offsetWidth; 
+        backdrop?.classList.remove('opacity-0');
+        
+        modal?.classList.remove('hidden');
+        
+        // Load current state into checkboxes
+        const current = getConsent();
+        const analyticsCheck = document.getElementById('check-analytics') as HTMLInputElement;
+        if (analyticsCheck) analyticsCheck.checked = current.analytics;
+        
+        setTimeout(() => {
+             modalContent?.classList.remove('scale-95', 'opacity-0');
+             modalContent?.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    function closeModal() {
+        const backdrop = document.getElementById('cookie-consent-backdrop');
+        const modalContent = document.getElementById('cookie-modal-content');
+        
+        backdrop?.classList.add('opacity-0');
+        modalContent?.classList.remove('scale-100', 'opacity-100');
+        modalContent?.classList.add('scale-95', 'opacity-0');
+        
+        setTimeout(() => {
+            backdrop?.classList.add('hidden');
+             const modal = document.getElementById('cookie-modal');
+             modal?.classList.add('hidden');
+        }, 300);
+    }
+
+    // Init
+    document.addEventListener('astro:page-load', () => {
+         // Re-run on navigation
+         const consent = getConsent();
+         if (!consent.consented) {
+             showBanner();
+         } else {
+             applyConsent(consent);
+         }
+
+         // Event Listeners
+         document.getElementById('btn-accept')?.addEventListener('click', () => {
+             saveConsent({
+                 ...defaultConsent,
+                 analytics: true,
+                 marketing: true,
+                 consented: true
+             });
+         });
+
+         document.getElementById('btn-reject')?.addEventListener('click', () => {
+             saveConsent({
+                 ...defaultConsent,
+                 analytics: false,
+                 marketing: false,
+                 consented: true
+             });
+         });
+
+         document.getElementById('btn-configure')?.addEventListener('click', openModal);
+         document.getElementById('btn-close-modal')?.addEventListener('click', closeModal);
+         document.getElementById('cookie-consent-backdrop')?.addEventListener('click', closeModal);
+         
+         document.getElementById('btn-save-prefs')?.addEventListener('click', () => {
+             const analyticsCheck = document.getElementById('check-analytics') as HTMLInputElement;
+             saveConsent({
+                 ...defaultConsent,
+                 analytics: analyticsCheck?.checked || false,
+                 consented: true
+             });
+             closeModal();
+         });
+    });
+</script>

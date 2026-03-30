@@ -1,0 +1,56 @@
+---
+import faqs from "../data/faqs.json";
+---
+
+<section class="max-w-4xl mx-auto px-4 py-16">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Preguntas Frecuentes (FAQ)</h2>
+    <p class="text-gray-600">Resolvemos tus dudas sobre horarios, acceso y servicios de nuestro supermercado en Tenerife.</p>
+  </div>
+
+  <div class="space-y-4">
+    {faqs.map((faq) => (
+      <details class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:border-green-300 transition-all duration-300" name="faq-accordion">
+        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-lg text-gray-800">
+          <span>{faq.question}</span>
+          <span class="transition-transform duration-300 group-open:rotate-180 bg-green-50 text-green-700 p-2 rounded-full">
+            <svg fill="none" height="20" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="text-gray-600 px-6 pb-6 leading-relaxed animate-fade-in">
+          <p>{faq.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+  
+  <!-- FAQ Structured Data para Google Search Results -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.answer
+      }
+    }))
+  })} />
+</section>
+
+<style>
+  details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-5px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+</style>

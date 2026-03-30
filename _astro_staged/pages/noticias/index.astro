@@ -1,0 +1,51 @@
+---
+import NewsGrid from "../../components/NewsGrid.astro";
+import PageHeader from "../../components/ui/PageHeader.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const title = "Actualidad y Noticias Corporativas | Terencio Cash Market";
+const description = "Mantente al día con las últimas novedades, aperturas, y noticias corporativas de Terencio Cash Market en Tenerife.";
+---
+
+<Layout title={title} description={description}>
+    <!-- Page Header -->
+    <PageHeader 
+        title="Terencio Actualidad" 
+        subtitle="El portal de noticias corporativas líder en distribución alimentaria de Canarias."
+        badge="Actualidad"
+    />
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-100 border-b border-gray-200">
+        <div class="container mx-auto px-4 py-3">
+             <nav class="flex text-sm text-gray-500" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                    <a href="/" class="inline-flex items-center hover:text-green-700">
+                        <svg class="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                        </svg>
+                        Inicio
+                    </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                            </svg>
+                            <span class="ml-1 text-gray-700 md:ml-2 font-medium">Noticias</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <NewsGrid />
+        </div>
+    </main>
+
+</Layout>

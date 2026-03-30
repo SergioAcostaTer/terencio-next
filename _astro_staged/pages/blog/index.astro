@@ -1,0 +1,24 @@
+---
+import blogBg from "../../assets/images/el-hierro-charco.webp"; // Using an existing image
+import BlogGrid from "../../components/BlogGrid.astro";
+import PageHeader from "../../components/ui/PageHeader.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const title = "Blog y Noticias - Terencio Cash Market";
+const description = "Últimas noticias, novedades sobre productos, ofertas y actualidad de Terencio Cash Market en Tenerife.";
+---
+
+<Layout title={title} description={description} image={blogBg.src}>
+  <PageHeader 
+    title="Blog y Actualidad" 
+    subtitle="Descubre guías de viaje de El Hierro, recetas, consejos de ahorro y todas las novedades de nuestro supermercado."
+    badge="Magazine"
+    backgroundImage={blogBg.src}
+  />
+
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <BlogGrid />
+    </div>
+  </section>
+</Layout>

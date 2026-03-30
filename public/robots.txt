@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /_image
+Disallow: /cdn-cgi/
+
+Sitemap: https://terencio.es/sitemap-index.xml
+

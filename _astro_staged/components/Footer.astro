@@ -1,0 +1,105 @@
+---
+import { Image } from "astro:assets";
+import europa from "../assets/europa.png";
+import sub2 from "../assets/fondo-europeo-regional.png";
+import logo from "../assets/logo.png";
+import sub4 from "../assets/next-generation-eu.png";
+import sub3 from "../assets/plan-recuperacion-espana.png";
+import sub1 from "../assets/subvencion-gobierno-canarias.png";
+import navigation from "../data/navigation.json";
+import siteData from "../data/siteData.json";
+import Icon from "./ui/Icon";
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-gray-900 text-gray-300 py-12 border-t-4 border-green-700">
+  <div class="container mx-auto px-4 lg:px-6">
+    
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+      
+      <!-- Brand & Address -->
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-2 mb-2">
+             <Image src={logo} alt="Terencio Logo Footer" width={40} height={40} class="h-10 w-auto bg-white p-1 rounded" loading="lazy" />
+             <span class="text-white text-xl font-bold tracking-tight">Terencio Cash Market</span>
+        </div>
+        <address class="not-italic text-sm text-gray-200 space-y-2">
+          <p class="flex items-start gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            <span>{siteData.address.streetAddress}<br>{siteData.address.postalCode} {siteData.address.addressLocality}, {siteData.address.addressRegion}</span>
+          </p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Terencio+Cash+Market" target="_blank" class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 font-bold transition-all group">
+            <Icon name="Navigation" size={16} className="group-hover:rotate-12 transition-transform" />
+            <span>Ver en Google Maps</span>
+          </a>
+          <p class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+            <a href={`tel:${siteData.contact.phone.replace(/\s/g, "")}`} class="hover:text-white transition-colors">{siteData.contact.phone}</a>
+          </p>
+          <p class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            <a href={`mailto:${siteData.contact.email}`} class="hover:text-white transition-colors">{siteData.contact.email}</a>
+          </p>
+        </address>
+      </div>
+
+      <!-- Quick Links -->
+      <nav aria-label="Enlaces Rápidos" class="flex flex-col gap-4">
+        <h3 class="text-white text-lg font-bold border-b border-gray-700 pb-2 w-fit">Enlaces Rápidos</h3>
+        <ul class="space-y-2 text-sm">
+          {navigation.footer.quickLinks.map(link => (
+            <li><a href={link.href} class="hover:text-green-400 transition-colors text-gray-300 hover:text-green-300">{link.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Schedule -->
+      <div class="flex flex-col gap-4">
+        <h3 class="text-white text-lg font-bold border-b border-gray-700 pb-2 w-fit">Horario de Apertura</h3>
+        <ul class="space-y-2 text-sm">
+          <li class="flex flex-col gap-1">
+            <span class="text-gray-200 font-medium">{siteData.hours.text}</span>
+          </li>
+        </ul>
+      </div>
+
+     {/* Destacados Column */}
+     <nav aria-label="Destacados" class="flex flex-col gap-4">
+        <h3 class="text-white text-lg font-bold border-b border-gray-700 pb-2 w-fit">Destacados</h3>
+        <ul class="space-y-2 text-sm">
+          {navigation.footer.featured.map(link => (
+            <li><a href={link.href} class="hover:text-green-300 transition-colors text-gray-300">{link.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Logos Subvenciones (Bottom Placement) -->
+    <section class="flex flex-col items-center justify-center gap-6 mt-12 pt-8 border-t border-gray-800">
+       <div class="flex flex-wrap justify-center gap-4">
+          <Image src={sub1} alt="Subvención 1" width={100} height={64} class="h-12 md:h-16 w-auto grayscale hover:grayscale-0 transition opacity-80 hover:opacity-100" loading="lazy" />
+          <Image src={sub2} alt="Subvención 2" width={200} height={64} class="h-12 md:h-16 w-auto grayscale hover:grayscale-0 transition opacity-80 hover:opacity-100" loading="lazy" />
+          <Image src={sub3} alt="Subvención 3" width={100} height={64} class="h-12 md:h-16 w-auto grayscale hover:grayscale-0 transition opacity-80 hover:opacity-100" loading="lazy" />
+          <Image src={sub4} alt="Subvención 4" width={200} height={64} class="h-12 md:h-16 w-auto grayscale hover:grayscale-0 transition opacity-80 hover:opacity-100" loading="lazy" />
+       </div>
+       <div class="w-full md:w-auto flex justify-center mt-4 md:mt-0">
+          <Image src={europa} alt="Logo Europa" width={580} height={180} class="w-full max-w-[580px] md:w-auto md:h-20 grayscale hover:grayscale-0 transition opacity-80 hover:opacity-100" loading="lazy" />
+       </div>
+    </section>
+
+    <div class="border-t border-gray-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+      <p>&copy; {year} {siteData.legalName} Todos los derechos reservados.</p>
+      <div class="flex flex-col md:flex-row gap-4 mt-4 md:mt-0 items-center">
+         <!-- Payment / Trust Icons -->
+         <div class="flex items-center gap-3 bg-white/10 p-2 rounded-lg backdrop-blur-sm opacity-0">
+         </div>
+         
+         <div class="flex gap-4">
+             <a href="/legal/aviso-legal" class="hover:text-white transition-colors">Aviso Legal</a>
+             <a href="/legal/politica-privacidad" class="hover:text-white transition-colors">Política de Privacidad</a>
+             <a href="/legal/cookies" class="hover:text-white transition-colors">Cookies</a>
+         </div>
+      </div>
+    </div>
+  </div>
+</footer>

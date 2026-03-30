@@ -1,0 +1,30 @@
+[
+  {
+    "id": "cash-carry",
+    "title": "Cash & Carry",
+    "description": "Formato mayorista para hostelería y grandes consumidores. Precios competitivos en grandes formatos.",
+    "icon": "store",
+    "link": "/profesionales"
+  },
+  {
+    "id": "supermercado",
+    "title": "Supermercado Diario",
+    "description": "Tu compra diaria con la mejor calidad en frescos, charcutería y alimentación general.",
+    "icon": "shopping-cart",
+    "link": "/terencio-cash-market"
+  },
+  {
+    "id": "hosteleria",
+    "title": "Servicio a Hostelería",
+    "description": "Atención especializada para bares, restaurantes y cafeterías. Productos específicos y asesoramiento.",
+    "icon": "utensils",
+    "link": "/profesionales"
+  },
+  {
+    "id": "aparcamiento",
+    "title": "Aparcamiento Gratuito",
+    "description": "Amplia zona de aparcamiento para que hagas tu compra con total comodidad.",
+    "icon": "parking",
+    "link": "/contacto"
+  }
+]

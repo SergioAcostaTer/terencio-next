@@ -1,0 +1,216 @@
+{
+    "name": "Terencio Cash Market",
+    "legalName": "Kit Cash Sl.",
+    "cif": "B76594126",
+    "tagline": "Tu Cash Market en Tenerife",
+    "slogan": "Precios de mayorista, abierto a todos",
+    "legal": {
+        "constitutionDate": "6-2-2013",
+        "lastChangeDate": "3-8-2025",
+        "socialObject": "Gestión de supermercado",
+        "activity": "Comercio al por mayor de otros productos alimenticios, helados de todas clases .. etc",
+        "cnae": "4639 - Comercio al por mayor, no especializado, de productos alimenticios, bebidas y tabaco",
+        "status": "Viva",
+        "sector": "Comercio",
+        "form": "Sociedad limitada"
+    },
+    "seo": {
+        "shortDescription": "Supermercado en La Esperanza y San Cristóbal de La Laguna, Tenerife. Cash & Carry abierto los domingos.",
+        "description": "Terencio Cash Market es tu supermercado en Tenerife y Cash & Carry abierto los domingos. Proveedor HORECA de alimentación, carne y embutidos al por mayor para hostelería, restaurantes y bares en La Laguna (La Esperanza). Venta a profesionales y particulares.",
+        "keywords": [
+            "terencio la esperanza",
+            "terencio cash market",
+            "supermercado en la laguna",
+            "san cristóbal de la laguna",
+            "supermercado abierto hoy en tenerife",
+            "supermercados abiertos domingos tenerife",
+            "proveedor horeca tenerife",
+            "alimentación al por mayor",
+            "proveedor para restaurantes y bares",
+            "supermercados en el hierro",
+            "venta de carne para supermercados"
+        ]
+    },
+    "url": "https://terencio.es",
+    "logo": "/logo.png",
+    "images": {
+        "storeFront": "/store-front.jpg",
+        "storeInterior": "/assets/images/supermercado-interior.jpg",
+        "logo": "/assets/images/logo.webp"
+    },
+    "address": {
+        "streetAddress": "Carr. de la Esperanza, 22",
+        "addressLocality": "San Cristóbal de La Laguna",
+        "locality": "La Laguna",
+        "addressRegion": "Santa Cruz de Tenerife",
+        "postalCode": "38206",
+        "addressCountry": "ES",
+        "formatted": "Carr. de la Esperanza, 22, 38206 La Laguna, Tenerife"
+    },
+    "geo": {
+        "latitude": 28.47311884198956,
+        "longitude": -16.33764619325292
+    },
+    "contact": {
+        "phone": "922 31 21 22",
+        "phoneRaw": "922312122",
+        "phoneInternational": "+34 922 31 21 22",
+        "email": "info@kitcash.es",
+        "whatsapp": "",
+        "whatsappUrl": ""
+    },
+    "social": {
+        "facebook": "https://www.facebook.com/TerencioCashMarket",
+        "instagram": "https://www.instagram.com/TerencioCashMarket",
+        "googleMaps": "https://www.google.com/maps/search/?api=1&query=Terencio+Cash+Market",
+        "googleMapsEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.1234!2d-16.33764619325292!3d28.47311884198956"
+    },
+    "ratings": {
+        "google": {
+            "rating": 4.0,
+            "reviewCount": 463,
+            "maxRating": 5,
+            "minRating": 1
+        }
+    },
+    "hours": {
+        "text": "Lunes a Sábado: 08:00–21:00. Domingo: 08:30–20:30 (Festivos igual que domingos. Solo cerramos Navidad, Reyes y Fin de Año)",
+        "special": "Festivos: igual que domingos. Solo cerramos Navidad, Reyes y Fin de Año",
+        "schedule": [
+            {
+                "dayOfWeek": [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday"
+                ],
+                "dayOfWeekES": [
+                    "Lunes",
+                    "Martes",
+                    "Miércoles",
+                    "Jueves",
+                    "Viernes",
+                    "Sábado"
+                ],
+                "opens": "08:00",
+                "closes": "21:00"
+            },
+            {
+                "dayOfWeek": [
+                    "Sunday"
+                ],
+                "dayOfWeekES": [
+                    "Domingo"
+                ],
+                "opens": "08:30",
+                "closes": "20:30"
+            }
+        ]
+    },
+    "services": {
+        "retail": {
+            "name": "Venta al Público",
+            "description": "Supermercado tradicional para particulares",
+            "icon": "shopping-cart"
+        },
+        "wholesale": {
+            "name": "Cash & Carry",
+            "description": "Venta mayorista sin necesidad de carnet",
+            "icon": "warehouse"
+        },
+        "horeca": {
+            "name": "HORECA",
+            "description": "Servicio especializado para hostelería, restaurantes y catering",
+            "icon": "chef-hat"
+        }
+    },
+    "departments": {
+        "butcher": {
+            "name": "Carnicería al Corte",
+            "description": "Carnicería tradicional con cortes al momento",
+            "icon": "beef"
+        },
+        "deli": {
+            "name": "Charcutería",
+            "description": "Jamones, quesos y embutidos de calidad",
+            "icon": "cheese"
+        },
+        "produce": {
+            "name": "Frutas y Verduras",
+            "description": "Frescos diarios de la mejor calidad",
+            "icon": "apple"
+        },
+        "wine": {
+            "name": "Bodega",
+            "description": "Vinos canarios, nacionales e importados",
+            "icon": "wine"
+        },
+        "elHierro": {
+            "name": "Productos de El Hierro",
+            "description": "Quesadillas, quesos, piña tropical y más",
+            "icon": "star"
+        }
+    },
+    "areas": {
+        "primary": [
+            "La Esperanza",
+            "San Cristóbal de La Laguna",
+            "El Rosario"
+        ],
+        "secondary": [
+            "Santa Cruz de Tenerife",
+            "Tegueste",
+            "Tacoronte"
+        ]
+    },
+    "specialties": [
+        {
+            "name": "Productos de El Hierro",
+            "description": "Importador oficial de productos herreños en Tenerife",
+            "featured": true
+        },
+        {
+            "name": "Carnicería Tradicional",
+            "description": "Cortes al momento con maestros carniceros",
+            "featured": true
+        },
+        {
+            "name": "Sin Cuota de Socio",
+            "description": "Cash & Carry abierto a particulares sin necesidad de tarjeta",
+            "featured": true
+        }
+    ],
+    "features": [
+        "Aparcamiento gratuito",
+        "Abierto domingos y festivos",
+        "Pago con tarjeta",
+        "Servicio urgente 362 días",
+        "Carnicería propia",
+        "Productos locales",
+        "Formato mayorista",
+        "Sin cuota de socio"
+    ],
+    "analytics": {
+        "gaMeasurementId": "G-HVCHD7R86X"
+    },
+    "brand": {
+        "colors": {
+            "primary": "#185d26",
+            "primaryLight": "#22c55e",
+            "secondary": "#dc2626",
+            "accent": "#f59e0b"
+        },
+        "fonts": {
+            "heading": "Inter",
+            "body": "Inter"
+        }
+    },
+    "meta": {
+        "themeColor": "#185d26",
+        "locale": "es_ES",
+        "language": "es",
+        "region": "IC"
+    }
+}

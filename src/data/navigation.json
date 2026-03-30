@@ -1,0 +1,139 @@
+{
+  "main": [
+    {
+      "label": "Inicio",
+      "href": "/"
+    },
+    {
+      "label": "Ofertas Semanales",
+      "href": "/ofertas",
+      "color": "red"
+    },
+    {
+      "label": "Nuestros Productos",
+      "href": "/cash-and-carry-tenerife",
+      "children": [
+        {
+          "label": "Cash & Carry Tenerife",
+          "href": "/cash-and-carry-tenerife"
+        },
+        {
+          "label": "Carnicería al Corte",
+          "href": "/carniceria-tenerife"
+        },
+        {
+          "label": "Productos de El Hierro",
+          "href": "/productos-el-hierro-tenerife"
+        },
+        {
+          "label": "Quesos Herreños",
+          "href": "/quesos-el-hierro-tenerife"
+        }
+      ]
+    },
+    {
+      "label": "Mayorista HORECA",
+      "href": "/profesionales",
+      "color": "slate"
+    },
+    {
+      "label": "Nuestra Carnicería",
+      "href": "/carniceria-tenerife",
+      "color": "red"
+    },
+    {
+      "label": "Horario",
+      "href": "/horario"
+    },
+    {
+      "label": "Blog",
+      "href": "/blog"
+    },
+    {
+      "label": "Noticias",
+      "href": "/noticias"
+    },
+    {
+      "label": "Empleo",
+      "href": "/trabaja-con-nosotros"
+    }
+  ],
+  "cta": {
+    "label": "Contacto",
+    "href": "/contacto"
+  },
+  "mobileExtra": [
+    {
+      "label": "Atención al Cliente",
+      "href": "/atencion-al-cliente"
+    },
+    {
+      "label": "Trabaja con Nosotros",
+      "href": "/trabaja-con-nosotros"
+    }
+  ],
+  "footer": {
+    "quickLinks": [
+      {
+        "label": "Horario y Ubicación",
+        "href": "/horario"
+      },
+      {
+        "label": "Zona Profesionales",
+        "href": "/profesionales"
+      },
+      {
+        "label": "Folleto de Ofertas",
+        "href": "/ofertas"
+      },
+      {
+        "label": "Quiénes Somos",
+        "href": "/sobre-nosotros"
+      },
+      {
+        "label": "Atención al Cliente",
+        "href": "/atencion-al-cliente"
+      },
+      {
+        "label": "Bolsa de Empleo",
+        "href": "/trabaja-con-nosotros"
+      }
+    ],
+    "featured": [
+      {
+        "label": "Carnicería Tenerife",
+        "href": "/carniceria-tenerife"
+      },
+      {
+        "label": "Quesos de El Hierro",
+        "href": "/quesos-el-hierro-tenerife"
+      },
+      {
+        "label": "Productos Herreños",
+        "href": "/productos-el-hierro-tenerife"
+      },
+      {
+        "label": "Supermercado Mayorista",
+        "href": "/cash-and-carry-tenerife"
+      }
+    ],
+    "legal": [
+      {
+        "label": "Aviso Legal",
+        "href": "/legal/aviso-legal"
+      },
+      {
+        "label": "Política de Privacidad",
+        "href": "/legal/politica-privacidad"
+      },
+      {
+        "label": "Política de Cookies",
+        "href": "/legal/cookies"
+      },
+      {
+        "label": "Mapa del sitio",
+        "href": "/sitemap-index.xml"
+      }
+    ]
+  }
+}

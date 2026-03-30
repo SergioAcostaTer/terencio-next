@@ -1,0 +1,103 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string; // fallback
+  ogImage?: string; // specific
+  canonical?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  publishDate?: string;
+  author?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  ogImage,
+  canonical = new URL(Astro.url.pathname, Astro.site).href,
+  noindex = false,
+  type = 'website',
+  publishDate,
+  author,
+} = Astro.props;
+
+// Helper to ensure absolute URLs
+const siteUrl = Astro.site ? Astro.site.toString() : 'https://terencio.es';
+const ensureAbsoluteUrl = (path: string) => {
+  if (path.startsWith('http')) return path;
+  // Remove leading slash if present to avoid double slashes when joining
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${siteUrl}${cleanPath}`;
+};
+
+// Image Logic
+// 1. If no image provided, use fallback
+// 2. If image is webp, usage fallback for social bots (unless specific social image logic exists, but requirement says "JPG Fallback Rule")
+// Requirement: "Create a standard social-share.jpg... Use this as the default fallback"
+// Requirement: "Social bots cannot read relative image paths"
+
+let socialImage = image || '/social-share.jpg';
+
+// Simple check for webp extension to fallback if needed (though modern bots handle webp better, the requirement is specific)
+// "Your optimization script converts everything to WebP. Older apps... fail"
+if (socialImage.endsWith('.webp')) {
+    socialImage = '/social-share.jpg'; // Hard overwrite for social sharing if the primary image is webp, assuming we want maximum compatibility
+}
+
+const absoluteImageUrl = ensureAbsoluteUrl(socialImage);
+
+// Clean title
+const baseTitle = 'Terencio Cash Market';
+const fullTitle = title === baseTitle ? title : `${title} | ${baseTitle}`;
+---
+
+<!-- Global Metadata -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonical} />
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+<meta name="author" content={author || baseTitle} />
+{noindex && <meta name="robots" content="noindex" />}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={absoluteImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content={baseTitle} />
+<meta property="og:locale" content="es_ES" />
+
+{type === 'article' && (
+  <>
+    {publishDate && <meta property="article:published_time" content={publishDate} />}
+    {author && <meta property="article:author" content={author} />}
+  </>
+)}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonical} />
+<meta property="twitter:title" content={fullTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={absoluteImageUrl} />
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#166534" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

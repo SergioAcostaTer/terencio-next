@@ -1,0 +1,130 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Icon from '../ui/Icon';
+
+interface Props {
+  currentSlug: string;
+  tags?: string[];
+  collection?: 'blog' | 'noticias';
+  maxItems?: number;
+  title?: string;
+}
+
+const { 
+  currentSlug, 
+  tags = [], 
+  collection = 'blog',
+  maxItems = 3,
+  title = 'Artículos Relacionados'
+} = Astro.props;
+
+// Fetch all posts from the specified collection
+const allPosts = await getCollection(collection);
+
+// Filter out current post
+const otherPosts = allPosts.filter(post => post.slug !== currentSlug);
+
+// Score posts based on shared tags
+const scoredPosts = otherPosts.map(post => {
+  let score = 0;
+  
+  // Higher score for posts with matching tags
+  if (tags.length > 0 && post.data.tags) {
+    const sharedTags = post.data.tags.filter(tag => tags.includes(tag));
+    score = sharedTags.length * 10; // 10 points per shared tag
+  }
+  
+  // Recent posts get a small bonus
+  const daysSincePublish = (Date.now() - post.data.pubDate.valueOf()) / (1000 * 60 * 60 * 24);
+  score += Math.max(0, 5 - daysSincePublish / 30); // Up to 5 points for recent posts
+  
+  return { post, score };
+});
+
+// Sort by score and take top N
+const relatedPosts = scoredPosts
+  .sort((a, b) => b.score - a.score)
+  .slice(0, maxItems)
+  .map(item => item.post);
+
+// Fallback: if no related posts found, just take most recent
+const postsToShow = relatedPosts.length > 0 
+  ? relatedPosts 
+  : otherPosts
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+      .slice(0, maxItems);
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+};
+
+const baseUrl = collection === 'blog' ? '/blog' : '/noticias';
+---
+
+{postsToShow.length > 0 && (
+  <aside class="my-16 not-prose">
+    <div class="border-t-4 border-green-700 pt-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
+        <a 
+          href={baseUrl} 
+          class="hidden md:flex items-center gap-2 text-green-700 font-semibold hover:gap-3 transition-all"
+        >
+          Ver todos
+          <Icon name="ArrowRight" size={20} client:load />
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {postsToShow.map(post => (
+          <a 
+            href={`${baseUrl}/${post.slug}`} 
+            class="group block bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-1"
+          >
+            <div class="aspect-video overflow-hidden relative">
+              {post.data.image && (
+                <Image 
+                  src={post.data.image as any} 
+                  alt={post.data.title}
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
+                  width={400}
+                  height={300}
+                  loading="lazy"
+                />
+              )}
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div class="p-5">
+              <div class="flex items-center gap-2 text-xs font-bold text-green-700 mb-2 uppercase tracking-wider">
+                <span>{post.data.tags?.[0] || 'Artículo'}</span>
+                <span class="text-gray-300">•</span>
+                <span class="text-gray-500 font-normal normal-case">{formatDate(post.data.pubDate)}</span>
+              </div>
+              
+              <h3 class="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-green-700 transition-colors line-clamp-2">
+                {post.data.title}
+              </h3>
+              
+              <p class="text-gray-600 text-sm line-clamp-2">
+                {post.data.description}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {/* Mobile "Ver todos" button */}
+      <div class="md:hidden mt-6 text-center">
+        <a 
+          href={baseUrl}
+          class="inline-flex items-center gap-2 text-green-700 font-bold hover:gap-3 transition-all"
+        >
+          Ver todos los {collection === 'blog' ? 'artículos' : 'noticias'}
+          <Icon name="ArrowRight" size={20} client:load />
+        </a>
+      </div>
+    </div>
+  </aside>
+)}

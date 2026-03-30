@@ -1,0 +1,27 @@
+---
+import siteData from "../../data/siteData.json";
+
+// Este schema es crucial para que salgan las estrellitas en los resultados de búsqueda de Google (Rich Snippets)
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": siteData.name,
+  "image": siteData.url + "/assets/images/logo.webp",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.0",
+    "reviewCount": "463",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": siteData.address.streetAddress,
+    "addressLocality": siteData.address.addressLocality,
+    "addressRegion": siteData.address.addressRegion,
+    "postalCode": siteData.address.postalCode,
+    "addressCountry": "ES"
+  }
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

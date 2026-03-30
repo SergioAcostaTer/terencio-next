@@ -1,0 +1,221 @@
+---
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon";
+import PageHeader from "../components/ui/PageHeader.astro";
+import offers from "../data/offers.json";
+import siteData from "../data/siteData.json";
+import Layout from "../layouts/Layout.astro";
+
+const title = "Ofertas Semanales Terencio | Supermercado Barato Tenerife";
+const description = "Descubre las mejores ofertas de la semana en Terencio Cash Market. Precios de mayorista en carnicería, frescos, bodega y limpieza en La Laguna.";
+---
+
+<Layout title={title} description={description}>
+  <PageHeader 
+    title='Ofertas <span class="text-yellow-400">Destacadas</span>'
+    subtitle="Bajamos los precios cada semana para que tu cesta de la compra rinda más. Calidad mayorista al alcance de todos."
+    badge="Ahorro Real"
+    bgClass="bg-red-700"
+    gradientClass="bg-gradient-to-b from-red-900/90 via-red-800/60 to-red-900/90"
+  >
+    <div class="mt-4 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 inline-block">
+        <p class="text-white font-bold flex items-center gap-2 justify-center">
+            <Icon name="Clock" size={20} /> Ofertas válidas hasta fin de existencias
+        </p>
+    </div>
+  </PageHeader>
+
+  <section class="py-12 bg-white border-b border-gray-200">
+      <div class="container mx-auto px-4 text-center max-w-3xl">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">¿Cómo funcionan nuestras ofertas?</h2>
+          <p class="text-gray-600 leading-relaxed mb-6">
+              En Terencio no inflamos precios para luego bajarlos. Nuestras ofertas son reales y directas, fruto de la negociación semanal con nuestros proveedores locales y nacionales. Aprovecha para comprar <strong>carne fresca, frutas de temporada y básicos de despensa</strong> al mejor precio de Tenerife.
+          </p>
+          <div class="flex justify-center gap-4">
+              <span class="inline-flex items-center gap-1 text-sm font-bold text-green-700 bg-green-50 px-3 py-1 rounded-full border border-green-200">
+                  <Icon name="Check" size={14} /> Stock Diario
+              </span>
+              <span class="inline-flex items-center gap-1 text-sm font-bold text-green-700 bg-green-50 px-3 py-1 rounded-full border border-green-200">
+                  <Icon name="Check" size={14} /> Sin Límite
+              </span>
+              <span class="inline-flex items-center gap-1 text-sm font-bold text-green-700 bg-green-50 px-3 py-1 rounded-full border border-green-200">
+                  <Icon name="Check" size={14} /> Para Todos
+              </span>
+          </div>
+      </div>
+  </section>
+
+  <!-- Offers Grid -->
+  <section class="py-16 bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4">
+        
+        <!-- Filter/Category Tabs -->
+        <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-12 sticky top-24 z-30 py-4 bg-gray-50/95 backdrop-blur-sm transition-all" id="filter-container">
+            <!-- Categories -->
+            <div class="flex flex-wrap justify-center gap-2">
+                <button class="filter-btn active px-5 py-2 bg-green-700 text-white rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 transition text-sm" data-category="all">Todo</button>
+                <button class="filter-btn px-5 py-2 bg-white text-gray-700 rounded-full font-bold shadow-sm hover:bg-green-50 hover:text-green-700 border border-gray-200 transition text-sm" data-category="Frescos">🥬 Frescos</button>
+                <button class="filter-btn px-5 py-2 bg-white text-gray-700 rounded-full font-bold shadow-sm hover:bg-green-50 hover:text-green-700 border border-gray-200 transition text-sm" data-category="Carnicería">🥩 Carnicería</button>
+                <button class="filter-btn px-5 py-2 bg-white text-gray-700 rounded-full font-bold shadow-sm hover:bg-green-50 hover:text-green-700 border border-gray-200 transition text-sm" data-category="Bodega">🍷 Bodega</button>
+                <button class="filter-btn px-5 py-2 bg-white text-gray-700 rounded-full font-bold shadow-sm hover:bg-green-50 hover:text-green-700 border border-gray-200 transition text-sm" data-category="Limpieza">🧼 Limpieza</button>
+            </div>
+            
+            <div class="hidden md:block w-px h-8 bg-gray-300 mx-2"></div>
+
+            <!-- Moments -->
+            <div class="flex flex-wrap justify-center gap-2">
+                <button class="filter-btn px-5 py-2 bg-orange-100 text-orange-800 rounded-full font-bold shadow-sm hover:bg-orange-200 border border-orange-200 transition text-sm flex items-center gap-1" data-moment="asadero">🔥 Para Asadero</button>
+                <button class="filter-btn px-5 py-2 bg-blue-100 text-blue-800 rounded-full font-bold shadow-sm hover:bg-blue-200 border border-blue-200 transition text-sm flex items-center gap-1" data-moment="despensa">🛒 Llenar Despensa</button>
+                 <button class="filter-btn px-5 py-2 bg-slate-800 text-white rounded-full font-bold shadow-sm hover:bg-slate-700 border border-slate-700 transition text-sm flex items-center gap-1" data-moment="restauracion">👨‍🍳 Restauración</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="offers-grid">
+            {offers.map(offer => (
+                <div class="offer-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 group flex flex-col h-full relative transform hover:-translate-y-1" 
+                     data-category={offer.category}
+                     data-moments={
+                        ['Carnicería', 'Bodega', 'Frescos'].includes(offer.category) ? 'asadero ' : '' + 
+                        ['Limpieza', 'Gran Formato', 'Bodega'].includes(offer.category) ? 'despensa ' : '' +
+                        ['Gran Formato', 'Limpieza', 'Carnicería'].includes(offer.category) ? 'restauracion ' : ''
+                     }
+                >
+                    {/* Highlight Badge */}
+                    {offer.highlight && (
+                        <div class="absolute top-0 left-0 bg-red-600 text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-br-xl z-20 shadow-md">
+                            {offer.highlight}
+                        </div>
+                    )}
+                    
+                    {/* Image Area - Placeholder with Icon */}
+                    <div class="h-48 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden flex items-center justify-center border-b border-gray-50">
+                        <div class="absolute inset-0 bg-white/30 z-10"></div>
+                        <span class="text-7xl group-hover:scale-125 transition duration-500 drop-shadow-sm filter grayscale-[0.2] group-hover:grayscale-0 relative z-0">
+                           {offer.category === 'Frescos' ? '🥬' : 
+                            offer.category === 'Carnicería' ? '🥩' :
+                            offer.category === 'Bodega' ? '🍷' :
+                            offer.category === 'Limpieza' ? '🧼' : '📦'}
+                        </span>
+                        
+                        {/* Discount Tag */}
+                        <div class="absolute bottom-3 right-3 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded shadow-sm z-20">
+                            Oferta
+                        </div>
+                    </div>
+
+                    <div class="p-5 flex flex-col flex-grow relative">
+                        <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 flex justify-between">
+                            <span>{offer.category}</span>
+                            {offer.category === 'Gran Formato' && <span class="text-blue-600">Pro</span>}
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-lg leading-snug mb-2 line-clamp-2 group-hover:text-green-700 transition-colors">{offer.name}</h3>
+                        <p class="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed">{offer.description}</p>
+                        
+                        <div class="mt-auto pt-4 border-t border-dashed border-gray-200">
+                             <!-- Dual Price Display -->
+                            <div class="flex items-end justify-between">
+                                <div class="flex flex-col">
+                                    <span class="text-gray-400 line-through text-xs font-medium mb-0.5">PVP: {offer.oldPrice}€</span>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-3xl font-black text-red-600 leading-none tracking-tight">{offer.price}</span>
+                                        <span class="text-xl font-bold text-red-600">€</span>
+                                    </div>
+                                    <span class="text-[10px] uppercase font-bold text-green-700 bg-green-50 px-1 rounded w-fit mt-1">Precio Cash</span>
+                                </div>
+                                {offer.unit && <span class="text-xs font-bold text-gray-400 bg-gray-100 px-2 py-1 rounded">/{offer.unit}</span>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+<script>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.offer-card');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+             // Reset UI
+            buttons.forEach(b => {
+                b.classList.remove('ring-2', 'ring-offset-1', 'ring-green-600');
+                if(b.classList.contains('bg-green-700')) {
+                    b.classList.remove('bg-green-700', 'text-white');
+                    b.classList.add('bg-white', 'text-gray-700');
+                }
+            });
+
+            // Activate current
+            const category = btn.getAttribute('data-category');
+            const moment = btn.getAttribute('data-moment');
+            
+            btn.classList.add('ring-2', 'ring-offset-1', 'ring-green-600');
+
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                const cardMoments = card.getAttribute('data-moments');
+                
+                let shouldShow = false;
+
+                if (category) {
+                    if (category === 'all') shouldShow = true;
+                    else shouldShow = cardCategory === category;
+                } else if (moment) {
+                    shouldShow = cardMoments && cardMoments.includes(moment);
+                }
+
+                if (shouldShow) {
+                    (card as HTMLElement).style.display = 'flex';
+                } else {
+                    (card as HTMLElement).style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+        <!-- CTA Newsletter / WhatsApp / Call -->
+        <div class="mt-20 bg-slate-900 rounded-3xl p-8 md:p-12 text-white text-center relative overflow-hidden shadow-2xl">
+            <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')]"></div>
+            <div class="relative z-10 max-w-2xl mx-auto">
+                { (siteData.contact.whatsapp || siteData.contact.whatsappUrl) ? (
+                  <>
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/30">
+                        <Icon name="MessageCircle" size={32} />
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4">¿Quieres recibir las ofertas en tu móvil?</h2>
+                    <p class="text-slate-300 mb-8 text-lg">No te pierdas ninguna bajada de precio. Únete a nuestro canal de difusión o consúltanos directamente por WhatsApp.</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Button href={siteData.contact.whatsappUrl || `https://wa.me/34${siteData.contact.phoneRaw}`} target="_blank" class="bg-green-700 hover:bg-green-800 text-white border-none shadow-lg shadow-green-700/20 gap-2">
+                            <Icon name="MessageCircle" /> Consultar por WhatsApp
+                        </Button>
+                        <Button href="/contacto" variant="outline" class="border-white text-white hover:bg-white hover:text-slate-900">
+                            Ver más formas de contacto
+                        </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-500/30">
+                        <Icon name="Phone" size={32} />
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4">¿Quieres enterarte de nuestras ofertas?</h2>
+                    <p class="text-slate-300 mb-8 text-lg">No te pierdas ninguna bajada de precio. Llámanos directamente para consultar nuestras promociones.</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Button href={`tel:${siteData.contact.phoneRaw}`} class="bg-blue-500 hover:bg-blue-600 text-white border-none shadow-lg shadow-blue-500/20 gap-2">
+                            <Icon name="Phone" /> Llámanos ahora
+                        </Button>
+                        <Button href="/contacto" variant="outline" class="border-white text-white hover:bg-white hover:text-slate-900">
+                            Ver más formas de contacto
+                        </Button>
+                    </div>
+                  </>
+                )}
+            </div>
+        </div>
+
+    </div>
+  </section>
+</Layout>

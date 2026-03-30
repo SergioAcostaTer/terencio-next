@@ -1,0 +1,38 @@
+[
+  {
+    "author": "María Candelaria",
+    "avatar": "M",
+    "color": "bg-purple-600",
+    "rating": 5,
+    "date": "Hace 2 días",
+    "text": "Llevo comprando aquí desde que abrieron en La Esperanza. La carne es espectacular, nada que ver con los supermercados grandes. El trato de Yeray en carnicería es de 10.",
+    "response": "¡Gracias María! Yeray se pondrá muy contento al leer esto. Nos vemos pronto."
+  },
+  {
+    "author": "Restaurante El Guachinche",
+    "avatar": "R",
+    "color": "bg-blue-600",
+    "rating": 5,
+    "date": "Hace 1 semana",
+    "text": "Soy cliente profesional y el servicio es inmejorable. Me salvan la vida cuando necesito género un domingo. Precios muy competitivos para hostelería.",
+    "isLocalGuide": true
+  },
+  {
+    "author": "Antonio M.",
+    "avatar": "A",
+    "color": "bg-green-600",
+    "rating": 4,
+    "date": "Hace 3 semanas",
+    "text": "Buen sitio para comprar productos de El Hierro. Las quesadillas siempre frescas. Le doy 4 estrellas porque a veces el parking se llena los sábados, pero por lo demás genial.",
+    "response": "Gracias Antonio. Estamos trabajando para mejorar la rotación del parking los fines de semana."
+  },
+  {
+    "author": "Laura Benítez",
+    "avatar": "L",
+    "color": "bg-yellow-600",
+    "rating": 5,
+    "date": "Hace 1 mes",
+    "text": "La piña tropical que traen es la mejor de la isla. Precios muy buenos y sin necesidad de hacerse socio ni nada. Recomendado.",
+    "photos": true
+  }
+]

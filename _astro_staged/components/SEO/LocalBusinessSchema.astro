@@ -1,0 +1,53 @@
+---
+import siteData from "../../data/siteData.json";
+
+interface Props {
+  type?: "LocalBusiness" | "GroceryStore" | "WholesaleStore";
+  name?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  type = "GroceryStore",
+  name = siteData.legalName,
+  description = siteData.seo.description,
+  image = "/assets/images/supermercado-interior.webp"
+} = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": type,
+  "name": name,
+  "image": new URL(image, Astro.site),
+  "description": description,
+  "@id": `${siteData.url}#${type.toLowerCase()}`,
+  "url": siteData.url,
+  "telephone": siteData.contact.phone,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": siteData.address.streetAddress,
+    "addressLocality": siteData.address.addressLocality,
+    "addressRegion": siteData.address.addressRegion,
+    "postalCode": siteData.address.postalCode,
+    "addressCountry": siteData.address.addressCountry
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 28.473194290645235,
+    "longitude": -16.33765692208819
+  },
+  "openingHoursSpecification": siteData.hours.schedule.map(h => ({
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": h.dayOfWeek,
+    "opens": h.opens,
+    "closes": h.closes
+  })),
+  "sameAs": [
+    "https://www.facebook.com/TerencioCashMarket/",
+    "https://www.instagram.com/terenciocashmarket/"
+  ]
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

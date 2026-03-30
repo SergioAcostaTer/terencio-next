@@ -1,0 +1,19 @@
+---
+import Button from '../components/ui/Button.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import Layout from '../layouts/Layout.astro';
+
+const title = "Página no encontrada - Terencio Cash Market";
+---
+
+<Layout title={title} noindex={true}>
+  <PageHeader 
+    title="404 - Página no encontrada" 
+    subtitle="Vaya, parece que te has perdido en el pasillo. La página que buscas no existe o ha sido movida."
+    badge="Error"
+  >
+     <Button href="/" variant="primary" class="text-lg px-8 py-4 shadow-xl hover:-translate-y-1 transition-all">
+         Volver al inicio
+     </Button>
+  </PageHeader>
+</Layout>

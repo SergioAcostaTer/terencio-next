@@ -1,0 +1,72 @@
+---
+import PageHeader from "../../components/ui/PageHeader.astro";
+import siteData from "../../data/siteData.json";
+import Layout from "../../layouts/Layout.astro";
+
+const title = "Aviso Legal - Terencio Cash Market";
+const description = "Información legal y condiciones de uso del sitio web de Terencio Cash Market.";
+---
+
+<Layout title={title} description={description} canonical={`${siteData.url}/legal/aviso-legal`} noindex={true}>
+  <PageHeader title="Aviso Legal" badge="Legal" />
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4 max-w-4xl prose prose-green prose-lg">
+
+      <h3>1. Datos Identificativos</h3>
+      <p>
+        En cumplimiento con el deber de información recogido en artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico, a continuación se reflejan los siguientes datos:
+      </p>
+      <ul class="space-y-2">
+        <li><strong>Titular (Razón Social):</strong> {siteData.legalName}</li>
+        <li><strong>C.I.F.:</strong> {siteData.cif}</li>
+         <li><strong>Forma Jurídica:</strong> {siteData.legal.form}</li>
+        <li><strong>Domicilio social:</strong> {siteData.address.streetAddress}, {siteData.address.postalCode} {siteData.address.addressLocality}, {siteData.address.addressRegion} ({siteData.address.addressCountry})</li>
+        <li><strong>Correo electrónico:</strong> {siteData.contact.email}</li>
+        <li><strong>Teléfono:</strong> {siteData.contact.phone}</li>
+        
+        <li class="mt-4 pt-4 border-t border-gray-100"><strong>Sector:</strong> {siteData.legal.sector}</li>
+        <li><strong>Objeto social:</strong> {siteData.legal.socialObject}</li>
+        <li><strong>Actividad:</strong> {siteData.legal.activity}</li>
+        <li><strong>CNAE:</strong> {siteData.legal.cnae}</li>
+        <li><strong>Fecha de constitución:</strong> {siteData.legal.constitutionDate}</li>
+        <li><strong>Estado:</strong> {siteData.legal.status}</li>
+      </ul>
+
+      <h3>2. Usuarios</h3>
+      <p>
+        El acceso y/o uso de este portal de {siteData.name} atribuye la condición de USUARIO, que acepta, desde dicho acceso y/o uso, las Condiciones Generales de Uso aquí reflejadas.
+      </p>
+
+      <h3>3. Uso del Portal</h3>
+      <p>
+        <span>{siteData.url}</span> proporciona el acceso a multitud de informaciones, servicios, programas o datos (en adelante, "los contenidos") en Internet pertenecientes a <span>{siteData.name}</span> o a sus licenciantes a los que el USUARIO pueda tener acceso. El USUARIO asume la responsabilidad del uso del portal.
+      </p>
+
+      <h3>4. Protección de Datos</h3>
+      <p>
+        <span>{siteData.name}</span> cumple con las directrices del Reglamento General de Protección de Datos (RGPD) y demás normativa vigente, y vela por garantizar un correcto uso y tratamiento de los datos personales del usuario. Para más información, visite nuestra <a href="/legal/politica-privacidad">Política de Privacidad</a>.
+      </p>
+
+      <h3>5. Propiedad Intelectual e Industrial</h3>
+      <p>
+        <span>{siteData.name}</span> por sí o como cesionaria, es titular de todos los derechos de propiedad intelectual e industrial de su página web, así como de los elementos contenidos en la misma (a título enunciativo, imágenes, sonido, audio, vídeo, software o textos; marcas o logotipos, combinaciones de colores, estructura y diseño, selección de materiales usados, etc.). Todos los derechos reservados.
+      </p>
+
+      <h3>6. Exclusión de Garantías y Responsabilidad</h3>
+      <p>
+        <span>{siteData.name}</span> no se hace responsable, en ningún caso, de los daños y perjuicios de cualquier naturaleza que pudieran ocasionar, a título enunciativo: errores u omisiones en los contenidos, falta de disponibilidad del portal o la transmisión de virus o programas maliciosos o lesivos en los contenidos, a pesar de haber adoptado todas las medidas tecnológicas necesarias para evitarlo.
+      </p>
+
+      <h3>7. Modificaciones</h3>
+      <p>
+        <span>{siteData.name}</span> se reserva el derecho de efectuar sin previo aviso las modificaciones que considere oportunas en su portal, pudiendo cambiar, suprimir o añadir tanto los contenidos y servicios que se presten a través de la misma como la forma en la que éstos aparezcan presentados o localizados en su portal.
+      </p>
+
+      <h3>8. Legislación Aplicable y Jurisdicción</h3>
+      <p>
+        La relación entre <span>{siteData.name}</span> y el USUARIO se regirá por la normativa española vigente y cualquier controversia se someterá a los Juzgados y tribunales de la ciudad de Santa Cruz de Tenerife.
+      </p>
+
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,59 @@
+[
+  {
+    "id": 1,
+    "name": "Queso Tierno Herreño",
+    "description": "Precio por kg. Pieza entera aprox. 3kg",
+    "price": "9.95",
+    "oldPrice": "12.50",
+    "image": "/images/queso-tierno.webp",
+    "category": "Frescos",
+    "highlight": "Oferta Estrella"
+  },
+  {
+    "id": 2,
+    "name": "Carne de Fiesta (Adobada)",
+    "description": "Precio por kg. Elaboración propia diaria.",
+    "price": "6.50",
+    "oldPrice": "8.20",
+    "image": "/images/carne-fiesta.webp",
+    "category": "Carnicería",
+    "unit": "kg"
+  },
+  {
+    "id": 3,
+    "name": "Vino Tinto Tacoronte",
+    "description": "Botella 75cl. D.O. Tacoronte-Acentejo",
+    "price": "4.95",
+    "oldPrice": "6.50",
+    "image": "/images/vino-tinto.webp",
+    "category": "Bodega"
+  },
+  {
+    "id": 4,
+    "name": "Piña Tropical El Hierro",
+    "description": "Calidad Extra. Dulce y en su punto.",
+    "price": "2.95",
+    "oldPrice": "3.80",
+    "image": "/images/pina-hierro.webp",
+    "category": "Frescos",
+    "unit": "kg"
+  },
+  {
+    "id": 5,
+    "name": "Detergente Industrial 5L",
+    "description": "Especial Hostelería. Alto rendimiento.",
+    "price": "8.50",
+    "oldPrice": "11.00",
+    "image": "/images/detergente.webp",
+    "category": "Limpieza"
+  },
+  {
+    "id": 6,
+    "name": "Aceite Girasol 25L",
+    "description": "Marca propia Terencio. Especial Frituras.",
+    "price": "32.00",
+    "oldPrice": "38.50",
+    "image": "/images/aceite.webp",
+    "category": "Gran Formato"
+  }
+]

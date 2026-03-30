@@ -1,0 +1,71 @@
+---
+import Button from "./ui/Button.astro";
+import Icon from "./ui/Icon";
+
+interface Props {
+  tags?: string[];
+}
+
+const { tags = [] } = Astro.props;
+
+// Determine context
+const isElHierro = tags.some(t => t.toLowerCase().includes('hierro') || t.toLowerCase().includes('queso'));
+const isHoreca = tags.some(t => t.toLowerCase().includes('profesional') || t.toLowerCase().includes('hostelería') || t.toLowerCase().includes('restaurante'));
+const isRecetas = tags.some(t => t.toLowerCase().includes('receta') || t.toLowerCase().includes('cocina'));
+---
+
+<section class="my-12 p-8 bg-gray-50 rounded-2xl border border-gray-100 not-prose">
+  <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">¿Te ha gustado este artículo?</h3>
+  
+  <div class="grid md:grid-cols-3 gap-6">
+    
+    {/* Dynamic CTA 1: Returns Carnicería by default or El Hierro if relevant */}
+    {isElHierro ? (
+        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center flex flex-col items-center border-t-4 border-yellow-400">
+            <span class="text-4xl mb-4">🧀</span>
+            <h4 class="font-bold text-gray-900 mb-2">Sabor de El Hierro</h4>
+            <p class="text-sm text-gray-600 mb-4">Quesadillas, queso herreño y más productos de la isla.</p>
+            <a href="/productos-el-hierro-tenerife" class="text-green-700 font-bold text-sm hover:underline mt-auto">Ver Productos Herreños →</a>
+        </div>
+    ) : (
+        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center flex flex-col items-center">
+            <span class="text-4xl mb-4">🥩</span>
+            <h4 class="font-bold text-gray-900 mb-2">Carnicería Selecta</h4>
+            <p class="text-sm text-gray-600 mb-4">Carne fresca con despiece propio y cortes al gusto.</p>
+            <a href="/terencio-cash-market#carniceria" class="text-green-700 font-bold text-sm hover:underline mt-auto">Ver Carnicería →</a>
+        </div>
+    )}
+
+    {/* Dynamic CTA 2: Professionals or Offers */}
+    {isHoreca ? (
+        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center flex flex-col items-center border-t-4 border-blue-600">
+            <span class="text-4xl mb-4">🏭</span>
+            <h4 class="font-bold text-gray-900 mb-2">¿Tienes un Negocio?</h4>
+            <p class="text-sm text-gray-600 mb-4">Tarifas especiales y servicio integral para hostelería.</p>
+            <a href="/profesionales" class="text-green-700 font-bold text-sm hover:underline mt-auto">Zona Profesional →</a>
+        </div>
+    ) : (
+        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center flex flex-col items-center">
+             <span class="text-4xl mb-4">🥗</span>
+            <h4 class="font-bold text-gray-900 mb-2">Frescos y Ofertas</h4>
+            <p class="text-sm text-gray-600 mb-4">Frutas y verduras locales con las mejores ofertas semanales.</p>
+            <a href="/ofertas" class="text-green-700 font-bold text-sm hover:underline mt-auto">Ver Folleto →</a>
+        </div>
+    )}
+
+    {/* Static CTA: Maps */}
+    <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center flex flex-col items-center">
+      <span class="text-4xl mb-4">📍</span>
+      <h4 class="font-bold text-gray-900 mb-2">Ven a Visitarnos</h4>
+      <p class="text-sm text-gray-600 mb-4">Estamos en La Esperanza, muy cerca de ti.</p>
+      <a href="https://www.google.com/maps/search/?api=1&query=Terencio+Cash+Market" target="_blank" class="text-green-700 font-bold text-sm hover:underline mt-auto">Ver en Mapa →</a>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center">
+    <Button href="/terencio-cash-market" variant="primary" class="gap-2">
+      Ver todos nuestros productos
+      <Icon name="ArrowRight" size={20} />
+    </Button>
+  </div>
+</section>

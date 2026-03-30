@@ -1,0 +1,143 @@
+---
+import interiorImage from "../assets/images/supermercado-interior.webp";
+import LocationMap from "../components/LocationMap.astro";
+import LocalBusinessSchema from "../components/SEO/LocalBusinessSchema.astro";
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import Layout from "../layouts/Layout.astro";
+
+const title = "Cash and Carry en Tenerife: Compra sin Carnet | Terencio";
+const description = "El único Cash & Carry en Tenerife abierto al público general. Sin carnet, sin cuotas. Precios de mayorista para familias y empresas en La Esperanza.";
+---
+
+<LocalBusinessSchema type="WholesaleStore" />
+<Layout title={title} description={description} image={interiorImage.src}>
+  
+  <PageHeader 
+    title='Cash and Carry Tenerife: <span class="text-green-300">Abierto al Público</span>'
+    subtitle="Rompemos las reglas del mayorista. Aquí particulares y empresas compran con precios de almacén sin necesidad de ser socios."
+    badge="Ahorro Inteligente"
+    backgroundImage={interiorImage.src}
+  >
+      <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+        <Button href="#ventajas" variant="white" class="text-lg px-8 py-4 shadow-xl hover:-translate-y-1 transition-all text-green-900 hover:bg-green-50 border-none font-bold">
+            Ver Ventajas
+        </Button>
+      </div>
+  </PageHeader>
+
+  <Section class="bg-white" id="ventajas">
+    <div class="text-center mb-16">
+        <span class="text-green-700 font-bold uppercase tracking-widest text-sm bg-green-100 px-4 py-1 rounded-full">Modelo Híbrido</span>
+        <h2 class="text-4xl font-bold text-gray-900 mt-4 mb-6">¿Por qué comprar aquí?</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
+            Hemos creado un espacio único que combina la comodidad de un supermercado de cercanía con la potencia de precios de un gran almacén.
+        </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+        <!-- Benefit 1 -->
+        <div class="bg-green-50 p-8 rounded-[2rem] border border-green-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group text-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-green-200 rounded-full mix-blend-multiply filter blur-2xl opacity-30 group-hover:opacity-50 transition"></div>
+            <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-sm mb-6 group-hover:scale-110 transition mx-auto text-green-600 font-bold border-2 border-green-100">
+                <Icon name="IdCard" size={36} />
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Sin Carnet ni Cuotas</h3>
+            <p class="text-gray-600 leading-relaxed">
+                No necesitas ser autónomo, ni empresa, ni registrarte en ningún club. Las puertas están abiertas para todos. Entra, carga tu carro y ahorra.
+            </p>
+        </div>
+
+        <!-- Benefit 2 -->
+        <div class="bg-blue-50 p-8 rounded-[2rem] border border-blue-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group text-center relative overflow-hidden">
+             <div class="absolute top-0 right-0 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-2xl opacity-30 group-hover:opacity-50 transition"></div>
+             <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-sm mb-6 group-hover:scale-110 transition mx-auto text-blue-600 border-2 border-blue-100">
+                <Icon name="PackageOpen" size={36} />
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Formatos Familiares</h3>
+            <p class="text-gray-600 leading-relaxed">
+                Libertad total. Compra una unidad suelta para la cena o llévate la caja completa para llenar la despensa y conseguir el máximo ahorro.
+            </p>
+        </div>
+
+        <!-- Benefit 3 -->
+        <div class="bg-red-50 p-8 rounded-[2rem] border border-red-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group text-center relative overflow-hidden">
+             <div class="absolute top-0 right-0 w-32 h-32 bg-red-200 rounded-full mix-blend-multiply filter blur-2xl opacity-30 group-hover:opacity-50 transition"></div>
+             <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-sm mb-6 group-hover:scale-110 transition mx-auto text-red-600 border-2 border-red-100">
+                <Icon name="Beef" size={36} />
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Calidad Fresca</h3>
+            <p class="text-gray-600 leading-relaxed">
+                A diferencia de otros Cash que solo tienen seco, nosotros destacamos por nuestra <strong>carnicería al corte</strong> y frutería local con reposición diaria.
+            </p>
+        </div>
+    </div>
+  </Section>
+
+  <!-- Comparison Table (SEO Goldmine for "supermercado barato") -->
+  <Section class="bg-slate-900 text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4">Terencio vs. Supermercado Típico</h2>
+            <p class="text-slate-400">La comparativa que explica por qué nuestros clientes repiten.</p>
+        </div>
+        
+        <div class="overflow-hidden rounded-3xl border border-slate-700 bg-slate-800/50 backdrop-blur-sm shadow-2xl">
+            <div class="grid grid-cols-3 bg-slate-800 border-b border-slate-700">
+                <div class="p-6 font-bold text-slate-400 uppercase tracking-wider text-sm flex items-center">Característica</div>
+                <div class="p-6 font-bold text-green-400 text-lg md:text-xl text-center bg-green-900/20 border-x border-slate-700 flex items-center justify-center gap-2">
+                    <Icon name="CircleCheck" size={20}/> Terencio
+                </div>
+                <div class="p-6 font-bold text-slate-400 text-center flex items-center justify-center">Otros</div>
+            </div>
+            
+            <div class="divide-y divide-slate-700">
+                <div class="grid grid-cols-3 hover:bg-slate-700/30 transition">
+                    <div class="p-6 font-medium">Precio</div>
+                    <div class="p-6 text-center font-bold text-white bg-green-900/10 border-x border-slate-700">Mayorista</div>
+                    <div class="p-6 text-center text-slate-400">Minorista (PVP alto)</div>
+                </div>
+                <div class="grid grid-cols-3 hover:bg-slate-700/30 transition">
+                    <div class="p-6 font-medium">Acceso</div>
+                    <div class="p-6 text-center font-bold text-white bg-green-900/10 border-x border-slate-700">Libre (Sin Carnet)</div>
+                    <div class="p-6 text-center text-slate-400">Con Tarjeta / Socio</div>
+                </div>
+                <div class="grid grid-cols-3 hover:bg-slate-700/30 transition">
+                    <div class="p-6 font-medium">Domingos</div>
+                    <div class="p-6 text-center font-bold text-white bg-green-900/10 border-x border-slate-700">ABIERTO</div>
+                    <div class="p-6 text-center text-slate-400">Cerrado</div>
+                </div>
+                <div class="grid grid-cols-3 hover:bg-slate-700/30 transition">
+                    <div class="p-6 font-medium">Carne Fresca</div>
+                    <div class="p-6 text-center font-bold text-white bg-green-900/10 border-x border-slate-700">Despiece Propio</div>
+                    <div class="p-6 text-center text-slate-400">Bandejas industriales</div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </Section>
+
+  <Section class="bg-white text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">Ubicación Estratégica</h2>
+    <p class="text-gray-600 mb-10 max-w-2xl mx-auto text-lg leading-relaxed">
+        En la subida a La Esperanza (La Laguna). Fácil aparcamiento gratuito en la puerta para cargar tu compra sin estrés y acceso directo desde la autopista.
+    </p>
+    
+    <div class="max-w-6xl mx-auto h-[450px] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white mb-10 transform hover:scale-[1.01] transition duration-500">
+        <LocationMap heightClass="h-full" title="Cómo llegar al Cash & Carry" />
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <Button href="https://www.google.com/maps/search/?api=1&query=Terencio+Cash+Market" target="_blank" variant="primary" class="gap-2 shadow-xl hover:-translate-y-1 py-4 px-8 text-lg font-bold">
+            <Icon name="Navigation" size={20} /> Ir con Google Maps
+        </Button>
+        <Button href="/horario" variant="white" class="gap-2 shadow-xl hover:-translate-y-1 text-green-700 border border-green-200 hover:bg-green-50 py-4 px-8 text-lg font-bold">
+            <Icon name="Clock" size={20} /> Ver Horarios
+        </Button>
+    </div>
+  </Section>
+
+</Layout>

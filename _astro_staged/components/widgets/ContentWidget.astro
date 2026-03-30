@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BlogGrid from '../BlogGrid.astro';
+import NewsGrid from '../NewsGrid.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  collection: 'blog' | 'noticias';
+  tags?: string[];
+  category?: string;
+  maxItems?: number;
+  viewAllLink?: string;
+  viewAllText?: string;
+  variant?: 'default' | 'compact' | 'sidebar';
+  bgClass?: string;
+}
+
+const { 
+  title, 
+  subtitle, 
+  collection, 
+  tags, 
+  category, 
+  maxItems = 3, 
+  viewAllLink, 
+  viewAllText,
+  variant = 'default',
+  bgClass = 'bg-white'
+} = Astro.props;
+
+// Fetch collection
+const allItems = await getCollection(collection);
+
+// Filter
+let items = allItems.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+if (tags && tags.length > 0) {
+  items = items.filter(item => item.data.tags && item.data.tags.some(t => tags.includes(t)));
+}
+
+if (category) {
+    items = items.filter(item => 'category' in item.data && (item.data as any).category === category);
+    // For blog, we might treat category as a specific tag if needed, but standard schema doesn't have 'category'
+}
+
+// Slice
+items = items.slice(0, maxItems);
+
+const defaultViewAllLink = collection === 'blog' ? '/blog' : '/noticias';
+const defaultViewAllText = collection === 'blog' ? 'Ver todo el Blog' : 'Ver todas las Noticias';
+
+---
+
+{items.length > 0 && (
+<Section class={bgClass}>
+    {(title || subtitle) && (
+        <div class="flex flex-col sm:flex-row justify-between sm:items-end items-start mb-8 md:mb-12 gap-4">
+            <div class="flex-1">
+              {subtitle && <span class="text-green-700 font-bold uppercase tracking-wider text-xs sm:text-sm mb-2 block">{subtitle}</span>}
+              {title && <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">{title}</h2>}
+            </div>
+            
+            {(viewAllLink || defaultViewAllLink) && (
+                <Button href={viewAllLink || defaultViewAllLink} variant="ghost" class="gap-2 flex-shrink-0 text-sm sm:text-base">
+                  {viewAllText || defaultViewAllText}
+                  <Icon name="ArrowRight" size={20} />
+                </Button>
+            )}
+        </div>
+    )}
+
+    {collection === 'blog' ? (
+        <BlogGrid posts={items} />
+    ) : (
+        <NewsGrid posts={items} />
+    )}
+</Section>
+)}

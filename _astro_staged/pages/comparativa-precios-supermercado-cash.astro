@@ -1,0 +1,104 @@
+---
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import Layout from "../layouts/Layout.astro";
+
+const title = "Comparativa de Precios: Supermercado vs Cash Market en Tenerife | Terencio";
+const description = "Descubre por qué comprar en un Cash Market es más barato que en un supermercado convencional. Ahorra en tu cesta de la compra en La Laguna.";
+const canonical = "https://terencio.es/comparativa-precios-supermercado-cash";
+
+const comparisonData = [
+  {
+    category: "Carnicería",
+    supermarket: "Carne envasada con gas, precio medio-alto",
+    cash: "Corte fresco diario, sin mermas, precio mayorista"
+  },
+  {
+    category: "Cantidades",
+    supermarket: "Formatos pequeños que encarecen el kilo",
+    cash: "Formatos adaptados y gran volumen = Menor precio unitario"
+  },
+  {
+    category: "Origen",
+    supermarket: "Cadena de suministro larga (más costes)",
+    cash: "Trato directo con origen y productores locales"
+  }
+];
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  
+  <PageHeader 
+    title='Supermercado vs <span class="text-yellow-400">Cash Market</span>'
+    subtitle="¿Por qué pagar más por lo mismo? Te explicamos la diferencia real en tu ticket de compra."
+    badge="Ahorro Inteligente"
+    bgClass="bg-blue-900"
+    gradientClass="bg-gradient-to-b from-blue-900/90 via-blue-800/60 to-blue-900/90"
+  />
+
+  <Section class="bg-gray-50">
+    <div class="container mx-auto px-4">
+      
+      <div class="max-w-4xl mx-auto text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">¿Quién es el supermercado más barato en La Laguna?</h2>
+        <p class="text-gray-600 text-lg leading-relaxed">
+           Muchas familias y negocios buscan ahorrar sin renunciar a la calidad. La clave no está solo en las ofertas puntuales, sino en el <strong>modelo de negocio</strong>. En Terencio operamos como Cash & Carry, lo que significa menores costes operativos que repercutimos directamente en un precio final más bajo para ti.
+        </p>
+      </div>
+
+      <!-- Comparison Table/Cards -->
+      <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {comparisonData.map((item) => (
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+                <div class="bg-gray-100 p-4 font-bold text-center text-gray-800 uppercase tracking-wider text-sm">
+                    {item.category}
+                </div>
+                <div class="p-6 flex-grow flex flex-col gap-6">
+                    <div>
+                        <span class="text-xs font-bold text-red-500 mb-1 block">Supermercado Convencional</span>
+                        <p class="text-gray-600 text-sm">{item.supermarket}</p>
+                    </div>
+                    <div class="border-t border-gray-100 pt-4 mt-auto bg-green-50/50 -mx-6 -mb-6 p-6">
+                        <span class="text-xs font-bold text-green-700 mb-1 block flex items-center gap-1">
+                            <Icon name="Check" size={12} /> Terencio Cash Market
+                        </span>
+                        <p class="text-gray-900 font-medium text-sm">{item.cash}</p>
+                    </div>
+                </div>
+            </div>
+        ))}
+      </div>
+
+      <!-- Visual Example Section -->
+      <div class="mt-20 bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200">
+         <div class="grid md:grid-cols-2">
+            <div class="p-10 md:p-14 flex flex-col justify-center">
+                <span class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-2">Caso Real</span>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">La cesta de la compra inteligente</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Al comprar formatos de hostelería o productos frescos a granel, una familia media puede ahorrar hasta un <strong>30% mensual</strong>. No necesitas ser un restaurante para comprar aquí; nuestros pasillos están abiertos para particulares que saben comprar.
+                </p>
+                <div class="flex gap-4">
+                    <Button href="/ofertas" variant="primary" class="bg-blue-600 hover:bg-blue-700 text-white border-none">
+                        Ver Ofertas Actuales
+                    </Button>
+                </div>
+            </div>
+            <div class="bg-blue-50 p-10 flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]"></div>
+                <!-- Abstract graphical representation of savings -->
+                <div class="relative z-10 text-center">
+                    <div class="text-9xl font-black text-blue-900/20 mb-[-20px]">30%</div>
+                    <div class="text-2xl font-bold text-blue-800">de ahorro estimado</div>
+                    <p class="text-blue-600 text-sm mt-2">en productos básicos y frescos</p>
+                </div>
+            </div>
+         </div>
+      </div>
+
+    </div>
+  </Section>
+
+</Layout>

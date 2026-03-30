@@ -1,0 +1,170 @@
+---
+import "@fontsource/outfit"; 
+import "@fontsource/outfit/500.css";
+import "@fontsource/outfit/600.css";
+import "@fontsource/outfit/700.css";
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
+import { ViewTransitions } from "astro:transitions";
+import CookieBanner from "../components/CookieBanner.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import LocalBusinessSchema from '../components/LocalBusinessSchema.astro';
+import SEO from '../components/SEO.astro';
+import siteData from "../data/siteData.json";
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string; 
+  ogImage?: string; 
+  preloadImage?: string; 
+  canonical?: string;
+  type?: "website" | "article";
+  publishDate?: string;
+  author?: string;
+  noindex?: boolean;
+}
+
+const { 
+  title, 
+  description = siteData.seo.description,
+  image, 
+  ogImage, 
+  preloadImage,
+  canonical = Astro.url.href,
+  type = "website",
+  publishDate,
+  author,
+  noindex = false
+} = Astro.props;
+
+// Breadcrumbs Schema para Google
+const breadcrumbsSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Supermercado Terencio",
+      "item": siteData.url
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": title,
+      "item": canonical
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth overflow-x-hidden">
+  <head>
+    <SEO 
+      title={title} 
+      description={description} 
+      ogImage={ogImage || image}
+      canonical={canonical}
+      type={type}
+      publishDate={publishDate}
+      author={author}
+      noindex={noindex}
+    />
+
+    <!-- Optimización LCP: Precarga de imagen Hero -->
+    {preloadImage && (
+      <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
+    )}
+
+    <LocalBusinessSchema />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)} />
+
+    <!-- Carga de Fuentes Optimizada -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    </noscript>
+
+    <ViewTransitions />
+  </head>
+  <body class="min-h-screen flex flex-col font-sans text-gray-800 bg-gray-50 overflow-x-hidden">
+    <SpeedInsights />
+    <Analytics />
+    
+    <Header />
+    
+    <!-- Ajuste de padding para evitar solapamiento con el header fijo -->
+    <main class="flex-grow pt-[110px] md:pt-[130px]">
+      <slot />
+    </main>
+    
+    <Footer />
+    
+    <!-- Barra de Navegación Inferior Fija (Solo Móvil) - Alta conversión -->
+    <nav aria-label="Navegación Móvil Rápida" class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] z-[60]">
+      <ul class="flex justify-between px-2 py-2 pb-[calc(8px+env(safe-area-inset-bottom))] gap-1 m-0 list-none w-full">
+        
+        <li class="flex-1 flex">
+          <a href={`tel:${siteData.contact.phoneRaw}`} class="w-full flex flex-col items-center justify-center p-2 rounded-lg text-gray-600 hover:bg-green-50 active:bg-green-100 transition tap-highlight-transparent">
+            <span class="material-icons-outlined text-green-700 text-2xl">call</span>
+            <span class="text-[10px] font-bold mt-1">Llamar</span>
+          </a>
+        </li>
+      
+        <li class="flex-1 flex">
+          <a href="/horario" class="w-full flex flex-col items-center justify-center p-2 rounded-lg text-gray-600 hover:bg-green-50 active:bg-green-100 transition tap-highlight-transparent">
+            <span class="material-icons-outlined text-green-700 text-2xl">schedule</span>
+            <span class="text-[10px] font-bold mt-1">Horario</span>
+          </a>
+        </li>
+
+        <!-- Botón central destacado -->
+        <li class="flex-[1.4] flex">
+          <a href="https://www.google.com/maps/search/?api=1&query=Terencio+Cash+Market" target="_blank" class="w-full flex flex-col items-center justify-center bg-brand-primary text-white rounded-xl shadow-lg active:bg-green-800 transition transform active:scale-95 p-1 mx-1 tap-highlight-transparent">
+            <span class="material-icons-outlined text-xl mb-0.5">near_me</span>
+            <span class="text-[11px] font-bold uppercase leading-none">Ir Ahora</span>
+          </a>
+        </li>
+      
+        <li class="flex-1 flex">
+          <a href="/ofertas" class="w-full flex flex-col items-center justify-center p-2 rounded-lg text-gray-600 hover:bg-red-50 active:bg-red-100 transition tap-highlight-transparent relative group">
+            <span class="absolute top-1 right-2 w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
+            <span class="material-icons-outlined text-red-600 text-2xl group-hover:scale-110 transition-transform">local_offer</span>
+            <span class="text-[10px] font-bold mt-1 text-red-700">Ofertas</span>
+          </a>
+        </li>
+      
+      </ul>
+    </nav>
+    
+    <CookieBanner />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --color-primary: 21, 128, 61; /* Green 700 */
+    --color-secondary: 185, 28, 28; /* Red 700 */
+  }
+  html {
+    font-family: 'Outfit', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Padding extra en móvil para que el contenido no quede oculto por la barra fija */
+  body { 
+    padding-bottom: calc(75px + env(safe-area-inset-bottom)); 
+  }
+  @media (min-width: 768px) {
+    body { padding-bottom: 0; }
+  }
+  
+  /* Utilidad para quitar el highlight azul en móvil al tocar */
+  .tap-highlight-transparent {
+    -webkit-tap-highlight-color: transparent;
+  }
+</style>
