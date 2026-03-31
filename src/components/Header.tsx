@@ -162,11 +162,11 @@ export default function Header() {
         </nav>
 
         <Link
-          href="/ofertas"
+          href="/contacto"
           className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-red-700 transition active:scale-95 md:hidden"
-          aria-label="Ver Ofertas"
+          aria-label="Contactar con Terencio"
         >
-          <Icon name="Tag" className="h-7 w-7" />
+          <Icon name="MessageSquare" className="h-7 w-7" />
         </Link>
       </div>
 

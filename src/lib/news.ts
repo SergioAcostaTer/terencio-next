@@ -3,22 +3,13 @@ import path from "node:path";
 
 import type { StaticImageData } from "next/image";
 
-import paisajeImg from "@/assets/images/paisaje.webp";
-import quesoMojoImg from "@/assets/images/queso_mojo.webp";
-import cocheImg from "@/assets/images/coche.webp";
-import supermercadoInteriorImg from "@/assets/images/supermercado-interior.webp";
 import visitaEstudiantesImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
 import sostenibilidad2Img from "@/assets/images/sostenibilidad-2.webp";
 import henryAcostaImg from "@/assets/images/henry-acosta-terencio-laguna.webp";
-import quesadillasImg from "@/assets/images/quesadillas.webp";
-import heroBgImg from "@/assets/images/hero-bg.webp";
-import cargadoresElectricosImg from "@/assets/images/cargadores-electricos.webp";
-import faroOrchillaImg from "@/assets/images/faro_orchilla.webp";
-import roqueBonanzaImg from "@/assets/images/Roque-Bonanza-El-Hierro.webp";
-import miradorLasPlayasImg from "@/assets/images/mirador_las_playas.webp";
 import terencioAcostaImg from "@/assets/images/terencio-acosta-entrevista.webp";
+import traspasoHiperDinoImg from "@/assets/images/traspasohiperdinoterencio.webp";
 
-export type BlogPostSummary = {
+export type NewsPostSummary = {
   slug: string;
   title: string;
   description: string;
@@ -28,32 +19,23 @@ export type BlogPostSummary = {
   author?: string;
   category?: string;
   tags?: string[];
-  tag?: string;
+  isBreaking?: boolean;
 };
 
-export type BlogPost = BlogPostSummary & {
+export type NewsPost = NewsPostSummary & {
   content: string;
   html: string;
 };
 
 const imageRegistry: Record<string, StaticImageData> = {
-  "paisaje.webp": paisajeImg,
-  "queso_mojo.webp": quesoMojoImg,
-  "coche.webp": cocheImg,
-  "supermercado-interior.webp": supermercadoInteriorImg,
   "visita-estudiantes-bachillerato.webp": visitaEstudiantesImg,
   "sostenibilidad-2.webp": sostenibilidad2Img,
   "henry-acosta-terencio-laguna.webp": henryAcostaImg,
-  "quesadillas.webp": quesadillasImg,
-  "hero-bg.webp": heroBgImg,
-  "cargadores-electricos.webp": cargadoresElectricosImg,
-  "faro_orchilla.webp": faroOrchillaImg,
-  "Roque-Bonanza-El-Hierro.webp": roqueBonanzaImg,
-  "mirador_las_playas.webp": miradorLasPlayasImg,
   "terencio-acosta-entrevista.webp": terencioAcostaImg,
+  "traspasohiperdinoterencio.webp": traspasoHiperDinoImg,
 };
 
-const blogDir = path.join(process.cwd(), "_astro_staged", "content", "blog");
+const newsDir = path.join(process.cwd(), "_astro_staged", "content", "noticias");
 
 function stripQuotes(value: string) {
   return value.replace(/^['"]|['"]$/g, "").trim();
@@ -63,10 +45,10 @@ function parseFrontmatter(source: string) {
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
 
   if (!match) {
-    return {} as Record<string, string | string[]>;
+    return {} as Record<string, string | string[] | boolean>;
   }
 
-  const result: Record<string, string | string[]> = {};
+  const result: Record<string, string | string[] | boolean> = {};
   const lines = match[1].split(/\r?\n/);
 
   for (const line of lines) {
@@ -88,6 +70,11 @@ function parseFrontmatter(source: string) {
       } catch {
         result[key] = [];
       }
+      continue;
+    }
+
+    if (rawValue === "true" || rawValue === "false") {
+      result[key] = rawValue === "true";
       continue;
     }
 
@@ -198,7 +185,7 @@ function markdownToHtml(source: string) {
       continue;
     }
 
-    const unorderedMatch = line.match(/^-\s+(.*)$/);
+    const unorderedMatch = line.match(/^[-*]\s+(.*)$/);
     if (unorderedMatch) {
       flushParagraph();
       if (listType && listType !== "ul") {
@@ -219,12 +206,12 @@ function markdownToHtml(source: string) {
   return blocks.join("\n");
 }
 
-async function readBlogSource(slug: string) {
-  const filePath = path.join(blogDir, `${slug}.md`);
+async function readNewsSource(slug: string) {
+  const filePath = path.join(newsDir, `${slug}.md`);
   return fs.readFile(filePath, "utf8");
 }
 
-function mapBlogPost(fileName: string, source: string): BlogPost {
+function mapNewsPost(fileName: string, source: string): NewsPost {
   const frontmatter = parseFrontmatter(source);
   const imagePath =
     typeof frontmatter.image === "string"
@@ -249,37 +236,37 @@ function mapBlogPost(fileName: string, source: string): BlogPost {
           ? frontmatter.title
           : undefined,
     author:
-      typeof frontmatter.author === "string" ? frontmatter.author : "Equipo Terencio",
+      typeof frontmatter.author === "string"
+        ? frontmatter.author
+        : "Equipo Terencio",
     category:
       typeof frontmatter.category === "string" ? frontmatter.category : undefined,
     tags,
-    tag:
-      typeof frontmatter.category === "string"
-        ? frontmatter.category
-        : typeof tags[0] === "string"
-          ? tags[0]
-          : "Blog",
+    isBreaking:
+      typeof frontmatter.isBreaking === "boolean"
+        ? frontmatter.isBreaking
+        : false,
     content,
     html: markdownToHtml(content),
   };
 }
 
-export async function getBlogPosts(): Promise<BlogPostSummary[]> {
-  const fileNames = await fs.readdir(blogDir);
+export async function getNewsPosts(): Promise<NewsPostSummary[]> {
+  const fileNames = await fs.readdir(newsDir);
   const posts = await Promise.all(
     fileNames
       .filter((fileName) => fileName.endsWith(".md"))
-      .map(async (fileName) => mapBlogPost(fileName, await fs.readFile(path.join(blogDir, fileName), "utf8"))),
+      .map(async (fileName) =>
+        mapNewsPost(fileName, await fs.readFile(path.join(newsDir, fileName), "utf8")),
+      ),
   );
 
   return posts.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 }
 
-export async function getBlogPostBySlug(
-  slug: string,
-): Promise<BlogPost | null> {
+export async function getNewsPostBySlug(slug: string) {
   try {
-    return mapBlogPost(`${slug}.md`, await readBlogSource(slug));
+    return mapNewsPost(`${slug}.md`, await readNewsSource(slug));
   } catch {
     return null;
   }

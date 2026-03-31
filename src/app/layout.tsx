@@ -75,13 +75,13 @@ export default function RootLayout({
             </li>
             <li className="flex flex-1">
               <a
-                href="/ofertas"
+                href="/contacto"
                 className="tap-highlight-transparent group relative flex w-full flex-col items-center justify-center rounded-lg p-2 text-gray-600 transition hover:bg-red-50 active:bg-red-100"
               >
                 <span className="absolute top-1 right-2 h-2 w-2 animate-pulse rounded-full bg-red-600" />
-                <Icon name="Tag" className="h-6 w-6 text-red-600 transition-transform group-hover:scale-110" />
+                <Icon name="MessageSquare" className="h-6 w-6 text-red-600 transition-transform group-hover:scale-110" />
                 <span className="mt-1 text-[10px] font-bold text-red-700">
-                  Ofertas
+                  Contacto
                 </span>
               </a>
             </li>

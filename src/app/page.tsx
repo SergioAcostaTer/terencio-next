@@ -28,7 +28,7 @@ export default function Home() {
         title="Supermercado en <span class='text-green-400'>La Esperanza (San Cristóbal de La Laguna)</span> y Mayorista HORECA en <span class='text-yellow-400'>Tenerife</span>"
         subtitle="El único Cash & Carry donde familias y profesionales compran al mejor precio. Carnicería propia, quesadillas de El Hierro y abierto los domingos."
         badge="📍 Ctra. La Esperanza, 22 (La Laguna)"
-        primaryCta={{ text: "Ver Ofertas", href: "/ofertas" }}
+        primaryCta={{ text: "Ver Horario", href: "/horario" }}
         secondaryCta={{ text: "Zona Profesionales", href: "/profesionales" }}
         backgroundImage={heroBg}
       />
