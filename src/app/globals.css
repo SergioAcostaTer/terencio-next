@@ -4,6 +4,17 @@
 :root {
   --background: #f8fafc;
   --foreground: #111827;
+  --backoffice-bg: #f3f6fb;
+  --backoffice-panel: rgba(255, 255, 255, 0.9);
+  --backoffice-panel-strong: #ffffff;
+  --backoffice-border: rgba(148, 163, 184, 0.22);
+  --backoffice-text: #0f172a;
+  --backoffice-muted: #64748b;
+  --backoffice-accent: #1d4ed8;
+  --backoffice-accent-soft: rgba(29, 78, 216, 0.1);
+  --backoffice-success: #15803d;
+  --backoffice-success-soft: rgba(22, 163, 74, 0.12);
+  --backoffice-shadow: 0 20px 45px -28px rgba(15, 23, 42, 0.35);
 
   /* Brand palette */
   --brand-green: #166534;
@@ -168,4 +179,32 @@ body[data-chrome="bare"] {
 
 .animate-fade-in-up {
   animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.backoffice-shell {
+  background:
+    radial-gradient(circle at top left, rgba(29, 78, 216, 0.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(22, 163, 74, 0.08), transparent 24%),
+    linear-gradient(180deg, #f8fbff 0%, var(--backoffice-bg) 100%);
+}
+
+.backoffice-panel {
+  border: 1px solid var(--backoffice-border);
+  background: var(--backoffice-panel);
+  box-shadow: var(--backoffice-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.backoffice-stat {
+  border: 1px solid var(--backoffice-border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.9));
+  box-shadow: 0 16px 32px -28px rgba(15, 23, 42, 0.45);
+}
+
+.backoffice-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
 }

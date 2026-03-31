@@ -14,7 +14,13 @@ export default function LogoutButton() {
   }
 
   return (
-    <Button type="button" variant="outline" size="sm" onClick={handleLogout}>
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      onClick={handleLogout}
+      className="border-slate-200 bg-white/80 text-slate-900 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-800"
+    >
       Cerrar sesión
     </Button>
   );

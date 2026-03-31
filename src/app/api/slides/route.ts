@@ -12,6 +12,18 @@ import { uploadFile } from "@/lib/r2";
 
 export const dynamic = "force-dynamic";
 
+function inferSlideType(file: File) {
+  if (file.type.startsWith("image/")) {
+    return "image";
+  }
+
+  if (file.type.startsWith("video/")) {
+    return "video";
+  }
+
+  throw new Error("El archivo no tiene un formato compatible.");
+}
+
 export async function GET(request: NextRequest) {
   const session = await getSessionFromRequest(request);
 
@@ -32,9 +44,8 @@ export async function POST(request: NextRequest) {
 
   const formData = await request.formData();
   const parsed = slideFormSchema.safeParse({
-    type: formData.get("type"),
     durationSec: formData.get("durationSec"),
-    order: formData.get("order"),
+    order: formData.get("order") ?? undefined,
     isActive: formData.get("isActive") === "true",
   });
 
@@ -46,34 +57,59 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const mediaFile = validateUploadFile(formData.get("file") as File | null, {
-      required: true,
-      label: "El archivo de la diapositiva",
-      allowedTypes: slideFileTypes,
-    });
+    const rawFiles = formData.getAll("files");
+    const fallbackFile = formData.get("file");
+    const candidateFiles = (rawFiles.length > 0 ? rawFiles : [fallbackFile]).filter(
+      (value): value is File => value instanceof File,
+    );
 
-    if (!mediaFile) {
+    const mediaFiles = candidateFiles
+      .map((file) =>
+        validateUploadFile(file, {
+          required: true,
+          label: "El archivo de la diapositiva",
+          allowedTypes: slideFileTypes,
+        }),
+      )
+      .filter((file): file is File => file !== null);
+
+    if (mediaFiles.length === 0) {
       return NextResponse.json(
-        { error: "El archivo es obligatorio." },
+        { error: "Debes subir al menos un archivo." },
         { status: 400 },
       );
     }
 
-    const upload = await uploadFile(mediaFile, "slides");
+    const currentMax = await prisma.slide.aggregate({
+      _max: { order: true },
+    });
+    const startOrder =
+      parsed.data.order ?? ((currentMax._max.order ?? -1) + 1);
 
-    if (!upload.url) {
-      throw new Error("No se pudo generar la URL pública de la diapositiva.");
+    const createdSlides = [];
+
+    for (const [index, mediaFile] of mediaFiles.entries()) {
+      const upload = await uploadFile(mediaFile, "slides");
+
+      if (!upload.url) {
+        throw new Error("No se pudo generar la URL pública de la diapositiva.");
+      }
+
+      const slide = await prisma.slide.create({
+        data: {
+          type: inferSlideType(mediaFile),
+          durationSec: parsed.data.durationSec,
+          order: startOrder + index,
+          isActive: parsed.data.isActive,
+          url: upload.url,
+          key: upload.key,
+        },
+      });
+
+      createdSlides.push(slide);
     }
 
-    const slide = await prisma.slide.create({
-      data: {
-        ...parsed.data,
-        url: upload.url,
-        key: upload.key,
-      },
-    });
-
-    return NextResponse.json(slide, { status: 201 });
+    return NextResponse.json(createdSlides, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       {

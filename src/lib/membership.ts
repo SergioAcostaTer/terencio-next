@@ -35,9 +35,8 @@ export const loginSchema = z.object({
 });
 
 export const slideFormSchema = z.object({
-  type: z.enum(["image", "video"]),
   durationSec: z.coerce.number().int().min(3).max(300),
-  order: z.coerce.number().int().min(0).max(9999),
+  order: z.coerce.number().int().min(0).max(9999).optional(),
   isActive: z.coerce.boolean().default(true),
 });
 
