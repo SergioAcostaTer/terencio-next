@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 import logo from "@/assets/images/logo.webp";
+import MarkdownContent from "@/components/MarkdownContent";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import { getBlogPostBySlug, getBlogPosts } from "@/lib/blog";
@@ -165,31 +164,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
               ) : null}
 
-              <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-p:leading-loose prose-p:text-gray-600 prose-a:text-green-700 prose-img:rounded-2xl prose-img:shadow-lg hover:prose-a:text-green-800 mx-auto max-w-none">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    a: ({ href, children, ...props }) => {
-                      if (href?.startsWith("/")) {
-                        return <Link href={href} {...props}>{children}</Link>;
-                      }
-                      return <a href={href} target="_blank" rel="noreferrer" {...props}>{children}</a>;
-                    },
-                    img: ({ src, alt, ...props }) => (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={src}
-                        alt={alt || ""}
-                        className="my-8 h-auto w-full rounded-2xl object-cover shadow-lg"
-                        loading="lazy"
-                        {...props}
-                      />
-                    ),
-                  }}
-                >
-                  {post.content}
-                </ReactMarkdown>
-              </div>
+              <MarkdownContent content={post.content} />
 
               <div className="mt-16 rounded-[3rem] border border-gray-100 bg-gradient-to-br from-white to-gray-50 p-8 shadow-xl">
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-bold tracking-wider text-green-700 uppercase">

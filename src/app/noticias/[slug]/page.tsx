@@ -5,9 +5,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
+import MarkdownContent from "@/components/MarkdownContent";
 import Icon from "@/components/ui/Icon";
 import siteData from "@/data/siteData.json";
 import { getNewsPostBySlug } from "@/lib/news";
@@ -154,31 +153,7 @@ export default async function NoticiaSlugPage({ params }: NewsPostPageProps) {
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[1fr_280px] lg:gap-12">
-            <div className="prose prose-base prose-headings:font-bold prose-headings:text-gray-900 prose-p:leading-relaxed prose-p:text-gray-700 prose-a:text-green-700 prose-strong:text-gray-900 hover:prose-a:text-green-800 max-w-none md:prose-lg">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  a: ({ href, children, ...props }) => {
-                    if (href?.startsWith("/")) {
-                      return <Link href={href} {...props}>{children}</Link>;
-                    }
-                    return <a href={href} target="_blank" rel="noreferrer" {...props}>{children}</a>;
-                  },
-                  img: ({ src, alt, ...props }) => (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={src}
-                      alt={alt || ""}
-                      className="my-8 h-auto w-full rounded-2xl object-cover shadow-lg"
-                      loading="lazy"
-                      {...props}
-                    />
-                  ),
-                }}
-              >
-                {post.content}
-              </ReactMarkdown>
-            </div>
+            <MarkdownContent content={post.content} className="md:text-lg" />
 
             <aside className="hidden h-fit space-y-8 lg:sticky lg:top-24 lg:block">
               <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">

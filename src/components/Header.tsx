@@ -65,7 +65,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="container relative z-50 mx-auto flex h-[70px] items-center justify-between bg-white px-4 md:h-[80px] lg:px-6">
+      <div className="relative z-50 mx-auto flex h-[70px] max-w-6xl items-center justify-between bg-white px-4 md:h-[80px] lg:px-6">
         <button
           type="button"
           onClick={() => setMobileMenuOpen((value) => !value)}

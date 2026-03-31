@@ -73,12 +73,17 @@ const imageRegistry: Record<string, StaticImageData> = {
 
 const blogDir = path.join(process.cwd(), "_astro_staged", "content", "blog");
 
+function normalizeSource(source: string) {
+  return source.replace(/^\uFEFF/, "");
+}
+
 function stripQuotes(value: string) {
   return value.replace(/^['"]|['"]$/g, "").trim();
 }
 
 function parseFrontmatter(source: string) {
-  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const normalizedSource = normalizeSource(source);
+  const match = normalizedSource.match(/^---\r?\n([\s\S]*?)\r?\n---/);
 
   if (!match) {
     return {} as Record<string, string | string[]>;
@@ -116,24 +121,7 @@ function parseFrontmatter(source: string) {
 }
 
 function stripFrontmatter(source: string) {
-  return source.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "");
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
-function renderInlineMarkdown(value: string) {
-  const escaped = escapeHtml(value);
-
-  return escaped
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/`([^`]+)`/g, "<code>$1</code>");
+  return normalizeSource(source).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "");
 }
 
 function normalizeMarkdownAssetPaths(source: string) {
