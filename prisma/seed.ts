@@ -1,4 +1,4 @@
-import { PrismaNeon } from "@prisma/adapter-neon";
+import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 
@@ -6,8 +6,8 @@ import { getEnv } from "../src/lib/env-core";
 
 const env = getEnv();
 const prisma = new PrismaClient({
-  adapter: new PrismaNeon({
-  connectionString: env.DATABASE_URL,
+  adapter: new PrismaPg({
+    connectionString: env.DATABASE_URL,
   }),
 });
 

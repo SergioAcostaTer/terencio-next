@@ -1,6 +1,6 @@
 import "server-only";
 
-import { PrismaNeon } from "@prisma/adapter-neon";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
 import { getEnv } from "@/lib/env";
@@ -10,7 +10,7 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function getPrismaAdapter() {
-  return new PrismaNeon({
+  return new PrismaPg({
     connectionString: getEnv().DATABASE_URL,
   });
 }

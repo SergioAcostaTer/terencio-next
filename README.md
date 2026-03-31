@@ -322,17 +322,8 @@ pnpm db:migrate
 pnpm db:seed
 ```
 
-## Problemas conocidos
-
-- `npx tsc --noEmit` está fallando actualmente por un problema de tipos en la integración `@prisma/adapter-neon` con `Pool` en:
-  - `src/lib/prisma.ts`
-  - `prisma/seed.ts`
-
-Ese problema es independiente del arranque básico si el runtime está funcionando, pero conviene corregirlo.
-
 ## TODO
 
-- Corregir el error de tipos actual entre `@prisma/adapter-neon` y `Pool`
 - Añadir migraciones versionadas si se quiere evitar `db push` en ciertos entornos
 - Añadir gestión de estado para consultas y memberships desde backoffice
 - Añadir borrado o archivado de consultas
