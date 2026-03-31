@@ -48,8 +48,21 @@ model MembershipSubmission {
   commercialName String?
   email          String
   phone          String
+  mobile         String?
   nifCif         String
   type           String
+  activity       String?
+  iaeCode        String?
+  tariff         String?
+  addressLine    String?
+  postalCode     String?
+  city           String?
+  province       String?
+  zone           String?
+  authorizedPersons Json?
+  documentationStatus Json?
+  legalAccepted  Boolean  @default(false)
+  source         String?  @default("qr")
   notes          String?
   dniFileUrl     String?
   dniFileKey     String?
@@ -58,6 +71,7 @@ model MembershipSubmission {
   certificateUrl String?
   certificateKey String?
   status         String   @default("pending")
+  submittedAt    DateTime @default(now())
   createdAt      DateTime @default(now())
 }
 

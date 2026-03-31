@@ -28,7 +28,7 @@ const NAV_OVERRIDES: Record<string, NavOverride> = {
     order: 1,
   },
   memberships: {
-    label: "Socios",
+    label: "Clientes",
     icon: "Users",
     description: "Altas y documentación",
     order: 2,

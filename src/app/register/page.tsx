@@ -4,49 +4,48 @@ import MembershipRegisterForm from "@/components/forms/MembershipRegisterForm";
 import Section from "@/components/ui/Section";
 
 export const metadata: Metadata = {
-  title: "Hazte socio",
-  description: "Alta interna de socios y clientes profesionales de Terencio.",
+  title: "Alta de cliente",
+  description: "Formulario digital de alta de cliente para tienda, optimizado para móvil y acceso por QR.",
 };
 
 export default function RegisterPage() {
   return (
     <main className="bg-gradient-to-b from-white to-gray-50">
-      <Section className="pb-4">
-        <div className="mx-auto max-w-4xl">
-          <span className="inline-flex rounded-full bg-green-100 px-4 py-1 text-sm font-bold uppercase tracking-widest text-green-700">
-            Alta de socios
+      <Section className="pb-3 md:pb-4">
+        <div className="mx-auto max-w-5xl">
+          <span className="inline-flex rounded-full bg-green-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-green-700">
+            Alta de clientes
           </span>
-          <h1 className="mt-4 text-4xl font-black tracking-tight text-gray-900">
-            Solicitud de alta para empresa o autónomo
+          <h1 className="mt-3 text-2xl font-black tracking-tight text-gray-900 md:text-3xl">
+            Formulario de alta para empresa o autónomo
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-gray-600">
-            Completa tus datos fiscales, adjunta la documentación necesaria y el
-            equipo de Terencio revisará la solicitud desde el backoffice interno.
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-gray-600 md:text-base">
+            Completa los datos fiscales y de contacto. El formulario se guarda automáticamente en este móvil mientras lo rellenas.
           </p>
         </div>
       </Section>
 
       <Section className="pt-0">
-        <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[1.5fr_0.8fr]">
-          <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-sm md:p-8">
+        <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[minmax(0,1.7fr)_320px]">
+          <div className="rounded-[1.75rem] border border-gray-200 bg-white p-3 shadow-sm md:p-5">
             <MembershipRegisterForm />
           </div>
 
           <aside className="space-y-4">
-            <div className="rounded-[2rem] border border-green-100 bg-green-50 p-6">
-              <h2 className="text-lg font-bold text-green-900">Documentación</h2>
-              <ul className="mt-4 space-y-3 text-sm text-green-950/85">
-                <li>DNI o CIF en PDF, JPG, PNG o WEBP</li>
-                <li>Modelo 21/62 opcional</li>
-                <li>Certificado de autónomo opcional</li>
+            <div className="rounded-[1.75rem] border border-green-100 bg-green-50 p-5">
+              <h2 className="text-base font-bold text-green-950">Qué necesitas</h2>
+              <ul className="mt-4 space-y-3 text-sm leading-6 text-green-950/85">
+                <li>Datos fiscales del titular o empresa.</li>
+                <li>Dirección y al menos una vía de contacto.</li>
+                <li>Estado de la documentación requerida.</li>
+                <li>Opcionalmente, personas autorizadas y observaciones.</li>
               </ul>
             </div>
 
-            <div className="rounded-[2rem] border border-yellow-100 bg-yellow-50 p-6">
-              <h2 className="text-lg font-bold text-yellow-900">Revisión</h2>
-              <p className="mt-3 text-sm leading-relaxed text-yellow-950/80">
-                La solicitud queda registrada con estado pendiente y se notifica
-                por email al equipo interno.
+            <div className="rounded-[1.75rem] border border-green-100 bg-green-50 p-5">
+              <h2 className="text-base font-bold text-green-950">Al enviar</h2>
+              <p className="mt-3 text-sm leading-6 text-green-950/80">
+                La solicitud queda registrada con estado pendiente y el equipo la recibe en backoffice para revisión.
               </p>
             </div>
           </aside>
