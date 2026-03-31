@@ -44,8 +44,12 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
     openGraph: {
       type: "article",
+      url: `/blog/${post.slug}`,
       title: post.title,
       description: post.description,
       publishedTime: post.pubDate.toISOString(),
@@ -57,6 +61,12 @@ export async function generateMetadata({
             },
           ]
         : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: post.image ? [post.image.src] : ["/social-share.png"],
     },
   };
 }

@@ -3,5 +3,6 @@ Allow: /
 Disallow: /_image
 Disallow: /cdn-cgi/
 
-Sitemap: https://terencio.es/sitemap-index.xml
+Sitemap: https://terencio.es/sitemap.xml
+Sitemap: https://terencio.es/news-sitemap.xml
 
