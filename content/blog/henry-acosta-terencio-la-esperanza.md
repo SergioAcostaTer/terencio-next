@@ -1,6 +1,6 @@
 ---
-title: "Henry Acosta | Terencio La Esperanza: Tradición y Futuro"
-description: "Conoce a Henry Acosta, la segunda generación al frente de Terencio Cash Market en La Esperanza. Tradición familiar e innovación en el supermercado referente de Tenerife."
+title: "Henry Acosta, tradición y futuro en Terencio"
+description: "Perfil de Henry Acosta y de la visión con la que impulsa la nueva etapa de Terencio Cash Market."
 pubDate: 2024-12-01
 author: "Redacción Terencio"
 image: "../../assets/images/henry-acosta-terencio-laguna.webp"

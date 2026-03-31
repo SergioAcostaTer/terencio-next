@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import carniceriaInterior from "@/assets/images/supermercado-interior.webp";
+import Hero from "@/components/Hero";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Section from "@/components/ui/Section";
@@ -67,53 +68,21 @@ export default function CarniceriaTenerifePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(butcherSchema) }}
       />
 
-      <section className="relative overflow-hidden bg-red-900 py-12 text-white md:py-16">
-        <Image
-          src={carniceriaInterior}
-          alt=""
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-red-900/90 via-red-900/60 to-red-900/90" />
-        <div className="container relative z-10 mx-auto px-4 text-center">
-          <span className="inline-block rounded-full border border-red-400 bg-red-800/80 px-3 py-1 text-xs font-bold tracking-wider text-red-100 uppercase">
-            Especialistas en Carnes
-          </span>
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight md:text-5xl">
-            Carnicería Tradicional:{" "}
-            <span className="text-red-300">Corte a Cuchillo</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-red-100">
-            Recuperamos el sabor de siempre. Realizamos despiece propio cada
-            mañana para garantizar la máxima frescura y preparamos tu carne de
-            fiesta al momento.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button
-              href="#productos"
-              variant="white"
-              className="border-none px-8 font-bold text-red-800 shadow-xl hover:bg-red-50"
-            >
-              Ver Cortes Destacados
-            </Button>
-            <Button
-              href="/profesionales"
-              variant="outline"
-              className="border-white px-8 font-bold text-white hover:bg-white hover:text-red-900"
-            >
-              Soy Restaurante
-            </Button>
-          </div>
-        </div>
-      </section>
+      <Hero
+        title="Carnicería Tradicional: <span class='text-yellow-400'>Corte a Cuchillo</span>"
+        subtitle="Recuperamos el sabor de siempre. Realizamos despiece propio cada mañana para garantizar la máxima frescura y preparamos tu carne de fiesta al momento."
+        badge="Especialistas en Carnes"
+        align="center"
+        primaryCta={{ text: "Ver Cortes Destacados", href: "#productos" }}
+        secondaryCta={{ text: "Soy Restaurante", href: "/profesionales" }}
+        backgroundImage={carniceriaInterior}
+      />
 
       <Section className="overflow-hidden bg-white">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
             <div className="relative order-2 md:order-1">
-              <div className="absolute -inset-4 z-0 rotate-[-2deg] rounded-[3rem] bg-red-50" />
-              <div className="absolute -inset-4 z-0 rotate-[2deg] rounded-[3rem] bg-gray-100 opacity-50" />
+              <div className="absolute -inset-4 z-0 rounded-[3rem] border border-green-100 bg-green-50/80" />
               <Image
                 src={carniceriaInterior}
                 alt="Carnicero cortando carne fresca en Terencio La Esperanza"
@@ -121,8 +90,8 @@ export default function CarniceriaTenerifePage() {
                 height={400}
                 className="relative z-10 h-auto w-full rounded-3xl border-8 border-white object-cover shadow-2xl transition duration-500 hover:scale-[1.01]"
               />
-              <div className="absolute -right-6 -bottom-6 z-20 hidden animate-bounce-slow rounded-2xl border-2 border-yellow-200 bg-yellow-50 p-6 text-center shadow-xl sm:block">
-                <p className="mb-1 text-4xl leading-none font-black text-red-900">
+              <div className="absolute right-6 bottom-6 z-20 hidden rounded-2xl border border-yellow-200 bg-yellow-50 p-6 text-center shadow-xl sm:block">
+                <p className="mb-1 text-4xl leading-none font-black text-green-900">
                   100%
                 </p>
                 <p className="text-xs font-bold tracking-wider text-gray-700 uppercase">
@@ -132,7 +101,7 @@ export default function CarniceriaTenerifePage() {
             </div>
 
             <div className="order-1 prose prose-lg text-gray-600 md:order-2">
-              <span className="rounded-full bg-red-50 px-3 py-1 text-sm font-bold tracking-widest text-red-600 uppercase">
+              <span className="rounded-full bg-green-50 px-3 py-1 text-sm font-bold tracking-widest text-green-700 uppercase">
                 Maestros Carniceros
               </span>
               <h2 className="mt-4 mb-6 text-4xl font-bold text-gray-900">
@@ -156,19 +125,19 @@ export default function CarniceriaTenerifePage() {
               </p>
               <ul className="mt-8 space-y-3 not-prose">
                 <li className="flex items-center gap-3">
-                  <Icon name="CircleCheck" className="shrink-0 text-red-600" />
+                  <Icon name="CircleCheck" className="shrink-0 text-green-700" />
                   <span className="font-medium text-gray-800">
                     Corte personalizado al grosor que desees
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Icon name="CircleCheck" className="shrink-0 text-red-600" />
+                  <Icon name="CircleCheck" className="shrink-0 text-green-700" />
                   <span className="font-medium text-gray-800">
                     Cerdo y Res del país y de importación selecta
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Icon name="CircleCheck" className="shrink-0 text-red-600" />
+                  <Icon name="CircleCheck" className="shrink-0 text-green-700" />
                   <span className="font-medium text-gray-800">
                     Precios directos de mayorista
                   </span>
@@ -182,7 +151,7 @@ export default function CarniceriaTenerifePage() {
       <section className="border-t border-gray-100 bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
-            <span className="rounded-full bg-red-50 px-3 py-1 text-sm font-bold tracking-widest text-red-700 uppercase">
+            <span className="rounded-full bg-green-50 px-3 py-1 text-sm font-bold tracking-widest text-green-700 uppercase">
               Transparencia Total
             </span>
             <h2 className="mt-4 text-3xl font-bold text-gray-900">
@@ -195,8 +164,8 @@ export default function CarniceriaTenerifePage() {
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
-            <div className="flex items-center gap-4 rounded-full border border-gray-200 bg-gray-50 px-6 py-4 transition hover:border-red-200">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 font-bold text-red-600">
+            <div className="flex items-center gap-4 rounded-full border border-gray-200 bg-gray-50 px-6 py-4 transition hover:border-green-200">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 font-bold text-green-700">
                 JD
               </span>
               <div>
@@ -204,8 +173,8 @@ export default function CarniceriaTenerifePage() {
                 <p className="text-xs text-gray-500">Ganadero - La Esperanza</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 rounded-full border border-gray-200 bg-gray-50 px-6 py-4 transition hover:border-red-200">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 font-bold text-red-600">
+            <div className="flex items-center gap-4 rounded-full border border-gray-200 bg-gray-50 px-6 py-4 transition hover:border-green-200">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 font-bold text-green-700">
                 MG
               </span>
               <div>
@@ -213,8 +182,8 @@ export default function CarniceriaTenerifePage() {
                 <p className="text-xs text-gray-500">Granja Porcina - Fasnia</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 rounded-full border border-gray-200 bg-gray-50 px-6 py-4 transition hover:border-red-200">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 font-bold text-red-600">
+            <div className="flex items-center gap-4 rounded-full border border-gray-200 bg-gray-50 px-6 py-4 transition hover:border-green-200">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 font-bold text-green-700">
                 AG
               </span>
               <div>
@@ -229,7 +198,7 @@ export default function CarniceriaTenerifePage() {
       <section id="productos" className="border-t border-gray-200 bg-gray-50 py-20">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="mb-16 text-center">
-            <span className="text-sm font-bold tracking-widest text-red-600 uppercase">
+            <span className="text-sm font-bold tracking-widest text-green-700 uppercase">
               Nuestras Especialidades
             </span>
             <h2 className="mt-3 text-3xl font-bold text-gray-900 md:text-5xl">
@@ -241,15 +210,15 @@ export default function CarniceriaTenerifePage() {
           </div>
           <div className="grid gap-8 md:grid-cols-3">
             <div className="group flex flex-col overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl">
-              <div className="relative flex h-64 items-center justify-center overflow-hidden bg-red-50 text-9xl transition duration-500 group-hover:scale-110">
-                <div className="absolute inset-0 bg-gradient-to-t from-red-100/50 to-transparent" />
-                🥩
-                <div className="absolute top-6 right-6 rounded-full bg-red-600 px-4 py-1.5 text-xs font-bold text-white shadow-lg">
+              <div className="relative flex h-64 items-center justify-center overflow-hidden bg-green-50 transition duration-300 group-hover:bg-green-100">
+                <div className="absolute inset-0 bg-gradient-to-t from-green-100/50 to-transparent" />
+                <Icon name="Beef" size={72} className="text-green-700" />
+                <div className="absolute top-6 right-6 rounded-full bg-green-700 px-4 py-1.5 text-xs font-bold text-white shadow-lg">
                   Top Ventas
                 </div>
               </div>
               <div className="flex flex-grow flex-col p-8">
-                <h3 className="mb-3 text-2xl font-bold text-gray-900 transition-colors group-hover:text-red-700">
+                <h3 className="mb-3 text-2xl font-bold text-gray-900 transition-colors group-hover:text-green-700">
                   Carne de Fiesta
                 </h3>
                 <p className="mb-6 flex-grow leading-relaxed text-gray-600">
@@ -259,22 +228,22 @@ export default function CarniceriaTenerifePage() {
                 </p>
                 <Link
                   href="/contacto"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 text-center font-bold text-gray-900 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 text-center font-bold text-gray-900 transition-colors hover:border-green-200 hover:bg-green-50 hover:text-green-700"
                 >
                   Consultar Disponibilidad
                 </Link>
               </div>
             </div>
             <div className="group flex flex-col overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl">
-              <div className="relative flex h-64 items-center justify-center overflow-hidden bg-yellow-50 text-9xl transition duration-500 group-hover:scale-110">
+              <div className="relative flex h-64 items-center justify-center overflow-hidden bg-yellow-50 transition duration-300 group-hover:bg-yellow-100">
                 <div className="absolute inset-0 bg-gradient-to-t from-yellow-100/50 to-transparent" />
-                🍗
+                <Icon name="Drumstick" size={72} className="text-yellow-700" />
                 <div className="absolute top-6 right-6 rounded-full bg-yellow-600 px-4 py-1.5 text-xs font-bold text-white shadow-lg">
                   Económico
                 </div>
               </div>
               <div className="flex flex-grow flex-col p-8">
-                <h3 className="mb-3 text-2xl font-bold text-gray-900 transition-colors group-hover:text-yellow-700">
+                <h3 className="mb-3 text-2xl font-bold text-gray-900 transition-colors group-hover:text-yellow-600">
                   Pollo Fresco
                 </h3>
                 <p className="mb-6 flex-grow leading-relaxed text-gray-600">
@@ -291,15 +260,15 @@ export default function CarniceriaTenerifePage() {
               </div>
             </div>
             <div className="group flex flex-col overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl">
-              <div className="relative flex h-64 items-center justify-center overflow-hidden bg-orange-50 text-9xl transition duration-500 group-hover:scale-110">
-                <div className="absolute inset-0 bg-gradient-to-t from-orange-100/50 to-transparent" />
-                🥓
-                <div className="absolute top-6 right-6 rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold text-white shadow-lg">
+              <div className="relative flex h-64 items-center justify-center overflow-hidden bg-gray-100 transition duration-300 group-hover:bg-green-50">
+                <div className="absolute inset-0 bg-gradient-to-t from-green-100/40 to-transparent" />
+                <Icon name="ChefHat" size={72} className="text-green-700" />
+                <div className="absolute top-6 right-6 rounded-full bg-yellow-500 px-4 py-1.5 text-xs font-bold text-slate-950 shadow-lg">
                   Tradición
                 </div>
               </div>
               <div className="flex flex-grow flex-col p-8">
-                <h3 className="mb-3 text-2xl font-bold text-gray-900 transition-colors group-hover:text-orange-700">
+                <h3 className="mb-3 text-2xl font-bold text-gray-900 transition-colors group-hover:text-green-700">
                   Chuletas y Costillas
                 </h3>
                 <p className="mb-6 flex-grow leading-relaxed text-gray-600">
@@ -309,7 +278,7 @@ export default function CarniceriaTenerifePage() {
                 </p>
                 <Link
                   href="/contacto"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 text-center font-bold text-gray-900 transition-colors hover:border-orange-200 hover:bg-orange-50 hover:text-orange-700"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 text-center font-bold text-gray-900 transition-colors hover:border-green-200 hover:bg-green-50 hover:text-green-700"
                 >
                   Consultar Disponibilidad
                 </Link>
@@ -321,10 +290,10 @@ export default function CarniceriaTenerifePage() {
 
       <section className="relative overflow-hidden bg-slate-900 py-24 text-center text-white">
         <div className="absolute top-0 left-0 h-full w-full bg-[url('https://www.transparenttextures.com/patterns/food.png')] opacity-5" />
-        <div className="absolute top-0 right-0 h-96 w-96 translate-x-1/2 -translate-y-1/2 rounded-full bg-red-600 opacity-20 blur-[120px]" />
-        <div className="absolute bottom-0 left-0 h-96 w-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-red-600 opacity-20 blur-[120px]" />
+        <div className="absolute top-0 right-0 h-96 w-96 translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-400 opacity-15 blur-[120px]" />
+        <div className="absolute bottom-0 left-0 h-96 w-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-green-600 opacity-20 blur-[120px]" />
         <div className="container relative z-10 mx-auto max-w-4xl px-4">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500 bg-red-500/20 px-4 py-1.5 text-xs font-bold tracking-wider text-red-300 uppercase">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-yellow-400/40 bg-yellow-400/10 px-4 py-1.5 text-xs font-bold tracking-wider text-yellow-300 uppercase">
             <Icon name="ChefHat" size={16} /> Servicio HORECA
           </div>
           <h2 className="mb-6 text-4xl font-bold leading-tight md:text-5xl">
@@ -339,14 +308,14 @@ export default function CarniceriaTenerifePage() {
             <Button
               href="/profesionales"
               variant="primary"
-              className="border-none bg-red-600 px-10 py-4 text-lg text-white shadow-lg shadow-red-900/50 hover:bg-red-700"
+              className="border-none px-10 py-4 text-lg text-white shadow-lg shadow-green-900/50"
             >
               Consultar Tarifas HORECA
             </Button>
             <Button
               href="tel:922550067"
               variant="outline"
-              className="border-gray-600 px-10 py-4 text-lg text-gray-300 hover:border-white hover:bg-white hover:text-red-900"
+              className="border-gray-600 px-10 py-4 text-lg text-gray-300 hover:border-white hover:bg-white hover:text-green-900"
             >
               <Icon name="Phone" className="mr-2" /> Llamar a Carnicería
             </Button>

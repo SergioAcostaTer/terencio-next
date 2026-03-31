@@ -57,17 +57,17 @@ export default function AtencionAlClientePage() {
                 <Icon name="Briefcase" size={28} />
               </div>
               <h3 className="mb-3 text-xl font-bold text-gray-900">
-                Comercial HORECA
+                Atencion Empresas y Autonomos
               </h3>
               <p className="mb-6 text-sm leading-relaxed text-gray-600">
-                Atención exclusiva para bares, restaurantes y grandes cuentas.
-                Altas, tarifas y pedidos.
+                Atencion para bares, restaurantes, autonomos, empresas y
+                grandes cuentas. Altas, tarifas y pedidos.
               </p>
               <Link
                 href="/profesionales"
                 className="flex items-center gap-1 text-sm font-bold text-blue-700 transition-all hover:gap-2"
               >
-                Zona Profesionales <Icon name="ArrowRight" size={16} />
+                Ver canal B2B <Icon name="ArrowRight" size={16} />
               </Link>
             </div>
 

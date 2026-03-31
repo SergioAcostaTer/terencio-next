@@ -1,6 +1,6 @@
 ---
-title: "Terencio Acosta | Historia del Fundador de Supermercados Terencio"
-description: "La vida de Terencio Miguel Acosta Armas, fundador de Supermercados Terencio. Un hombre humilde que forjó el referente de alimentación en El Hierro y Tenerife."
+title: "Terencio Acosta, fundador de una historia familiar"
+description: "La trayectoria de Terencio Miguel Acosta Armas y el origen de una empresa clave para El Hierro y Tenerife."
 pubDate: 2024-09-25
 author: "Familia Acosta"
 image: "../../assets/images/terencio-acosta-entrevista.webp"

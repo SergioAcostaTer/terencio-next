@@ -1,6 +1,6 @@
 ﻿---
-title: "Guía Completa para Visitar El Hierro: Charcos, Buceo y más en 3, 5 o 7 Días"
-description: "Descubre todo lo que puedes ver y hacer en El Hierro, desde sus increíbles charcos naturales hasta sus espectaculares miradores y oportunidades de buceo."
+title: "Guía para visitar El Hierro en 3, 5 o 7 días"
+description: "Itinerarios claros para recorrer El Hierro, con propuestas de naturaleza, miradores, charcos y buceo."
 pubDate: 2024-07-30
 author: "Equipo Terencio"
 image: "../../assets/images/Roque-Bonanza-El-Hierro.webp"

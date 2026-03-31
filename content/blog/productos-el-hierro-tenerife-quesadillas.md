@@ -1,6 +1,6 @@
 ---
-title: "Productos de El Hierro en Tenerife: Quesadillas y Quesos"
-description: "Descubre los tesoros de la Isla del Meridiano en Terencio. Quesadillas artesanales, queso ahumado y más, sin salir de Tenerife y con el mejor horario."
+title: "Productos de El Hierro en Tenerife"
+description: "Quesadillas, quesos y otros sabores herreños reunidos en Tenerife con una selección cuidada y de confianza."
 pubDate: 2024-10-28
 author: "Henry Acosta"
 image: "../../assets/images/quesadillas.webp"

@@ -184,7 +184,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     Ver ubicación y contacto
                   </Button>
                   <Button href="/profesionales" variant="outline">
-                    Zona Profesionales
+                    Empresas y autonomos
                   </Button>
                 </div>
               </div>

@@ -30,18 +30,18 @@ type ButtonAsButton = SharedProps &
 type ButtonProps = ButtonAsLink | ButtonAsAnchor | ButtonAsButton;
 
 const baseStyles =
-  "inline-flex items-center justify-center rounded-xl font-bold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 curosor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:shadow-none";
+  "inline-flex items-center justify-center rounded-xl font-bold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 disabled:shadow-none";
 
 const variants: Record<Variant, string> = {
   primary:
     "bg-green-700 text-white shadow-lg hover:bg-green-800 hover:shadow-xl focus:ring-green-700",
   secondary:
-    "bg-red-700 text-white shadow-lg hover:bg-red-800 hover:shadow-xl focus:ring-red-700",
+    "bg-yellow-400 text-slate-950 shadow-lg hover:bg-yellow-300 hover:shadow-xl focus:ring-yellow-400",
   outline:
-    "border-2 border-green-700 text-green-700 hover:bg-green-50 focus:ring-green-700",
+    "border-2 border-green-700 text-green-800 hover:bg-green-50 focus:ring-green-700",
   ghost: "text-green-700 hover:bg-green-50 focus:ring-green-700",
   white:
-    "bg-white text-slate-900 shadow-lg hover:bg-gray-50 hover:shadow-xl focus:ring-white",
+    "bg-white text-green-900 shadow-lg hover:bg-gray-50 hover:shadow-xl focus:ring-white",
 };
 
 const sizes: Record<Size, string> = {

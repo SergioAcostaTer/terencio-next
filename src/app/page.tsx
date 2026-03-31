@@ -25,11 +25,11 @@ export default function Home() {
   return (
     <main>
       <Hero
-        title="Tu Cash & Carry en <span class='text-yellow-400'>Tenerife</span>"
-        subtitle="Supermercado en La Esperanza y Mayorista HORECA. El único almacén donde familias y profesionales compran al mejor precio. Carnicería al corte y abierto los domingos."
-        badge="📍 Ctra. La Esperanza, 22 (La Laguna)"
+        title="Supermercado en <span class='text-green-400'>La Esperanza (San Cristóbal de La Laguna)</span> y Mayorista HORECA en <span class='text-yellow-400'>Tenerife</span>"
+        subtitle="Compra diaria para particulares y solución mayorista para hostelería, autónomos y empresas. Carnicería al corte, precios competitivos y apertura los domingos."
+        badge="Ctra. La Esperanza, 22 (La Laguna)"
         primaryCta={{ text: "Ver Horario", href: "/horario" }}
-        secondaryCta={{ text: "Zona Profesionales", href: "/profesionales" }}
+        secondaryCta={{ text: "Empresas y Autónomos", href: "/profesionales" }}
         backgroundImage={heroBg}
       />
 
@@ -80,7 +80,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-2 md:grid-cols-2 lg:grid-cols-3">
           <Link
             href="/carniceria-tenerife"
-            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl lg:h-80"
+            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 lg:h-80"
           >
             <div className="absolute inset-0 z-10 rounded-2xl bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
             <Image
@@ -91,7 +91,7 @@ export default function Home() {
               className="rounded-2xl object-cover transition duration-700 group-hover:scale-110"
             />
             <div className="absolute bottom-0 left-0 z-20 w-full p-6 text-white">
-              <span className="mb-3 inline-block rounded-full border border-white/20 bg-red-600/90 px-3 py-1 text-xs font-bold text-white shadow-sm backdrop-blur-sm">
+              <span className="mb-3 inline-block rounded-full border border-white/20 bg-green-700/90 px-3 py-1 text-xs font-bold text-white shadow-sm backdrop-blur-sm">
                 Corte a Cuchillo
               </span>
               <h3 className="mb-2 flex items-center gap-2 text-2xl font-bold">
@@ -99,7 +99,7 @@ export default function Home() {
                 <Icon
                   name="ArrowRight"
                   size={24}
-                  className="-translate-x-4 text-red-400 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                  className="-translate-x-4 text-yellow-400 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
                 />
               </h3>
               <p className="text-sm font-medium leading-relaxed text-gray-200 opacity-90">
@@ -112,7 +112,7 @@ export default function Home() {
 
           <Link
             href="/productos-el-hierro-tenerife"
-            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl lg:h-80"
+            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 lg:h-80"
           >
             <div className="absolute inset-0 z-10 rounded-2xl bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
             <Image
@@ -143,7 +143,7 @@ export default function Home() {
 
           <Link
             href="/profesionales"
-            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl md:col-span-2 lg:col-span-1 lg:h-80"
+            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 md:col-span-2 lg:col-span-1 lg:h-80"
           >
             <div className="absolute inset-0 z-10 rounded-2xl bg-slate-900" />
             <div className="absolute inset-0 z-10 rounded-2xl opacity-10 [background-image:url('https://www.transparenttextures.com/patterns/cubes.png')]" />
@@ -152,7 +152,7 @@ export default function Home() {
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-green-800 bg-green-700 shadow-[0_0_20px_rgba(21,128,61,0.5)] transition-transform duration-300 group-hover:scale-110">
                 <Icon name="Store" size={32} className="text-white" />
               </div>
-              <h3 className="mb-3 text-2xl font-bold">Zona Profesionales</h3>
+              <h3 className="mb-3 text-2xl font-bold">Empresas y Autonomos</h3>
               <p className="mx-auto mb-6 max-w-xs text-sm font-medium text-slate-300">
                 Soluciones integrales para Hostelería y Restauración. Pedidos
                 personalizados y tarifas netas competitivas.
@@ -165,10 +165,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section className="relative overflow-hidden bg-white">
-        <div className="animate-blob absolute top-0 right-0 h-64 w-64 rounded-full bg-green-50 opacity-70 blur-3xl mix-blend-multiply" />
-        <div className="animate-blob animation-delay-2000 absolute bottom-0 left-0 h-64 w-64 rounded-full bg-yellow-50 opacity-70 blur-3xl mix-blend-multiply" />
-
+      <Section className="bg-white">
         <div className="relative z-10 mx-auto mb-12 max-w-4xl text-center">
           <span className="rounded-full bg-green-100 px-4 py-1 text-sm font-bold uppercase tracking-widest text-green-700">
             Tu Supermercado Diferente
@@ -184,7 +181,7 @@ export default function Home() {
             <strong>Terencio Cash Market</strong> ha revolucionado la forma de
             hacer la compra en el norte de Tenerife. Somos el único{" "}
             <strong>Cash & Carry sin carnet de socio</strong> donde
-            particulares y profesionales conviven para beneficiarse de precios
+            particulares, autonomos y empresas conviven para beneficiarse de precios
             de almacén. Ubicados estratégicamente en la subida a{" "}
             <strong>La Esperanza (La Laguna)</strong>, ofrecemos una experiencia
             de compra cómoda, rápida y económica.
@@ -193,7 +190,7 @@ export default function Home() {
           <div className="my-8 grid gap-8 text-left md:grid-cols-2">
             <div className="rounded-2xl border border-gray-100 bg-gray-50 p-6 transition hover:shadow-lg">
               <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-gray-900">
-                <Icon name="Beef" className="text-red-600" /> Carnicería
+                <Icon name="Beef" className="text-green-700" /> Carnicería
                 Tradicional
               </h3>
               <p className="text-base">
@@ -246,7 +243,7 @@ export default function Home() {
               Sector HORECA
             </span>
             <h2 className="mt-3 mb-5 text-3xl font-bold leading-tight md:text-4xl">
-              Servicio Integral para Profesionales
+              Servicio Integral para Empresas y Autonomos
             </h2>
 
             <p className="mb-6 text-lg leading-relaxed text-slate-200">
@@ -302,13 +299,13 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <div className="absolute inset-0 rounded-3xl bg-green-500 opacity-20 blur-md rotate-3" />
+            <div className="absolute inset-0 rounded-3xl border border-green-200/70 bg-gradient-to-br from-green-50 to-yellow-50" />
             <Image
               src={frescoImg}
               alt="Profesional cargando mercancía en Terencio"
-              className="relative hidden h-[500px] w-full rounded-3xl border-4 border-slate-700 object-cover shadow-2xl md:block"
+              className="relative hidden h-[500px] w-full rounded-3xl border border-slate-700/60 object-cover shadow-2xl md:block"
             />
-            <div className="animate-bounce-slow absolute -bottom-6 -left-6 hidden max-w-xs rounded-2xl border-l-8 border-green-600 bg-white p-6 text-slate-900 shadow-xl md:block">
+            <div className="absolute right-6 bottom-6 hidden max-w-xs rounded-2xl border border-slate-200 bg-white/95 p-6 text-slate-900 shadow-xl md:block">
               <p className="mb-1 text-lg font-bold">¿Pedido Urgente?</p>
               <p className="text-sm text-gray-600">
                 Abrimos sábados y domingos para salvarte el servicio.
@@ -321,8 +318,8 @@ export default function Home() {
       <Section className="bg-white">
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-12">
           <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-green-50">
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-green-100 text-4xl text-green-700 shadow-sm transition-all duration-300 group-hover:rotate-6 group-hover:bg-green-600 group-hover:text-white">
-              🥩
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-green-100 text-green-700 shadow-sm transition-all duration-300 group-hover:bg-green-600 group-hover:text-white">
+              <Icon name="Beef" size={32} />
             </div>
             <h3 className="text-lg font-bold text-gray-900">
               Corte a Cuchillo
@@ -332,8 +329,8 @@ export default function Home() {
             </p>
           </div>
           <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-yellow-50">
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-yellow-100 text-4xl text-yellow-700 shadow-sm transition-all duration-300 group-hover:-rotate-6 group-hover:bg-yellow-500 group-hover:text-white">
-              🏷️
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-yellow-100 text-yellow-700 shadow-sm transition-all duration-300 group-hover:bg-yellow-500 group-hover:text-slate-950">
+              <Icon name="BadgePercent" size={32} />
             </div>
             <h3 className="text-lg font-bold text-gray-900">
               Precios Mayoristas
@@ -342,9 +339,9 @@ export default function Home() {
               Ahorra comprando formatos grandes sin carnet.
             </p>
           </div>
-          <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-blue-50">
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-100 text-4xl text-blue-700 shadow-sm transition-all duration-300 group-hover:rotate-6 group-hover:bg-blue-600 group-hover:text-white">
-              📅
+          <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-green-50">
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-green-100 text-green-700 shadow-sm transition-all duration-300 group-hover:bg-green-600 group-hover:text-white">
+              <Icon name="CalendarClock" size={32} />
             </div>
             <h3 className="text-lg font-bold text-gray-900">
               Abierto 362 Días
@@ -353,9 +350,9 @@ export default function Home() {
               Domingos, festivos... siempre abiertos para ti.
             </p>
           </div>
-          <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-red-50">
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-red-100 text-4xl text-red-700 shadow-sm transition-all duration-300 group-hover:-rotate-6 group-hover:bg-red-600 group-hover:text-white">
-              ❤️
+          <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-yellow-50">
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-yellow-100 text-yellow-700 shadow-sm transition-all duration-300 group-hover:bg-yellow-500 group-hover:text-slate-950">
+              <Icon name="HeartHandshake" size={32} />
             </div>
             <h3 className="text-lg font-bold text-gray-900">100% Canario</h3>
             <p className="mt-2 text-sm font-medium text-gray-500">
@@ -365,10 +362,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section className="relative overflow-hidden bg-gradient-to-br from-green-50 to-emerald-100">
-        <div className="pointer-events-none absolute top-0 right-0 h-[400px] w-[400px] translate-x-1/3 -translate-y-1/3 rounded-full bg-white opacity-40 blur-3xl mix-blend-overlay" />
-        <div className="pointer-events-none absolute bottom-0 left-0 h-[300px] w-[300px] -translate-x-1/2 translate-y-1/2 rounded-full bg-green-200 opacity-50 blur-3xl mix-blend-multiply" />
-
+      <Section className="bg-gradient-to-br from-green-50 to-yellow-50">
         <div className="mx-auto max-w-3xl text-center">
           <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-green-600 shadow-lg">
             <Icon name="Mail" size={32} />
@@ -428,7 +422,7 @@ export default function Home() {
               <div className="border-t border-gray-100 bg-white px-6 pt-4 pb-6 leading-relaxed text-gray-700">
                 <strong>No</strong>, somos un{" "}
                 <strong>Cash & Carry abierto a todos</strong>. Tanto
-                particulares como profesionales pueden comprar libremente
+                particulares, autonomos y empresas pueden comprar libremente
                 nuestros productos a precios mayoristas sin cuotas ni carnets.
               </div>
             </details>

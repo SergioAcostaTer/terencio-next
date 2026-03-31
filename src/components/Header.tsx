@@ -29,6 +29,26 @@ function desktopNavClass(color?: string) {
   return "text-gray-800 hover:bg-gray-50 hover:text-green-700";
 }
 
+function childNavIcon(label: string) {
+  if (label.includes("Carnicería")) {
+    return "Beef";
+  }
+
+  if (label.includes("Quesos")) {
+    return "BadgePlus";
+  }
+
+  if (label.includes("Hierro")) {
+    return "TreePalm";
+  }
+
+  if (label.includes("Cash")) {
+    return "ShoppingCart";
+  }
+
+  return "ChevronRight";
+}
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
@@ -54,7 +74,7 @@ export default function Header() {
             href="/profesionales"
             className="font-medium transition hover:text-yellow-200"
           >
-            Zona Profesionales HORECA
+            Profesionales HORECA
           </Link>
           <a
             href={`tel:${siteData.contact.phoneRaw}`}
@@ -65,11 +85,11 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="relative z-50 mx-auto flex h-[70px] max-w-6xl items-center justify-between bg-white px-4 md:h-[80px] lg:px-6">
+      <div className="relative z-50 flex h-[70px] w-full items-center justify-between gap-3 bg-white px-3 md:mx-auto md:h-[80px] md:max-w-6xl md:px-4 lg:px-6">
         <button
           type="button"
           onClick={() => setMobileMenuOpen((value) => !value)}
-          className="flex h-12 w-12 items-center justify-center rounded-xl text-gray-800 transition hover:bg-gray-100 md:hidden"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-gray-800 transition hover:bg-gray-100 md:hidden"
           aria-label="Menú Principal"
           aria-expanded={mobileMenuOpen}
         >
@@ -78,10 +98,10 @@ export default function Header() {
 
         <Link
           href="/"
-          className="group relative flex items-center gap-2"
+          className="group relative flex min-w-0 flex-1 items-center justify-center gap-2 md:flex-none md:justify-start"
           aria-label="Terencio Cash Market Inicio"
         >
-          <div className="flex h-8 items-center md:h-12">
+          <div className="flex h-7 shrink-0 items-center md:h-12">
             <Image
               className="h-full w-auto object-contain transition-transform group-hover:scale-105"
               src={logo}
@@ -91,11 +111,11 @@ export default function Header() {
               priority
             />
           </div>
-          <div className="flex flex-col justify-center -space-y-1">
-            <span className="text-3xl leading-none font-black tracking-tighter text-[#c81010] capitalize lg:text-4xl">
+          <div className="flex min-w-0 flex-col justify-center">
+            <span className="truncate text-[1.45rem] leading-none font-black tracking-tight text-[#c81010] capitalize md:text-3xl lg:text-4xl">
               Terencio
             </span>
-            <span className="text-lg leading-none font-extrabold italic tracking-wider text-[#007236] capitalize lg:text-base">
+            <span className="truncate pt-0.5 text-[0.72rem] leading-none font-extrabold italic tracking-wide text-[#007236] capitalize md:text-base">
               Cash Market
             </span>
           </div>
@@ -129,15 +149,10 @@ export default function Header() {
                             className="group/item flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-gray-800 transition-colors hover:bg-green-50 hover:text-green-900"
                           >
                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition group-hover/item:bg-green-200 group-hover/item:text-green-800">
-                              {child.label.includes("Carnicería")
-                                ? "🥩"
-                                : child.label.includes("Quesos")
-                                  ? "🧀"
-                                  : child.label.includes("Hierro")
-                                    ? "🍍"
-                                    : child.label.includes("Cash")
-                                      ? "🛒"
-                                      : "•"}
+                              <Icon
+                                name={childNavIcon(child.label)}
+                                size={16}
+                              />
                             </div>
                             <span>{child.label}</span>
                           </Link>
@@ -163,7 +178,7 @@ export default function Header() {
 
         <Link
           href="/contacto"
-          className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-red-700 transition active:scale-95 md:hidden"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-700 transition active:scale-95 md:hidden"
           aria-label="Contactar con Terencio"
         >
           <Icon name="MessageSquare" className="h-7 w-7" />
@@ -176,7 +191,8 @@ export default function Header() {
         aria-label="Navegación Móvil Principal"
         className={`fixed top-[105px] left-0 z-[70] h-[calc(100dvh-105px)] w-full overflow-hidden bg-white pb-6 shadow-inner transition-transform duration-300 md:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <ul className="m-0 flex list-none flex-col gap-2 p-6">
+        <div className="flex h-full flex-col overflow-y-auto p-6">
+          <ul className="m-0 flex list-none flex-col gap-2">
           {(navigation.main as NavItem[]).map((link) => (
             <li key={link.label} className="mb-2">
               {link.children ? (
@@ -232,7 +248,34 @@ export default function Header() {
               </Link>
             </li>
           ))}
-        </ul>
+          </ul>
+
+          <div className="mt-6 border-t border-gray-200 pt-5">
+            <p className="mb-3 text-sm font-bold uppercase tracking-wider text-gray-500">
+              Síguenos
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href={siteData.social.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 font-medium text-gray-800 transition hover:bg-green-50 hover:text-green-800"
+              >
+                <Icon name="Camera" size={18} className="text-green-700" />
+                Instagram
+              </a>
+              <a
+                href={siteData.social.facebook}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 font-medium text-gray-800 transition hover:bg-green-50 hover:text-green-800"
+              >
+                <Icon name="ThumbsUp" size={18} className="text-green-700" />
+                Facebook
+              </a>
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
   );

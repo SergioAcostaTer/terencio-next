@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import Button from "@/components/ui/Button";
+import Icon from "@/components/ui/Icon";
 import Section from "@/components/ui/Section";
 
 export const metadata: Metadata = {
@@ -56,7 +57,9 @@ export default function OptimizacionEscandallosPage() {
 
             <div className="not-prose my-8 grid gap-6 md:grid-cols-3">
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <span className="mb-3 block text-4xl">🥩</span>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-700">
+                  <Icon name="Beef" size={24} />
+                </div>
                 <h4 className="mb-2 font-bold text-gray-900">
                   Despiece a Medida
                 </h4>
@@ -66,7 +69,9 @@ export default function OptimizacionEscandallosPage() {
                 </p>
               </div>
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <span className="mb-3 block text-4xl">🥫</span>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-100 text-yellow-700">
+                  <Icon name="Package2" size={24} />
+                </div>
                 <h4 className="mb-2 font-bold text-gray-900">
                   Formatos Horeca
                 </h4>
@@ -76,7 +81,9 @@ export default function OptimizacionEscandallosPage() {
                 </p>
               </div>
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <span className="mb-3 block text-4xl">⚖️</span>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
+                  <Icon name="Scale" size={24} />
+                </div>
                 <h4 className="mb-2 font-bold text-gray-900">Estabilidad</h4>
                 <p className="text-sm">
                   Nuestros precios fluctúan menos que el súper, permitiéndote

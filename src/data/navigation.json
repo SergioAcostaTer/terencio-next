@@ -1,38 +1,30 @@
 {
   "main": [
     {
-      "label": "Inicio",
-      "href": "/"
-    },
-    {
-      "label": "Nuestros Productos",
+      "label": "Productos",
       "href": "/cash-and-carry-tenerife",
       "children": [
         {
-          "label": "Cash & Carry Tenerife",
+          "label": "Cash & Carry",
           "href": "/cash-and-carry-tenerife"
         },
         {
-          "label": "Carnicería al Corte",
-          "href": "/carniceria-tenerife"
-        },
-        {
-          "label": "Productos de El Hierro",
+          "label": "El Hierro",
           "href": "/productos-el-hierro-tenerife"
         },
         {
-          "label": "Quesos Herreños",
+          "label": "Quesos",
           "href": "/quesos-el-hierro-tenerife"
         }
       ]
     },
     {
-      "label": "Mayorista HORECA",
+      "label": "Profesionales",
       "href": "/profesionales",
       "color": "slate"
     },
     {
-      "label": "Nuestra Carnicería",
+      "label": "Carnicería",
       "href": "/carniceria-tenerife",
       "color": "red"
     },
@@ -59,12 +51,8 @@
   },
   "mobileExtra": [
     {
-      "label": "Atención al Cliente",
+      "label": "Ayuda",
       "href": "/atencion-al-cliente"
-    },
-    {
-      "label": "Trabaja con Nosotros",
-      "href": "/trabaja-con-nosotros"
     }
   ],
   "footer": {
@@ -74,7 +62,7 @@
         "href": "/horario"
       },
       {
-        "label": "Zona Profesionales",
+        "label": "Profesionales",
         "href": "/profesionales"
       },
       {

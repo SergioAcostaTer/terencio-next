@@ -1,6 +1,6 @@
 ---
-title: "Supermercado Abierto Domingos y Festivos | Terencio La Esperanza"
-description: "Descubre Terencio Cash Market en La Esperanza: el supermercado de Tenerife que abre domingos y festivos con horario ampliado para tu comodidad."
+title: "Supermercado abierto los domingos en La Esperanza"
+description: "Qué ofrece Terencio a quienes necesitan comprar en domingo o festivo en La Esperanza, sin perder tiempo."
 pubDate: 2025-01-20
 author: "Equipo Terencio"
 image: "../../assets/images/coche.webp"

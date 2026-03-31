@@ -62,21 +62,21 @@ const categoryConfig: CategoryConfig[] = [
     key: "productos",
     title: "Productos y Frescos",
     icon: "Beef",
-    iconWrapperClassName: "bg-red-100 text-red-700",
-    detailsHoverClassName: "hover:border-red-300",
-    summaryHoverClassName: "hover:text-red-800",
+    iconWrapperClassName: "bg-yellow-100 text-yellow-700",
+    detailsHoverClassName: "hover:border-yellow-300",
+    summaryHoverClassName: "hover:text-yellow-800",
     summaryIconClassName:
-      "bg-gray-50 text-gray-400 group-open:bg-red-50 group-open:text-red-700",
+      "bg-gray-50 text-gray-400 group-open:bg-yellow-50 group-open:text-yellow-700",
   },
   {
     key: "profesional",
-    title: "Profesionales y Facturación",
+    title: "Empresas, Autonomos y Facturacion",
     icon: "Briefcase",
-    iconWrapperClassName: "bg-blue-100 text-blue-700",
-    detailsHoverClassName: "hover:border-blue-300",
-    summaryHoverClassName: "hover:text-blue-800",
+    iconWrapperClassName: "bg-slate-100 text-slate-700",
+    detailsHoverClassName: "hover:border-slate-300",
+    summaryHoverClassName: "hover:text-slate-800",
     summaryIconClassName:
-      "bg-gray-50 text-gray-400 group-open:bg-blue-50 group-open:text-blue-700",
+      "bg-gray-50 text-gray-400 group-open:bg-slate-100 group-open:text-slate-700",
   },
 ];
 
@@ -180,13 +180,13 @@ export default function FaqPage() {
                             <Icon
                               name="MessageCircleQuestionMark"
                               size={20}
-                              className="shrink-0 text-blue-600"
+                              className="shrink-0 text-slate-700"
                             />
                             <Link
                               href="/profesionales"
-                              className="text-sm font-bold text-blue-700 hover:underline"
+                              className="text-sm font-bold text-slate-800 hover:underline"
                             >
-                              Ir a Zona Profesionales →
+                              Ir al canal B2B
                             </Link>
                           </div>
                         ) : null}
@@ -245,7 +245,7 @@ export default function FaqPage() {
               ) : (
                 <a
                   href={`tel:${siteData.contact.phoneRaw}`}
-                  className="flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white px-8 py-3 font-bold text-blue-700 transition hover:bg-blue-50"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-8 py-3 font-bold text-slate-800 transition hover:bg-slate-50"
                 >
                   <Icon name="Phone" size={20} /> Llamar a Tienda
                 </a>

@@ -111,16 +111,16 @@ export default function QuesosElHierroTenerifePage() {
             <div className="space-y-6">
               <div className="rounded-xl border border-yellow-100 bg-yellow-50 p-4">
                 <h3 className="flex items-center gap-2 font-bold text-yellow-900">
-                  <span className="text-xl">🧀</span> Tierno Ahumado
+                  <Icon name="BadgePlus" size={18} /> Tierno Ahumado
                 </h3>
                 <p className="mt-1 text-sm text-gray-700">
                   Suave, blanco y cremoso. Ahumado ligero. Ideal para desayunos
                   o sándwiches.
                 </p>
               </div>
-              <div className="rounded-xl border border-orange-100 bg-orange-50 p-4">
-                <h3 className="flex items-center gap-2 font-bold text-orange-900">
-                  <span className="text-xl">🧀</span> Semicurado Mezcla
+              <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-4">
+                <h3 className="flex items-center gap-2 font-bold text-yellow-900">
+                  <Icon name="BadgePlus" size={18} /> Semicurado Mezcla
                 </h3>
                 <p className="mt-1 text-sm text-gray-700">
                   El equilibrio perfecto. Corteza ahumada natural y pasta
@@ -129,7 +129,7 @@ export default function QuesosElHierroTenerifePage() {
               </div>
               <div className="rounded-xl border border-amber-100 bg-amber-50 p-4">
                 <h3 className="flex items-center gap-2 font-bold text-amber-900">
-                  <span className="text-xl">🧀</span> Curado Viejo
+                  <Icon name="BadgePlus" size={18} /> Curado Viejo
                 </h3>
                 <p className="mt-1 text-sm text-gray-700">
                   Sabor intenso, picante y textura quebradiza. Ganador de
@@ -145,14 +145,18 @@ export default function QuesosElHierroTenerifePage() {
         <h2 className="mb-8 text-3xl font-bold">Maridaje Perfecto</h2>
         <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-3">
           <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
-            <span className="mb-2 block text-4xl">🍯</span>
+            <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-100 text-yellow-700">
+              <Icon name="Droplets" size={24} />
+            </div>
             <h3 className="mb-2 font-bold">Miel de Palma</h3>
             <p className="text-sm text-gray-500">
               Un contraste dulce que realza el ahumado.
             </p>
           </div>
           <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
-            <span className="mb-2 block text-4xl">🌶️</span>
+            <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-red-600">
+              <Icon name="Flame" size={24} />
+            </div>
             <h3 className="mb-2 font-bold">Mojo Rojo</h3>
             <p className="text-sm text-gray-500">
               Hazlo a la plancha con mojo por encima. ¡Delicioso!
@@ -162,9 +166,9 @@ export default function QuesosElHierroTenerifePage() {
             href="/productos-el-hierro-tenerife"
             className="group block rounded-xl border border-yellow-200 bg-yellow-50 p-6 transition hover:shadow-md"
           >
-            <span className="mb-2 block text-4xl transition group-hover:scale-110">
-              🍷
-            </span>
+            <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-yellow-700 transition group-hover:scale-105">
+              <Icon name="Wine" size={24} />
+            </div>
             <h3 className="mb-2 font-bold text-yellow-900">Vinos de Frontera</h3>
             <p className="text-sm text-yellow-800">
               Ver Vinos Recomendados{" "}

@@ -1,6 +1,6 @@
 ---
-title: "Qué ver en El Hierro: Ruta Gastronómica de 7 días"
-description: "Descubre qué ver en El Hierro a través de sus sabores. Una guía de viaje enfocada en dónde comer, qué comprar y los paisajes que no te puedes perder."
+title: "Ruta gastronómica por El Hierro"
+description: "Una guía para descubrir la isla a través de su cocina, sus productores y algunos de sus paisajes más memorables."
 pubDate: 2024-05-20
 author: "Equipo Terencio"
 image: "../../assets/images/faro_orchilla.webp"

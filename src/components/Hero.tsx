@@ -8,6 +8,7 @@ type HeroProps = {
   title?: string;
   subtitle?: string;
   badge?: string;
+  align?: "left" | "center";
   primaryCta?: {
     text: string;
     href: string;
@@ -23,10 +24,13 @@ export default function Hero({
   title = "Tu Compra Diaria y <span class='text-green-300'>Cash & Carry</span> para Profesionales",
   subtitle = "Calidad, frescura y los mejores precios en un solo lugar. Abierto todos los días para particulares y empresas de hostelería.",
   badge = "📍 La Laguna, Tenerife",
+  align = "left",
   primaryCta = { text: "Cómo llegar", href: "#donde-estamos" },
   secondaryCta,
   backgroundImage = defaultHeroBg,
 }: HeroProps) {
+  const isCentered = align === "center";
+
   return (
     <section className="relative flex min-h-[350px] items-center overflow-hidden bg-green-900 text-white md:min-h-[450px]">
       <div className="absolute inset-0 z-0">
@@ -42,7 +46,14 @@ export default function Hero({
       </div>
 
       <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-4 py-8 lg:px-6 lg:py-16">
-        <div className="animate-fade-in-up max-w-3xl">
+        <div
+          className={[
+            "animate-fade-in-up max-w-3xl",
+            isCentered ? "mx-auto text-center" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
           <span className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-bold uppercase tracking-wide text-green-50 shadow-sm backdrop-blur-md">
             {badge}
           </span>
@@ -56,7 +67,14 @@ export default function Hero({
             {subtitle}
           </p>
 
-          <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row sm:items-start">
+          <div
+            className={[
+              "flex w-full flex-col gap-4 sm:w-auto sm:flex-row",
+              isCentered ? "items-center sm:justify-center" : "items-center sm:items-start",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
             <Link
               href={primaryCta.href}
               aria-label={`${primaryCta.text} - Ir a la sección`}

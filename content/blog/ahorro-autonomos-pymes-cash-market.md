@@ -1,6 +1,6 @@
 ---
-title: "Ahorro para Autónomos y Pymes | Terencio Cash Market Tenerife"
-description: "¿Tienes un pequeño negocio en Tenerife? Descubre cómo Terencio Cash Market te ayuda a reducir costes sin sacrificar calidad en La Esperanza."
+title: "Cómo ahorrar si eres autónomo o pyme"
+description: "Descubre cómo reducir costes de compra en Tenerife con una estrategia práctica para autónomos y pequeñas empresas."
 pubDate: 2025-01-25
 author: "Equipo Terencio"
 image: "../../assets/images/supermercado-interior.webp"

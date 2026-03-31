@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import ContactForm from "@/components/forms/ContactForm";
+import Hero from "@/components/Hero";
 import LocationMap from "@/components/LocationMap";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
@@ -19,21 +20,12 @@ const whatsappLink = `https://wa.me/34${siteData.contact.phoneRaw}?text=${encode
 export default function ContactoPage() {
   return (
     <main>
-      <section className="relative overflow-hidden bg-green-900 py-10 text-white md:py-14">
-        <div className="absolute inset-0 bg-gradient-to-b from-green-900/90 via-green-800/80 to-green-900/90" />
-        <div className="container relative z-10 mx-auto px-4 text-center">
-          <span className="mb-4 inline-block rounded-full border border-green-400 bg-green-800/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-green-100">
-            Contacto Directo
-          </span>
-          <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
-            Estamos muy <span className="text-green-300">Cerca de Ti</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg font-medium leading-relaxed text-green-100">
-            ¿Tienes dudas sobre stock, horarios o pedidos? Elige cómo quieres
-            hablar con nosotros. Te respondemos rápido.
-          </p>
-        </div>
-      </section>
+      <Hero
+        title="Estamos muy <span class='text-yellow-400'>Cerca de Ti</span>"
+        subtitle="¿Tienes dudas sobre stock, horarios o pedidos? Elige cómo quieres hablar con nosotros. Te respondemos rápido."
+        badge="Contacto Directo"
+        align="center"
+      />
 
       <section className="relative z-20 container mx-auto -mt-16 mb-16 px-4">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -80,14 +72,14 @@ export default function ContactoPage() {
               href={`tel:${siteData.contact.phoneRaw}`}
               className="group flex flex-col items-center rounded-3xl border border-gray-100 bg-white p-8 text-center shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg shadow-blue-200 transition duration-300 group-hover:scale-110 group-hover:bg-blue-600">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-400 text-slate-950 shadow-lg shadow-yellow-200 transition duration-300 group-hover:scale-110 group-hover:bg-yellow-300">
                 <Icon name="Phone" size={32} />
               </div>
               <h3 className="mb-1 text-xs font-bold tracking-wider text-gray-500 uppercase">
                 Habla con nosotros
               </h3>
               <p className="mb-2 text-2xl font-black text-gray-900">Llamada</p>
-              <span className="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 transition group-hover:bg-blue-100">
+              <span className="rounded-full bg-yellow-50 px-3 py-1 text-sm font-medium text-yellow-700 transition group-hover:bg-yellow-100">
                 Llamar Ahora
               </span>
             </a>
@@ -97,7 +89,7 @@ export default function ContactoPage() {
             href={`mailto:${siteData.contact.email}`}
             className="group flex flex-col items-center rounded-3xl border border-gray-100 bg-white p-8 text-center shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
           >
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-blue-700 transition duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-50 text-yellow-700 transition duration-300 group-hover:scale-110 group-hover:bg-yellow-400 group-hover:text-slate-950">
               <Icon name="Mail" size={32} />
             </div>
             <h3 className="mb-1 text-xs font-bold tracking-wider text-gray-500 uppercase">
@@ -106,7 +98,7 @@ export default function ContactoPage() {
             <p className="mb-2 text-2xl font-black text-gray-900">
               {siteData.contact.email}
             </p>
-            <span className="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 transition group-hover:bg-blue-100">
+            <span className="rounded-full bg-yellow-50 px-3 py-1 text-sm font-medium text-yellow-700 transition group-hover:bg-yellow-100">
               Enviar Email
             </span>
           </a>
@@ -118,7 +110,7 @@ export default function ContactoPage() {
           <div className="space-y-8">
             <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
               <h2 className="mb-6 flex items-center gap-3 text-3xl font-bold text-gray-900">
-                <span className="rounded-xl bg-red-100 p-2 text-red-600">
+                <span className="rounded-xl bg-yellow-50 p-2 text-yellow-700">
                   <Icon name="MapPin" size={24} />
                 </span>
                 Visítanos
@@ -178,10 +170,10 @@ export default function ContactoPage() {
               <div className="relative z-10">
                 <h3 className="mb-1 flex items-center gap-2 text-xl font-bold">
                   <Icon name="ChefHat" className="text-yellow-400" />
-                  ¿Eres Profesional?
+                  ¿Tienes empresa o trabajas por tu cuenta?
                 </h3>
                 <p className="text-sm text-slate-400">
-                  Tenemos un canal exclusivo para hostelería.
+                  Tenemos un canal especifico para hosteleria, empresas y autonomos.
                 </p>
               </div>
               <a

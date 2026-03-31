@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import heroBg from "@/assets/images/hero-bg.webp";
+import Hero from "@/components/Hero";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Section from "@/components/ui/Section";
@@ -13,38 +15,15 @@ export const metadata: Metadata = {
 export default function AsaderosTenerifePage() {
   return (
     <main>
-      <section className="relative overflow-hidden bg-orange-900 py-12 text-white md:py-16">
-        <div className="absolute inset-0 bg-gradient-to-b from-orange-900/90 via-orange-800/60 to-orange-900/90" />
-        <div className="container relative z-10 mx-auto px-4 text-center">
-          <span className="inline-block rounded-full border border-orange-300 bg-orange-800/70 px-3 py-1 text-xs font-bold tracking-wider text-orange-100 uppercase">
-            Parada Obligatoria
-          </span>
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight md:text-5xl">
-            Todo para tu <span className="text-orange-400">Asadero</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-orange-100">
-            ¿Subes al monte? Haz tu parada técnica en La Esperanza. Carne
-            fresca, leña, carbón y todo lo que necesitas sin desviarte.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button
-              href="/carniceria-tenerife"
-              variant="white"
-              className="font-bold text-orange-800 hover:bg-orange-50"
-            >
-              Ver Carne de Fiesta
-            </Button>
-            <Button
-              href="https://maps.app.goo.gl/YourGoogleMapsLink"
-              target="_blank"
-              variant="outline"
-              className="border-white font-bold text-white hover:bg-white hover:text-orange-900"
-            >
-              <Icon name="MapPin" className="mr-2" /> Cómo Llegar
-            </Button>
-          </div>
-        </div>
-      </section>
+      <Hero
+        title="Todo para tu <span class='text-yellow-400'>Asadero</span>"
+        subtitle="¿Subes al monte? Haz tu parada técnica en La Esperanza. Carne fresca, leña, carbón y todo lo que necesitas sin desviarte."
+        badge="Parada Obligatoria"
+        align="center"
+        primaryCta={{ text: "Ver Carne de Fiesta", href: "/carniceria-tenerife" }}
+        secondaryCta={{ text: "Cómo Llegar", href: "https://maps.app.goo.gl/YourGoogleMapsLink" }}
+        backgroundImage={heroBg}
+      />
 
       <Section className="bg-white">
         <div className="container mx-auto px-4">
@@ -65,11 +44,11 @@ export default function AsaderosTenerifePage() {
                 todo lo que necesitas en un solo lugar.
               </p>
 
-              <div className="my-8 rounded-r-xl border-l-4 border-orange-500 bg-orange-50 p-6">
-                <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-orange-900">
+              <div className="my-8 rounded-r-xl border-l-4 border-yellow-400 bg-gray-50 p-6">
+                <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-slate-900">
                   <Icon name="MapPin" /> Ubicación Estratégica
                 </h3>
-                <p className="m-0 text-orange-800">
+                <p className="m-0 text-gray-700">
                   Estamos a solo <strong>5 minutos de la Vía de Ronda</strong>{" "}
                   y en plena subida hacia el Parque Nacional del Teide. La
                   parada perfecta para comprar carne para asadero en La
@@ -79,29 +58,37 @@ export default function AsaderosTenerifePage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-2xl border border-gray-200 bg-gray-100 p-6 text-center transition hover:bg-orange-50">
-                <span className="mb-3 block text-5xl">🥩</span>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-center transition hover:border-green-200 hover:bg-green-50">
+                <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 text-green-700">
+                  <Icon name="Beef" size={28} />
+                </div>
                 <h3 className="font-bold text-gray-900">Carne Fresca</h3>
                 <p className="mt-2 text-sm text-gray-500">
                   Costillas, chuletas y carne de fiesta
                 </p>
               </div>
-              <div className="rounded-2xl border border-gray-200 bg-gray-100 p-6 text-center transition hover:bg-orange-50">
-                <span className="mb-3 block text-5xl">🔥</span>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-center transition hover:border-green-200 hover:bg-green-50">
+                <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-100 text-yellow-700">
+                  <Icon name="Flame" size={28} />
+                </div>
                 <h3 className="font-bold text-gray-900">Leña y Carbón</h3>
                 <p className="mt-2 text-sm text-gray-500">
                   Sacos grandes al mejor precio
                 </p>
               </div>
-              <div className="rounded-2xl border border-gray-200 bg-gray-100 p-6 text-center transition hover:bg-orange-50">
-                <span className="mb-3 block text-5xl">🧊</span>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-center transition hover:border-green-200 hover:bg-green-50">
+                <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-700">
+                  <Icon name="Snowflake" size={28} />
+                </div>
                 <h3 className="font-bold text-gray-900">Hielo y Bebida</h3>
                 <p className="mt-2 text-sm text-gray-500">
                   Cerveza fría y refrescos
                 </p>
               </div>
-              <div className="rounded-2xl border border-gray-200 bg-gray-100 p-6 text-center transition hover:bg-orange-50">
-                <span className="mb-3 block text-5xl">🥖</span>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-center transition hover:border-green-200 hover:bg-green-50">
+                <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 text-green-700">
+                  <Icon name="Sandwich" size={28} />
+                </div>
                 <h3 className="font-bold text-gray-900">Pan y Mojo</h3>
                 <p className="mt-2 text-sm text-gray-500">
                   El complemento perfecto
@@ -114,6 +101,7 @@ export default function AsaderosTenerifePage() {
 
       <section className="relative overflow-hidden bg-slate-900 py-16 text-center text-white">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.12),transparent_32%)]" />
         <div className="container relative z-10 mx-auto px-4">
           <h2 className="mb-6 text-3xl font-bold md:text-4xl">
             ¿Quieres ir sobre seguro?

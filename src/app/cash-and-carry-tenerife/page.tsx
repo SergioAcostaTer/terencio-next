@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 
 import interiorImage from "@/assets/images/supermercado-interior.webp";
+import Hero from "@/components/Hero";
 import LocationMap from "@/components/LocationMap";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
@@ -16,38 +16,13 @@ export const metadata: Metadata = {
 export default function CashAndCarryTenerifePage() {
   return (
     <main>
-      <section className="relative overflow-hidden bg-slate-900 py-12 text-white md:py-16">
-        <Image
-          src={interiorImage}
-          alt=""
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/60 to-slate-900/90" />
-        <div className="container relative z-10 mx-auto px-4 text-center md:text-left">
-          <span className="inline-block rounded-full border border-green-400 bg-green-900/50 px-3 py-1 text-xs font-bold tracking-wider text-green-200 uppercase">
-            Ahorro Inteligente
-          </span>
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight md:text-5xl">
-            Cash and Carry Tenerife:{" "}
-            <span className="text-green-300">Abierto al Público</span>
-          </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-200">
-            Rompemos las reglas del mayorista. Aquí particulares y empresas
-            compran con precios de almacén sin necesidad de ser socios.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4 md:justify-start">
-            <Button
-              href="#ventajas"
-              variant="white"
-              className="border-none px-8 py-4 text-lg font-bold text-green-900 shadow-xl transition-all hover:-translate-y-1 hover:bg-green-50"
-            >
-              Ver Ventajas
-            </Button>
-          </div>
-        </div>
-      </section>
+      <Hero
+        title="Cash and Carry Tenerife: <span class='text-yellow-400'>Abierto al Público</span>"
+        subtitle="Rompemos las reglas del mayorista. Aquí particulares y empresas compran con precios de almacén sin necesidad de ser socios."
+        badge="Ahorro Inteligente"
+        primaryCta={{ text: "Ver Ventajas", href: "#ventajas" }}
+        backgroundImage={interiorImage}
+      />
 
       <Section className="bg-white" id="ventajas">
         <div className="mb-16 text-center">
@@ -80,9 +55,9 @@ export default function CashAndCarryTenerifePage() {
             </p>
           </div>
 
-          <div className="group relative overflow-hidden rounded-[2rem] border border-blue-100 bg-blue-50 p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-            <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-blue-200 opacity-30 blur-2xl transition group-hover:opacity-50" />
-            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-blue-100 bg-white text-blue-600 shadow-sm transition group-hover:scale-110">
+          <div className="group relative overflow-hidden rounded-[2rem] border border-yellow-100 bg-yellow-50 p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+            <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-yellow-200 opacity-30 blur-2xl transition group-hover:opacity-50" />
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-yellow-100 bg-white text-yellow-600 shadow-sm transition group-hover:scale-110">
               <Icon name="PackageOpen" size={36} />
             </div>
             <h3 className="mb-3 text-xl font-bold text-gray-900">
@@ -95,9 +70,9 @@ export default function CashAndCarryTenerifePage() {
             </p>
           </div>
 
-          <div className="group relative overflow-hidden rounded-[2rem] border border-red-100 bg-red-50 p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-            <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-red-200 opacity-30 blur-2xl transition group-hover:opacity-50" />
-            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-red-100 bg-white text-red-600 shadow-sm transition group-hover:scale-110">
+          <div className="group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-gray-50 p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+            <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-green-200 opacity-30 blur-2xl transition group-hover:opacity-50" />
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-green-100 bg-white text-green-700 shadow-sm transition group-hover:scale-110">
               <Icon name="Beef" size={36} />
             </div>
             <h3 className="mb-3 text-xl font-bold text-gray-900">
@@ -203,7 +178,7 @@ export default function CashAndCarryTenerifePage() {
           <Button
             href="/horario"
             variant="white"
-            className="gap-2 border border-green-200 px-8 py-4 text-lg font-bold text-green-700 shadow-xl transition-all hover:-translate-y-1 hover:bg-green-50"
+            className="gap-2 border border-green-200 px-8 py-4 text-lg font-bold shadow-xl transition-all hover:-translate-y-1 hover:bg-green-50"
           >
             <Icon name="Clock" size={20} /> Ver Horarios
           </Button>

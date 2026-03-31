@@ -11,7 +11,7 @@ import Section from "@/components/ui/Section";
 export const metadata: Metadata = {
   title: "Proveedor HORECA Tenerife | Mayorista Alimentación y Bebidas",
   description:
-    "Terencio Profesionales: Tu proveedor integral para hostelería en Tenerife. Alimentación, bebidas, limpieza y menaje. Precios netos competitivos.",
+    "Tu proveedor integral para hosteleria, autonomos y empresas en Tenerife. Alimentacion, bebidas, limpieza y menaje. Precios netos competitivos.",
 };
 
 const categories = [
@@ -62,7 +62,7 @@ export default function ProfesionalesPage() {
             <div className="space-y-6 lg:col-span-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-4 py-1.5 text-sm font-bold tracking-wider text-green-400 uppercase">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-                Zona B2B Exclusiva
+                Canal B2B
               </div>
 
               <h1 className="text-4xl font-extrabold leading-tight text-white md:text-5xl">
@@ -100,7 +100,7 @@ export default function ProfesionalesPage() {
               <div className="relative rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl md:p-6">
                 <div className="mb-5 text-center">
                   <h3 className="text-xl font-bold text-slate-900">
-                    Solicita Tarifas Profesionales
+                    Solicita Tarifas para tu Negocio
                   </h3>
                   <p className="mt-1.5 text-xs text-slate-500">
                     Acceso a precios mayoristas y condiciones especiales.

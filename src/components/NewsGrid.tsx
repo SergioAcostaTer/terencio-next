@@ -36,7 +36,7 @@ export default async function NewsGrid({
   return (
     <div className="news-portal font-sans">
       {breakingNews ? (
-        <div className="mb-4 flex items-center gap-2 rounded-md bg-red-700 px-3 py-2.5 text-xs font-bold text-white shadow-sm sm:mb-6 sm:gap-3 sm:px-4 sm:py-2 sm:text-sm">
+        <div className="mb-4 flex items-center gap-2 rounded-md bg-red-700 px-3 py-3 text-sm font-bold text-white shadow-sm sm:mb-6 sm:gap-3 sm:px-4">
           <span className="h-2.5 w-2.5 flex-shrink-0 animate-pulse rounded-full bg-white opacity-75 sm:h-3 sm:w-3" />
           <span className="flex-shrink-0 tracking-wider uppercase">
             ÚLTIMA HORA:
@@ -65,9 +65,9 @@ export default async function NewsGrid({
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               ) : null}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/10" />
               <div className="absolute bottom-0 left-0 w-full p-8">
-                <span className="mb-2 inline-block rounded-sm bg-green-700 px-2 py-1 text-[10px] font-bold tracking-wide text-white uppercase sm:mb-3 sm:px-3 sm:text-xs">
+                <span className="mb-2 inline-block rounded-sm bg-green-700 px-3 py-1.5 text-xs font-bold tracking-wide text-white uppercase sm:mb-3">
                   {heroNews.category || "Actualidad"}
                 </span>
                 <h2 className="mb-2 text-xl leading-tight font-bold text-white underline-offset-4 drop-shadow-md decoration-2 group-hover:underline sm:mb-3 sm:text-2xl md:text-4xl lg:text-5xl">
@@ -112,14 +112,14 @@ export default async function NewsGrid({
                   </div>
                   <div className="flex w-2/3 min-w-0 flex-col justify-between">
                     <div className="min-w-0">
-                      <span className="mb-1 block text-[10px] font-bold text-green-800 uppercase sm:text-xs">
+                      <span className="mb-1 block text-xs font-bold text-green-800 uppercase">
                         {news.category}
                       </span>
                       <h4 className="line-clamp-2 text-sm leading-snug font-bold text-gray-900 transition group-hover:text-green-800 sm:line-clamp-3 sm:text-base">
                         {news.title}
                       </h4>
                     </div>
-                    <time className="mt-1 block text-[10px] font-medium text-gray-500 sm:mt-2 sm:text-xs">
+                    <time className="mt-1 block text-xs font-medium text-gray-500 sm:mt-2">
                       {formatDate(news.pubDate)}
                     </time>
                   </div>
@@ -128,12 +128,12 @@ export default async function NewsGrid({
             ))}
 
             <div className="mt-auto hidden rounded-lg border border-gray-200 bg-gray-100 p-3 text-center lg:block lg:p-4">
-              <p className="mb-2 text-xs font-medium text-gray-700 sm:text-sm">
+              <p className="mb-2 text-sm font-medium text-gray-700">
                 Mantente al día con nuestra actualidad corporativa.
               </p>
               <Link
                 href="/noticias"
-                className="block w-full rounded bg-gray-900 py-2 text-xs font-bold text-white transition hover:bg-gray-800 sm:text-sm"
+                className="block w-full rounded-lg bg-gray-900 py-3 text-sm font-bold text-white transition hover:bg-gray-800 active:scale-[0.99]"
               >
                 Ver todas las noticias
               </Link>
@@ -172,13 +172,13 @@ export default async function NewsGrid({
                       />
                     ) : null}
                   </div>
-                  <span className="mb-1 block text-[10px] font-bold text-gray-600 sm:mb-2 sm:text-xs">
+                  <span className="mb-1 block text-xs font-bold text-gray-600 sm:mb-2">
                     {formatDate(news.pubDate)} · {news.category}
                   </span>
                   <h4 className="mb-2 text-base leading-snug font-bold text-gray-900 transition group-hover:text-green-800 sm:text-lg md:text-xl">
                     {news.title}
                   </h4>
-                  <p className="line-clamp-2 text-xs text-gray-600 sm:text-sm">
+                  <p className="line-clamp-2 text-base text-gray-600">
                     {news.description}
                   </p>
                 </article>

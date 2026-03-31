@@ -185,9 +185,11 @@ export default function ProductosElHierroTenerifePage() {
 
             <div className="group overflow-hidden rounded-[2rem] bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
               <div className="relative flex h-64 items-center justify-center bg-yellow-100">
-                <span className="text-9xl transition duration-500 group-hover:scale-125 drop-shadow-md">
-                  🍍
-                </span>
+                <Icon
+                  name="TreePalm"
+                  size={88}
+                  className="text-green-700 transition duration-300 group-hover:scale-110"
+                />
                 <div className="absolute top-4 right-4 rounded-full bg-green-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
                   Fresco
                 </div>

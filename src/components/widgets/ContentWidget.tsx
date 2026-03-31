@@ -40,7 +40,7 @@ export default async function ContentWidget({
         <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:mb-12 sm:flex-row sm:items-end">
           <div className="flex-1">
             {subtitle ? (
-              <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-green-700 sm:text-sm">
+              <span className="mb-2 block text-sm font-bold uppercase tracking-wider text-green-700">
                 {subtitle}
               </span>
             ) : null}
@@ -53,7 +53,7 @@ export default async function ContentWidget({
 
           <Link
             href={viewAllLink ?? "/blog"}
-            className="flex shrink-0 items-center gap-2 text-sm font-bold text-green-700 transition hover:text-green-800 sm:text-base"
+            className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-green-200 bg-white px-5 py-3 text-base font-bold text-green-800 transition hover:bg-green-50 active:scale-[0.99]"
           >
             {viewAllText ?? "Ver todo el Blog"}
             <Icon name="ArrowRight" size={20} />

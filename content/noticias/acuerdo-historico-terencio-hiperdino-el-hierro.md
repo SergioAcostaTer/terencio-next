@@ -1,6 +1,6 @@
 ﻿---
-title: "Terencio y HiperDino sellan un acuerdo estratégico para el futuro de la alimentación en El Hierro"
-description: "Nuestra empresa familiar, Terencio Supermercados, anuncia la integración de sus cuatro puntos de venta físicos en El Hierro en la red de HiperDino, garantizando el empleo local y el apoyo al sector primario."
+title: "Terencio y HiperDino sellan un acuerdo estratégico"
+description: "La integración de los puntos de venta de Terencio en El Hierro garantiza continuidad, empleo local y apoyo al sector primario."
 pubDate: 2025-03-19
 author: "Dirección Terencio"
 image: "../../assets/images/traspasohiperdinoterencio.webp"

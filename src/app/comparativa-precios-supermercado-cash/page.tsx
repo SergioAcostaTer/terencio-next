@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import Hero from "@/components/Hero";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Section from "@/components/ui/Section";
@@ -32,21 +33,12 @@ const comparisonData = [
 export default function ComparativaPreciosSupermercadoCashPage() {
   return (
     <main>
-      <section className="relative overflow-hidden bg-blue-900 py-12 text-white md:py-16">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/90 via-blue-800/60 to-blue-900/90" />
-        <div className="container relative z-10 mx-auto px-4 text-center">
-          <span className="inline-block rounded-full border border-blue-300 bg-blue-800/70 px-3 py-1 text-xs font-bold tracking-wider text-blue-100 uppercase">
-            Ahorro Inteligente
-          </span>
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight md:text-5xl">
-            Supermercado vs <span className="text-yellow-400">Cash Market</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-blue-100">
-            ¿Por qué pagar más por lo mismo? Te explicamos la diferencia real en
-            tu ticket de compra.
-          </p>
-        </div>
-      </section>
+      <Hero
+        title="Supermercado vs <span class='text-yellow-400'>Cash Market</span>"
+        subtitle="¿Por qué pagar más por lo mismo? Te explicamos la diferencia real en tu ticket de compra."
+        badge="Ahorro Inteligente"
+        align="center"
+      />
 
       <Section className="bg-gray-50">
         <div className="container mx-auto px-4">
@@ -74,7 +66,7 @@ export default function ComparativaPreciosSupermercadoCashPage() {
                 </div>
                 <div className="flex flex-grow flex-col gap-6 p-6">
                   <div>
-                    <span className="mb-1 block text-xs font-bold text-red-500">
+                    <span className="mb-1 block text-xs font-bold text-slate-500">
                       Supermercado Convencional
                     </span>
                     <p className="text-sm text-gray-600">{item.supermarket}</p>
@@ -95,7 +87,7 @@ export default function ComparativaPreciosSupermercadoCashPage() {
           <div className="mt-20 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl">
             <div className="grid md:grid-cols-2">
               <div className="flex flex-col justify-center p-10 md:p-14">
-                <span className="mb-2 text-sm font-bold tracking-widest text-blue-600 uppercase">
+                <span className="mb-2 text-sm font-bold tracking-widest text-green-700 uppercase">
                   Caso Real
                 </span>
                 <h3 className="mb-4 text-3xl font-bold text-gray-900">
@@ -112,22 +104,22 @@ export default function ComparativaPreciosSupermercadoCashPage() {
                   <Button
                     href="/cash-and-carry-tenerife"
                     variant="primary"
-                    className="border-none bg-blue-600 text-white hover:bg-blue-700"
+                    className="border-none"
                   >
                     Ver Cómo Funciona
                   </Button>
                 </div>
               </div>
-              <div className="relative flex items-center justify-center overflow-hidden bg-blue-50 p-10">
+              <div className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-green-50 to-yellow-50 p-10">
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10" />
                 <div className="relative z-10 text-center">
-                  <div className="mb-[-20px] text-9xl font-black text-blue-900/20">
+                  <div className="mb-[-20px] text-9xl font-black text-green-900/20">
                     30%
                   </div>
-                  <div className="text-2xl font-bold text-blue-800">
+                  <div className="text-2xl font-bold text-green-900">
                     de ahorro estimado
                   </div>
-                  <p className="mt-2 text-sm text-blue-600">
+                  <p className="mt-2 text-sm text-green-700">
                     en productos básicos y frescos
                   </p>
                 </div>

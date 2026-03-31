@@ -1,6 +1,6 @@
 ---
-title: "Producto Canario y Kilómetro 0 | Terencio Supermercados Tenerife"
-description: "En Terencio defendemos el producto local de Tenerife y El Hierro. Descubre por qué más del 40% de nuestro surtido es Km0 y cómo apoyamos al sector primario."
+title: "Producto canario y kilómetro 0 en Terencio"
+description: "Así trabajamos el producto local de Tenerife y El Hierro para apoyar al sector primario y ofrecer más valor."
 pubDate: 2025-01-22
 author: "Henry Acosta"
 image: "../../assets/images/paisaje.webp"
