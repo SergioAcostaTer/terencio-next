@@ -171,19 +171,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   components={{
                     a: ({ href, children, ...props }) => {
                       if (href?.startsWith("/")) {
-                        return (
-                          <Link href={href} {...props}>
-                            {children}
-                          </Link>
-                        );
+                        return <Link href={href} {...props}>{children}</Link>;
                       }
-
-                      return (
-                        <a href={href} {...props}>
-                          {children}
-                        </a>
-                      );
+                      return <a href={href} target="_blank" rel="noreferrer" {...props}>{children}</a>;
                     },
+                    img: ({ src, alt, ...props }) => (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={src}
+                        alt={alt || ""}
+                        className="my-8 h-auto w-full rounded-2xl object-cover shadow-lg"
+                        loading="lazy"
+                        {...props}
+                      />
+                    ),
                   }}
                 >
                   {post.content}

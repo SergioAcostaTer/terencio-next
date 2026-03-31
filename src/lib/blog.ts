@@ -4,6 +4,7 @@ import path from "node:path";
 import type { StaticImageData } from "next/image";
 
 import paisajeImg from "@/assets/images/paisaje.webp";
+import paisaje2Img from "@/assets/images/paisaje-2.webp";
 import quesoMojoImg from "@/assets/images/queso_mojo.webp";
 import cocheImg from "@/assets/images/coche.webp";
 import supermercadoInteriorImg from "@/assets/images/supermercado-interior.webp";
@@ -13,10 +14,18 @@ import henryAcostaImg from "@/assets/images/henry-acosta-terencio-laguna.webp";
 import quesadillasImg from "@/assets/images/quesadillas.webp";
 import heroBgImg from "@/assets/images/hero-bg.webp";
 import cargadoresElectricosImg from "@/assets/images/cargadores-electricos.webp";
+import elHierroCharcoImg from "@/assets/images/el-hierro-charco.webp";
+import ecomuseoGuineaImg from "@/assets/images/ecomuseo_guinea.webp";
 import faroOrchillaImg from "@/assets/images/faro_orchilla.webp";
+import buceoElHierroExperienciaImg from "@/assets/images/buceo-el-hierro-experiencia.webp";
+import buceoLaRestingaImg from "@/assets/images/buceo_la_restinga.webp";
+import miradorIsoraImg from "@/assets/images/mirador-isora.webp";
 import roqueBonanzaImg from "@/assets/images/Roque-Bonanza-El-Hierro.webp";
 import miradorLasPlayasImg from "@/assets/images/mirador_las_playas.webp";
 import terencioAcostaImg from "@/assets/images/terencio-acosta-entrevista.webp";
+import tuboVolcanicoGuineaImg from "@/assets/images/tubo_volcanico_guinea.webp";
+import rutaVolcanesImg from "@/assets/images/ruta_volcanes.webp";
+import vinosElHierroImg from "@/assets/images/vinos_el_hierro.webp";
 
 export type BlogPostSummary = {
   slug: string;
@@ -38,6 +47,7 @@ export type BlogPost = BlogPostSummary & {
 
 const imageRegistry: Record<string, StaticImageData> = {
   "paisaje.webp": paisajeImg,
+  "paisaje-2.webp": paisaje2Img,
   "queso_mojo.webp": quesoMojoImg,
   "coche.webp": cocheImg,
   "supermercado-interior.webp": supermercadoInteriorImg,
@@ -47,10 +57,18 @@ const imageRegistry: Record<string, StaticImageData> = {
   "quesadillas.webp": quesadillasImg,
   "hero-bg.webp": heroBgImg,
   "cargadores-electricos.webp": cargadoresElectricosImg,
+  "el-hierro-charco.webp": elHierroCharcoImg,
+  "ecomuseo_guinea.webp": ecomuseoGuineaImg,
   "faro_orchilla.webp": faroOrchillaImg,
+  "buceo-el-hierro-experiencia.webp": buceoElHierroExperienciaImg,
+  "buceo_la_restinga.webp": buceoLaRestingaImg,
+  "mirador-isora.webp": miradorIsoraImg,
   "Roque-Bonanza-El-Hierro.webp": roqueBonanzaImg,
   "mirador_las_playas.webp": miradorLasPlayasImg,
   "terencio-acosta-entrevista.webp": terencioAcostaImg,
+  "tubo_volcanico_guinea.webp": tuboVolcanicoGuineaImg,
+  "ruta_volcanes.webp": rutaVolcanesImg,
+  "vinos_el_hierro.webp": vinosElHierroImg,
 };
 
 const blogDir = path.join(process.cwd(), "_astro_staged", "content", "blog");
@@ -118,105 +136,11 @@ function renderInlineMarkdown(value: string) {
     .replace(/`([^`]+)`/g, "<code>$1</code>");
 }
 
-function markdownToHtml(source: string) {
-  const lines = source.replace(/\r\n/g, "\n").split("\n");
-  const blocks: string[] = [];
-  let paragraph: string[] = [];
-  let listItems: string[] = [];
-  let listType: "ul" | "ol" | null = null;
-
-  const flushParagraph = () => {
-    if (paragraph.length === 0) {
-      return;
-    }
-
-    blocks.push(`<p>${renderInlineMarkdown(paragraph.join(" "))}</p>`);
-    paragraph = [];
-  };
-
-  const flushList = () => {
-    if (!listType || listItems.length === 0) {
-      return;
-    }
-
-    blocks.push(
-      `<${listType}>${listItems
-        .map((item) => `<li>${renderInlineMarkdown(item)}</li>`)
-        .join("")}</${listType}>`,
-    );
-    listItems = [];
-    listType = null;
-  };
-
-  for (const rawLine of lines) {
-    const line = rawLine.trim();
-
-    if (!line) {
-      flushParagraph();
-      flushList();
-      continue;
-    }
-
-    if (line === "---") {
-      flushParagraph();
-      flushList();
-      blocks.push("<hr />");
-      continue;
-    }
-
-    const headingMatch = line.match(/^(#{1,6})\s+(.*)$/);
-    if (headingMatch) {
-      flushParagraph();
-      flushList();
-      const level = headingMatch[1].length;
-      blocks.push(
-        `<h${level}>${renderInlineMarkdown(headingMatch[2])}</h${level}>`,
-      );
-      continue;
-    }
-
-    const blockquoteMatch = line.match(/^>\s?(.*)$/);
-    if (blockquoteMatch) {
-      flushParagraph();
-      flushList();
-      blocks.push(
-        `<blockquote><p>${renderInlineMarkdown(
-          blockquoteMatch[1],
-        )}</p></blockquote>`,
-      );
-      continue;
-    }
-
-    const orderedMatch = line.match(/^\d+\.\s+(.*)$/);
-    if (orderedMatch) {
-      flushParagraph();
-      if (listType && listType !== "ol") {
-        flushList();
-      }
-      listType = "ol";
-      listItems.push(orderedMatch[1]);
-      continue;
-    }
-
-    const unorderedMatch = line.match(/^-\s+(.*)$/);
-    if (unorderedMatch) {
-      flushParagraph();
-      if (listType && listType !== "ul") {
-        flushList();
-      }
-      listType = "ul";
-      listItems.push(unorderedMatch[1]);
-      continue;
-    }
-
-    flushList();
-    paragraph.push(line);
-  }
-
-  flushParagraph();
-  flushList();
-
-  return blocks.join("\n");
+function normalizeMarkdownAssetPaths(source: string) {
+  return source.replace(
+    /\.\.\/\.\.\/assets\/images\/([A-Za-z0-9._-]+)/g,
+    (fullMatch, fileName: string) => imageRegistry[fileName]?.src ?? fullMatch,
+  );
 }
 
 async function readBlogSource(slug: string) {
@@ -231,7 +155,8 @@ function mapBlogPost(fileName: string, source: string): BlogPost {
       ? path.basename(frontmatter.image)
       : undefined;
   const tags = Array.isArray(frontmatter.tags) ? frontmatter.tags : [];
-  const content = stripFrontmatter(source).trim();
+  const rawContent = stripFrontmatter(source).trim();
+  const content = normalizeMarkdownAssetPaths(rawContent);
 
   return {
     slug: fileName.replace(/\.md$/, ""),
@@ -260,7 +185,7 @@ function mapBlogPost(fileName: string, source: string): BlogPost {
           ? tags[0]
           : "Blog",
     content,
-    html: markdownToHtml(content),
+    html: normalizeMarkdownAssetPaths(rawContent),
   };
 }
 

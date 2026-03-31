@@ -4,6 +4,7 @@ import path from "node:path";
 import type { StaticImageData } from "next/image";
 
 import visitaEstudiantesImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
+import sostenibilidad1Img from "@/assets/images/sostenibilidad-1.webp";
 import sostenibilidad2Img from "@/assets/images/sostenibilidad-2.webp";
 import henryAcostaImg from "@/assets/images/henry-acosta-terencio-laguna.webp";
 import terencioAcostaImg from "@/assets/images/terencio-acosta-entrevista.webp";
@@ -29,6 +30,7 @@ export type NewsPost = NewsPostSummary & {
 
 const imageRegistry: Record<string, StaticImageData> = {
   "visita-estudiantes-bachillerato.webp": visitaEstudiantesImg,
+  "sostenibilidad-1.webp": sostenibilidad1Img,
   "sostenibilidad-2.webp": sostenibilidad2Img,
   "henry-acosta-terencio-laguna.webp": henryAcostaImg,
   "terencio-acosta-entrevista.webp": terencioAcostaImg,
@@ -105,105 +107,11 @@ function renderInlineMarkdown(value: string) {
     .replace(/`([^`]+)`/g, "<code>$1</code>");
 }
 
-function markdownToHtml(source: string) {
-  const lines = source.replace(/\r\n/g, "\n").split("\n");
-  const blocks: string[] = [];
-  let paragraph: string[] = [];
-  let listItems: string[] = [];
-  let listType: "ul" | "ol" | null = null;
-
-  const flushParagraph = () => {
-    if (paragraph.length === 0) {
-      return;
-    }
-
-    blocks.push(`<p>${renderInlineMarkdown(paragraph.join(" "))}</p>`);
-    paragraph = [];
-  };
-
-  const flushList = () => {
-    if (!listType || listItems.length === 0) {
-      return;
-    }
-
-    blocks.push(
-      `<${listType}>${listItems
-        .map((item) => `<li>${renderInlineMarkdown(item)}</li>`)
-        .join("")}</${listType}>`,
-    );
-    listItems = [];
-    listType = null;
-  };
-
-  for (const rawLine of lines) {
-    const line = rawLine.trim();
-
-    if (!line) {
-      flushParagraph();
-      flushList();
-      continue;
-    }
-
-    if (line === "---") {
-      flushParagraph();
-      flushList();
-      blocks.push("<hr />");
-      continue;
-    }
-
-    const headingMatch = line.match(/^(#{1,6})\s+(.*)$/);
-    if (headingMatch) {
-      flushParagraph();
-      flushList();
-      const level = headingMatch[1].length;
-      blocks.push(
-        `<h${level}>${renderInlineMarkdown(headingMatch[2])}</h${level}>`,
-      );
-      continue;
-    }
-
-    const blockquoteMatch = line.match(/^>\s?(.*)$/);
-    if (blockquoteMatch) {
-      flushParagraph();
-      flushList();
-      blocks.push(
-        `<blockquote><p>${renderInlineMarkdown(
-          blockquoteMatch[1],
-        )}</p></blockquote>`,
-      );
-      continue;
-    }
-
-    const orderedMatch = line.match(/^\d+\.\s+(.*)$/);
-    if (orderedMatch) {
-      flushParagraph();
-      if (listType && listType !== "ol") {
-        flushList();
-      }
-      listType = "ol";
-      listItems.push(orderedMatch[1]);
-      continue;
-    }
-
-    const unorderedMatch = line.match(/^[-*]\s+(.*)$/);
-    if (unorderedMatch) {
-      flushParagraph();
-      if (listType && listType !== "ul") {
-        flushList();
-      }
-      listType = "ul";
-      listItems.push(unorderedMatch[1]);
-      continue;
-    }
-
-    flushList();
-    paragraph.push(line);
-  }
-
-  flushParagraph();
-  flushList();
-
-  return blocks.join("\n");
+function normalizeMarkdownAssetPaths(source: string) {
+  return source.replace(
+    /\.\.\/\.\.\/assets\/images\/([A-Za-z0-9._-]+)/g,
+    (fullMatch, fileName: string) => imageRegistry[fileName]?.src ?? fullMatch,
+  );
 }
 
 async function readNewsSource(slug: string) {
@@ -218,7 +126,8 @@ function mapNewsPost(fileName: string, source: string): NewsPost {
       ? path.basename(frontmatter.image)
       : undefined;
   const tags = Array.isArray(frontmatter.tags) ? frontmatter.tags : [];
-  const content = stripFrontmatter(source).trim();
+  const rawContent = stripFrontmatter(source).trim();
+  const content = normalizeMarkdownAssetPaths(rawContent);
 
   return {
     slug: fileName.replace(/\.md$/, ""),
@@ -247,7 +156,7 @@ function mapNewsPost(fileName: string, source: string): NewsPost {
         ? frontmatter.isBreaking
         : false,
     content,
-    html: markdownToHtml(content),
+    html: normalizeMarkdownAssetPaths(rawContent),
   };
 }
 
