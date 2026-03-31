@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Section from "@/components/ui/Section";
+import siteData from "@/data/siteData.json";
 
 export const metadata: Metadata = {
   title: "Asaderos en Tenerife: Carne, Leña y Carbón en La Esperanza | Terencio",
@@ -21,7 +22,7 @@ export default function AsaderosTenerifePage() {
         badge="Parada Obligatoria"
         align="center"
         primaryCta={{ text: "Ver Carne de Fiesta", href: "/carniceria-tenerife" }}
-        secondaryCta={{ text: "Cómo Llegar", href: "https://maps.app.goo.gl/YourGoogleMapsLink" }}
+        secondaryCta={{ text: "Cómo Llegar", href: siteData.social.googleMaps }}
         backgroundImage={heroBg}
       />
 

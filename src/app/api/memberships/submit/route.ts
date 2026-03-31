@@ -15,9 +15,9 @@ function buildEmailContent(params: {
   nifCif: string;
   type: string;
   notes?: string;
-  dniFileUrl?: string;
-  modelFileUrl?: string;
-  certificateUrl?: string;
+  hasDniFile: boolean;
+  hasModelFile: boolean;
+  hasCertificateFile: boolean;
 }) {
   const lines = [
     `Razón social / Nombre legal: ${params.legalName}`,
@@ -27,9 +27,9 @@ function buildEmailContent(params: {
     `NIF/CIF: ${params.nifCif}`,
     `Tipo: ${params.type}`,
     `Notas: ${params.notes || "-"}`,
-    `Documento DNI/CIF: ${params.dniFileUrl || "-"}`,
-    `Modelo 21/62: ${params.modelFileUrl || "-"}`,
-    `Certificado autónomo: ${params.certificateUrl || "-"}`,
+    `Documento DNI/CIF: ${params.hasDniFile ? "Adjuntado (ver backoffice)" : "-"}`,
+    `Modelo 21/62: ${params.hasModelFile ? "Adjuntado (ver backoffice)" : "-"}`,
+    `Certificado autónomo: ${params.hasCertificateFile ? "Adjuntado (ver backoffice)" : "-"}`,
   ];
 
   return {
@@ -108,20 +108,20 @@ export async function POST(request: Request) {
         ...parsed.data,
         commercialName: parsed.data.commercialName || null,
         notes: parsed.data.notes || null,
-        dniFileUrl: dniUpload?.url,
+        dniFileUrl: null,
         dniFileKey: dniUpload?.key,
-        modelFileUrl: modelUpload?.url,
+        modelFileUrl: null,
         modelFileKey: modelUpload?.key,
-        certificateUrl: certificateUpload?.url,
+        certificateUrl: null,
         certificateKey: certificateUpload?.key,
       },
     });
 
     const emailContent = buildEmailContent({
       ...parsed.data,
-      dniFileUrl: dniUpload?.url,
-      modelFileUrl: modelUpload?.url,
-      certificateUrl: certificateUpload?.url,
+      hasDniFile: Boolean(dniUpload?.key),
+      hasModelFile: Boolean(modelUpload?.key),
+      hasCertificateFile: Boolean(certificateUpload?.key),
     });
 
     await sendEmail({
@@ -136,7 +136,7 @@ export async function POST(request: Request) {
     await Promise.all(
       uploadedKeys.map(async (key) => {
         try {
-          await deleteFile(key);
+          await deleteFile(key, "memberships");
         } catch {
           // Best-effort cleanup only.
         }

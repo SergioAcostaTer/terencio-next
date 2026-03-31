@@ -49,7 +49,7 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
     where: { id },
   });
 
-  await deleteFile(slide.key).catch(() => undefined);
+  await deleteFile(slide.key, "slides").catch(() => undefined);
 
   return NextResponse.json({ ok: true });
 }

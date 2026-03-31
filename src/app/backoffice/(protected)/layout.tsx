@@ -33,6 +33,12 @@ export default async function BackofficeProtectedLayout({
         <aside className="rounded-3xl bg-slate-900 p-4 text-white shadow-sm">
           <nav className="space-y-2">
             <Link
+              href="/backoffice/submissions"
+              className="block rounded-2xl px-4 py-3 text-sm font-semibold transition hover:bg-white/10"
+            >
+              Consultas
+            </Link>
+            <Link
               href="/backoffice/memberships"
               className="block rounded-2xl px-4 py-3 text-sm font-semibold transition hover:bg-white/10"
             >

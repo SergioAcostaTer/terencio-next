@@ -4,56 +4,40 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CheckCircle, FileText, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import siteData from '../../data/siteData.json';
 
-const professionalSchema = z.object({
-  businessName: z.string().min(2, "El nombre del negocio es obligatorio"),
-  sector: z.string().min(1, "Selecciona un sector"),
-  email: z.string().email("Introduce un email válido"),
-  phone: z.string().min(9, "Introduce un teléfono válido"),
-  honeypot: z.string().optional(),
-});
-
-type ProfessionalFormData = z.infer<typeof professionalSchema>;
+import {
+  professionalSubmissionSchema,
+  type ProfessionalSubmissionInput,
+} from '@/lib/form-submissions';
 
 export default function ProfessionalForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ProfessionalFormData>({
-    resolver: zodResolver(professionalSchema),
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ProfessionalSubmissionInput>({
+    resolver: zodResolver(professionalSubmissionSchema),
   });
 
-  const onSubmit = async (data: ProfessionalFormData) => {
+  const onSubmit = async (data: ProfessionalSubmissionInput) => {
     if (data.honeypot) return;
 
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('/api/professional', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            access_key: "82d5137b-b53c-414f-9671-eadf139e9505",
-            subject: "Nueva solicitud de tarifas mayoristas - Terencio Profesionales",
-            from_name: "Web Terencio Profesionales",
-            ...data
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (result.success) {
-        // Redirect to Thank You Page
+      if (response.ok) {
+        reset();
         window.location.href = '/gracias';
       } else {
         setSubmitStatus('error');
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

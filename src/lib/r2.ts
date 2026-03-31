@@ -2,9 +2,11 @@ import "server-only";
 
 import {
   DeleteObjectCommand,
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { randomUUID } from "crypto";
 import path from "path";
 
@@ -23,6 +25,14 @@ function getR2Client() {
       secretAccessKey: env.R2_SECRET_ACCESS_KEY,
     },
   });
+}
+
+function getPublicBucketName() {
+  return getEnv().R2_PUBLIC_BUCKET_NAME;
+}
+
+function getPrivateBucketName() {
+  return getEnv().R2_PRIVATE_BUCKET_NAME;
 }
 
 function sanitizeFilename(filename: string) {
@@ -47,13 +57,14 @@ export async function uploadFile(file: File, folder: "memberships" | "slides") {
     throw new Error("Invalid upload folder");
   }
 
-  const env = getEnv();
   const key = `${folder}/${randomUUID()}-${sanitizeFilename(file.name)}`;
   const buffer = Buffer.from(await file.arrayBuffer());
+  const bucketName =
+    folder === "slides" ? getPublicBucketName() : getPrivateBucketName();
 
   await getR2Client().send(
     new PutObjectCommand({
-      Bucket: env.R2_BUCKET_NAME,
+      Bucket: bucketName,
       Key: key,
       Body: buffer,
       ContentType: file.type || "application/octet-stream",
@@ -63,16 +74,32 @@ export async function uploadFile(file: File, folder: "memberships" | "slides") {
 
   return {
     key,
-    url: getPublicUrl(key),
+    url: folder === "slides" ? getPublicUrl(key) : undefined,
   };
 }
 
-export async function deleteFile(key: string) {
+export async function getPrivateSignedUrl(key: string) {
   const env = getEnv();
+
+  return getSignedUrl(
+    getR2Client(),
+    new GetObjectCommand({
+      Bucket: getPrivateBucketName(),
+      Key: key,
+    }),
+    {
+      expiresIn: env.R2_PRIVATE_URL_EXPIRES_SECONDS ?? 900,
+    },
+  );
+}
+
+export async function deleteFile(key: string, folder: "memberships" | "slides") {
+  const bucketName =
+    folder === "slides" ? getPublicBucketName() : getPrivateBucketName();
 
   await getR2Client().send(
     new DeleteObjectCommand({
-      Bucket: env.R2_BUCKET_NAME,
+      Bucket: bucketName,
       Key: key,
     }),
   );

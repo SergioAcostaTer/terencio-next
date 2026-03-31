@@ -332,7 +332,7 @@ Antes de volver a tu país, asegúrate de tener:
 **Parking:** Gratuito  
 **WiFi:** No disponible
 
-**Teléfono (por si te pierdes):** [Insertar teléfono]
+**Teléfono (por si te pierdes):** 922 31 21 22
 
 ---
 

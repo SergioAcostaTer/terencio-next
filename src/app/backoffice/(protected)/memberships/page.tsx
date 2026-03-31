@@ -1,5 +1,30 @@
 import { prisma } from "@/lib/prisma";
 
+function getFileHref(item: {
+  id: string;
+  dniFileKey: string | null;
+  modelFileKey: string | null;
+  certificateKey: string | null;
+  dniFileUrl: string | null;
+  modelFileUrl: string | null;
+  certificateUrl: string | null;
+}, fileType: "dni" | "model" | "certificate") {
+  switch (fileType) {
+    case "dni":
+      return item.dniFileKey
+        ? `/api/memberships/${item.id}/files/dni`
+        : item.dniFileUrl;
+    case "model":
+      return item.modelFileKey
+        ? `/api/memberships/${item.id}/files/model`
+        : item.modelFileUrl;
+    case "certificate":
+      return item.certificateKey
+        ? `/api/memberships/${item.id}/files/certificate`
+        : item.certificateUrl;
+  }
+}
+
 export default async function MembershipsPage() {
   const submissions = await prisma.membershipSubmission.findMany({
     orderBy: { createdAt: "desc" },
@@ -46,9 +71,9 @@ export default async function MembershipsPage() {
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex flex-col gap-2">
-                      {item.dniFileUrl ? (
+                      {item.dniFileUrl || item.dniFileKey ? (
                         <a
-                          href={item.dniFileUrl}
+                          href={getFileHref(item, "dni") || "#"}
                           target="_blank"
                           rel="noreferrer"
                           className="text-green-700 hover:underline"
@@ -56,9 +81,9 @@ export default async function MembershipsPage() {
                           DNI / CIF
                         </a>
                       ) : null}
-                      {item.modelFileUrl ? (
+                      {item.modelFileUrl || item.modelFileKey ? (
                         <a
-                          href={item.modelFileUrl}
+                          href={getFileHref(item, "model") || "#"}
                           target="_blank"
                           rel="noreferrer"
                           className="text-green-700 hover:underline"
@@ -66,9 +91,9 @@ export default async function MembershipsPage() {
                           Modelo 21/62
                         </a>
                       ) : null}
-                      {item.certificateUrl ? (
+                      {item.certificateUrl || item.certificateKey ? (
                         <a
-                          href={item.certificateUrl}
+                          href={getFileHref(item, "certificate") || "#"}
                           target="_blank"
                           rel="noreferrer"
                           className="text-green-700 hover:underline"

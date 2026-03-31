@@ -3,56 +3,36 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CheckCircle, Loader2, Mail, MessageSquare, Phone, Send, User } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 
-const contactSchema = z.object({
-  name: z.string().min(2, "El nombre es muy corto"),
-  email: z.string().email("Email inválido"),
-  phone: z.string().min(9, "Teléfono inválido"),
-  topic: z.string().min(1, "Selecciona un motivo"),
-  message: z.string().min(10, "Cuéntanos un poco más (mín. 10 caracteres)"),
-  honeypot: z.string().optional(),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
+import { contactSubmissionSchema, type ContactSubmissionInput } from '@/lib/form-submissions';
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactSubmissionInput>({
+    resolver: zodResolver(contactSubmissionSchema),
   });
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async (data: ContactSubmissionInput) => {
     if (data.honeypot) return;
 
     setIsSubmitting(true);
     
     try {
-      // Replace with your Web3Forms Access Key or API endpoint
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-            access_key: "YOUR_ACCESS_KEY_HERE", // IMPORTANT: Add your key here
-            subject: `Nuevo mensaje Web: ${data.topic}`,
-            from_name: "Terencio Web Contact",
-            ...data
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (result.success) {
+      if (response.ok) {
         setSubmitStatus('success');
         reset();
-        // Optional: Redirect to thank you page
-        // window.location.href = '/gracias';
       } else {
         setSubmitStatus('error');
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

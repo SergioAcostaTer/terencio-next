@@ -60,6 +60,11 @@ export async function POST(request: NextRequest) {
     }
 
     const upload = await uploadFile(mediaFile, "slides");
+
+    if (!upload.url) {
+      throw new Error("No se pudo generar la URL pública de la diapositiva.");
+    }
+
     const slide = await prisma.slide.create({
       data: {
         ...parsed.data,

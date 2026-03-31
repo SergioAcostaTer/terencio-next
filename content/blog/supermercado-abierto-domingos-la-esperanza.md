@@ -291,7 +291,7 @@ A diferencia de gasolineras o algunos comercios que suben precios en festivos, e
 
 **Antes de venir, confirma:**
 - **Instagram/Facebook:** @terenciocashmarket
-- **Teléfono:** [Insertar teléfono]
+- **Teléfono:** 922 31 21 22
 - **Google Maps:** "Terencio Cash Market" (horario actualizado en tiempo real)
 
 **Pregunta más frecuente:** "¿De verdad abren TODOS los domingos?"  

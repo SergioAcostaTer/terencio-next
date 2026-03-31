@@ -32,6 +32,34 @@ model MembershipSubmission {
   createdAt      DateTime @default(now())
 }
 
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  topic     String
+  message   String
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
+
+model ProfessionalSubmission {
+  id           String   @id @default(cuid())
+  businessName String
+  sector       String
+  email        String
+  phone        String
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+}
+
+model NewsletterSubscription {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  status    String   @default("active")
+  createdAt DateTime @default(now())
+}
+
 model Slide {
   id          String   @id @default(cuid())
   type        String

@@ -5,52 +5,39 @@ import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 
-const newsletterSchema = z.object({
-  email: z.string().email("Introduce un email válido"),
-  honeypot: z.string().optional(),
-});
-
-type NewsletterFormData = z.infer<typeof newsletterSchema>;
+import {
+  newsletterSubscriptionSchema,
+  type NewsletterSubscriptionInput,
+} from '@/lib/form-submissions';
 
 export default function NewsletterForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<NewsletterFormData>({
-    resolver: zodResolver(newsletterSchema),
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<NewsletterSubscriptionInput>({
+    resolver: zodResolver(newsletterSubscriptionSchema),
   });
 
-  const onSubmit = async (data: NewsletterFormData) => {
+  const onSubmit = async (data: NewsletterSubscriptionInput) => {
     if (data.honeypot) return;
 
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('/api/newsletter', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            access_key: "82d5137b-b53c-414f-9671-eadf139e9505",
-            subject: "Nueva suscripción a la Newsletter (Inicio)",
-            from_name: "Web Terencio Cash Market",
-            ...data
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (result.success) {
+      if (response.ok) {
         setSubmitStatus('success');
         reset();
       } else {
         setSubmitStatus('error');
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
