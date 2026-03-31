@@ -1,7 +1,9 @@
 import SlidesManager from "@/components/backoffice/SlidesManager";
+import { assertPermission, requireAdminPermission } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export default async function SlidesPage() {
+  const session = await requireAdminPermission("slides.read");
   const slides = await prisma.slide.findMany({
     orderBy: [{ order: "asc" }, { createdAt: "asc" }],
   });
@@ -31,7 +33,7 @@ export default async function SlidesPage() {
         </div>
       </section>
 
-      <SlidesManager slides={slides} />
+      <SlidesManager slides={slides} canManage={assertPermission(session, "slides.write")} />
     </div>
   );
 }

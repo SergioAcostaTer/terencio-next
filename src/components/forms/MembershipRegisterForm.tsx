@@ -9,12 +9,29 @@ import { z } from "zod";
 import Button from "@/components/ui/Button";
 import { membershipSchema } from "@/lib/membership";
 
+function isFileList(value: unknown): value is FileList {
+  return typeof FileList !== "undefined" && value instanceof FileList;
+}
+
+function fileListSchema(requiredMessage?: string) {
+  return z
+    .custom<FileList | undefined>((value) => value === undefined || isFileList(value), {
+      message: "Adjunta un archivo válido.",
+    })
+    .superRefine((value, ctx) => {
+      if (requiredMessage && (!value || value.length === 0)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: requiredMessage,
+        });
+      }
+    });
+}
+
 const formSchema = membershipSchema.extend({
-  dniFile: z.instanceof(FileList).refine((files) => files.length > 0, {
-    message: "Adjunta el DNI o CIF.",
-  }),
-  modelFile: z.instanceof(FileList).optional(),
-  certificateFile: z.instanceof(FileList).optional(),
+  dniFile: fileListSchema("Adjunta el DNI o CIF."),
+  modelFile: fileListSchema(),
+  certificateFile: fileListSchema(),
 });
 
 type FormValues = z.infer<typeof formSchema>;

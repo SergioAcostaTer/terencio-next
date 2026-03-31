@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 
 import BackofficeHeader from "@/components/backoffice/BackofficeHeader";
 import BackofficeSidebar from "@/components/backoffice/BackofficeSidebar";
+import type { AdminRole } from "@/lib/admin-users";
 import type { BackofficeNavItem } from "@/lib/backoffice-navigation";
 
 type BackofficeLayoutShellProps = {
   children: React.ReactNode;
   navItems: BackofficeNavItem[];
   sessionEmail: string;
+  sessionRole: AdminRole;
 };
 
 const SIDEBAR_EXPANDED_WIDTH = 288;
@@ -21,6 +23,7 @@ export default function BackofficeLayoutShell({
   children,
   navItems,
   sessionEmail,
+  sessionRole,
 }: BackofficeLayoutShellProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -90,6 +93,7 @@ export default function BackofficeLayoutShell({
           isMobileNavOpen={mobileOpen}
           searchValue={searchValue}
           sessionEmail={sessionEmail}
+          sessionRole={sessionRole}
           onSearchChange={setSearchValue}
           onToggleMobileNav={() => setMobileOpen((value) => !value)}
         />

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Lock, MonitorUp, PanelsTopLeft, ShieldCheck } from "lucide-react";
 
@@ -98,7 +99,9 @@ export default function BackofficeLoginPage() {
                   Usa tus credenciales de administrador para entrar.
                 </p>
               </div>
-              <LoginForm />
+              <Suspense fallback={<div className="text-sm text-slate-500">Cargando acceso...</div>}>
+                <LoginForm />
+              </Suspense>
             </div>
           </div>
         </section>

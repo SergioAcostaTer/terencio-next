@@ -6,6 +6,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";
 
+import type { AdminRole, PermissionKey } from "@/lib/admin-users";
+import { hasPermission, isRootAdminEmail } from "@/lib/admin-users";
 import { getEnv } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 
@@ -15,6 +17,11 @@ const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7;
 type SessionPayload = {
   userId: string;
   email: string;
+};
+
+export type AdminSession = SessionPayload & {
+  role: AdminRole;
+  isRoot: boolean;
 };
 
 function getSecretKey() {
@@ -59,43 +66,85 @@ export async function clearSession() {
   cookieStore.delete(SESSION_COOKIE_NAME);
 }
 
+async function resolveSessionFromToken(token: string | undefined) {
+  if (!token) {
+    return { session: null, disabled: false as const };
+  }
+
+  let payload: SessionPayload;
+
+  try {
+    payload = await verifyToken(token);
+  } catch {
+    return { session: null, disabled: false as const };
+  }
+
+  const admin = await prisma.adminUser.findUnique({
+    where: { id: payload.userId },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      isActive: true,
+    },
+  });
+
+  if (!admin || !admin.isActive) {
+    return { session: null, disabled: true as const };
+  }
+
+  return {
+    session: {
+      userId: admin.id,
+      email: admin.email,
+      role: admin.role,
+      isRoot: isRootAdminEmail(admin.email, getEnv().ADMIN_EMAIL),
+    } satisfies AdminSession,
+    disabled: false as const,
+  };
+}
+
 export async function getSessionFromCookies() {
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
-
-  if (!token) {
-    return null;
-  }
-
-  try {
-    return await verifyToken(token);
-  } catch {
-    return null;
-  }
+  const { session } = await resolveSessionFromToken(token);
+  return session;
 }
 
 export async function getSessionFromRequest(request: NextRequest) {
   const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
-
-  if (!token) {
-    return null;
-  }
-
-  try {
-    return await verifyToken(token);
-  } catch {
-    return null;
-  }
+  const { session } = await resolveSessionFromToken(token);
+  return session;
 }
 
 export async function requireAdminSession() {
-  const session = await getSessionFromCookies();
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  const { session, disabled } = await resolveSessionFromToken(token);
 
   if (!session) {
+    if (disabled) {
+      redirect("/api/auth/logout?next=/backoffice/login?error=account_disabled");
+    }
+
     redirect("/backoffice/login");
   }
 
   return session;
+}
+
+export async function requireAdminPermission(permission: PermissionKey) {
+  const session = await requireAdminSession();
+
+  if (!hasPermission(session.role, permission)) {
+    redirect("/backoffice");
+  }
+
+  return session;
+}
+
+export function assertPermission(session: AdminSession, permission: PermissionKey) {
+  return hasPermission(session.role, permission);
 }
 
 export async function authenticateAdmin(email: string, password: string) {
@@ -103,7 +152,7 @@ export async function authenticateAdmin(email: string, password: string) {
     where: { email: email.toLowerCase() },
   });
 
-  if (!admin) {
+  if (!admin || !admin.isActive) {
     return null;
   }
 

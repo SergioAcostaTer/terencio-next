@@ -1,5 +1,6 @@
 import { BadgeCheck, FileText, FolderOpen, Users2 } from "lucide-react";
 
+import { requireAdminPermission } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 function getFileHref(
@@ -68,6 +69,8 @@ function FileLink({ href, label }: { href: string | null | undefined; label: str
 }
 
 export default async function MembershipsPage() {
+  await requireAdminPermission("memberships.read");
+
   const submissions = await prisma.membershipSubmission.findMany({
     orderBy: { createdAt: "desc" },
   });

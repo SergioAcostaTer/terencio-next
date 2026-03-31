@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { getSessionFromRequest } from "@/lib/auth";
+import { assertPermission, getSessionFromRequest } from "@/lib/auth";
 import { slideUpdateSchema } from "@/lib/membership";
 import { prisma } from "@/lib/prisma";
 import { deleteFile } from "@/lib/r2";
@@ -17,7 +17,7 @@ type RouteContext = {
 export async function PATCH(request: NextRequest, context: RouteContext) {
   const session = await getSessionFromRequest(request);
 
-  if (!session) {
+  if (!session || !assertPermission(session, "slides.write")) {
     return NextResponse.json({ error: "No autorizado." }, { status: 401 });
   }
 
@@ -40,7 +40,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 export async function DELETE(request: NextRequest, context: RouteContext) {
   const session = await getSessionFromRequest(request);
 
-  if (!session) {
+  if (!session || !assertPermission(session, "slides.write")) {
     return NextResponse.json({ error: "No autorizado." }, { status: 401 });
   }
 

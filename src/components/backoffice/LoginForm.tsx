@@ -21,7 +21,11 @@ const inputCls = (hasError?: boolean) =>
 export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    searchParams.get("error") === "account_disabled"
+      ? "Tu cuenta está desactivada o la sesión ha sido revocada."
+      : null,
+  );
   const [showPassword, setShowPassword] = useState(false);
 
   const {

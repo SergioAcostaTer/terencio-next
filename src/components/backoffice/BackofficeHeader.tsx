@@ -4,12 +4,14 @@ import { useEffect, useRef, useState } from "react";
 
 import LogoutButton from "@/components/backoffice/LogoutButton";
 import Icon from "@/components/ui/Icon";
+import { roleLabels, type AdminRole } from "@/lib/admin-users";
 
 type BackofficeHeaderProps = {
   collapsed: boolean;
   isMobileNavOpen: boolean;
   searchValue: string;
   sessionEmail: string;
+  sessionRole: AdminRole;
   onSearchChange: (value: string) => void;
   onToggleMobileNav: () => void;
 };
@@ -35,6 +37,7 @@ export default function BackofficeHeader({
   isMobileNavOpen,
   searchValue,
   sessionEmail,
+  sessionRole,
   onSearchChange,
   onToggleMobileNav,
 }: BackofficeHeaderProps) {
@@ -139,7 +142,9 @@ export default function BackofficeHeader({
               </span>
               <span className="hidden min-w-0 sm:block">
                 <span className="block truncate text-sm font-bold text-slate-950">{userName}</span>
-                <span className="block truncate text-xs text-slate-500">{sessionEmail}</span>
+                <span className="block truncate text-xs text-slate-500">
+                  {roleLabels[sessionRole]} · {sessionEmail}
+                </span>
               </span>
               <Icon name="ChevronDown" className="hidden h-4 w-4 text-slate-400 sm:block" />
             </button>
@@ -154,6 +159,9 @@ export default function BackofficeHeader({
                   </p>
                   <p className="mt-2 text-sm font-bold text-slate-950">{userName}</p>
                   <p className="mt-1 text-sm text-slate-500">{sessionEmail}</p>
+                  <p className="mt-2 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-slate-700">
+                    {roleLabels[sessionRole]}
+                  </p>
                 </div>
                 <div className="mt-3">
                   <LogoutButton className="w-full justify-center" />

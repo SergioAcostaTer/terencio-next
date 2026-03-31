@@ -14,7 +14,10 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-type SlidesManagerProps = { slides: Slide[] };
+type SlidesManagerProps = {
+  slides: Slide[];
+  canManage?: boolean;
+};
 
 type UploadItem = {
   id: string;
@@ -48,7 +51,10 @@ function reorderSlides(items: Slide[], draggedId: string, targetId: string) {
 const inputCls =
   "w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100/80";
 
-export default function SlidesManager({ slides }: SlidesManagerProps) {
+export default function SlidesManager({
+  slides,
+  canManage = true,
+}: SlidesManagerProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const itemsRef = useRef<Slide[]>(slides);
   const [items, setItems] = useState<Slide[]>(slides);
@@ -97,6 +103,10 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
   }
 
   async function handleBatchUpload() {
+    if (!canManage) {
+      return;
+    }
+
     if (uploadQueue.length === 0) {
       setError("Añade al menos un archivo para cargar.");
       return;
@@ -147,6 +157,10 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
   }
 
   async function persistOrder(nextItems: Slide[]) {
+    if (!canManage) {
+      return;
+    }
+
     setIsSavingOrder(true);
     setError(null);
 
@@ -177,6 +191,10 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
   }
 
   async function handleSaveSlide(slide: Slide) {
+    if (!canManage) {
+      return;
+    }
+
     setSavingIds((current) => [...current, slide.id]);
     setError(null);
 
@@ -203,6 +221,10 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
   }
 
   async function handleDelete(id: string) {
+    if (!canManage) {
+      return;
+    }
+
     if (!confirm("¿Eliminar esta diapositiva?")) {
       return;
     }
@@ -256,7 +278,8 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-900 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-800"
+            disabled={!canManage}
+            className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-900 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-800 disabled:opacity-60"
           >
             <Plus className="h-4 w-4" />
             Añadir archivos
@@ -278,10 +301,16 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
         />
 
         <div
-          onDragOver={(event) => event.preventDefault()}
+          onDragOver={(event) => {
+            if (canManage) {
+              event.preventDefault();
+            }
+          }}
           onDrop={(event) => {
             event.preventDefault();
-            addFiles(event.dataTransfer.files);
+            if (canManage) {
+              addFiles(event.dataTransfer.files);
+            }
           }}
           className="rounded-[28px] border-2 border-dashed border-blue-200 bg-[linear-gradient(180deg,rgba(239,246,255,0.9),rgba(248,250,252,0.9))] px-6 py-10 text-center"
         >
@@ -292,7 +321,9 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
             Suelta aquí imágenes o vídeos
           </p>
           <p className="mt-2 text-sm text-slate-500">
-            También puedes seleccionar varios archivos de una vez.
+            {canManage
+              ? "También puedes seleccionar varios archivos de una vez."
+              : "Tu rol puede revisar el tablero, pero no publicar ni editar diapositivas."}
           </p>
         </div>
 
@@ -358,6 +389,7 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
                   value={durationSec}
                   onChange={(event) => setDurationSec(Number(event.target.value))}
                   className={inputCls}
+                  disabled={!canManage}
                 />
               </div>
               <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium text-slate-700">
@@ -366,17 +398,18 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
                   checked={isActiveByDefault}
                   onChange={(event) => setIsActiveByDefault(event.target.checked)}
                   className="h-4 w-4 rounded border-slate-300 text-blue-700 focus:ring-blue-500"
+                  disabled={!canManage}
                 />
                 Activar nuevas diapositivas al subir
               </label>
               <button
                 type="button"
                 onClick={handleBatchUpload}
-                disabled={isUploading || uploadQueue.length === 0}
+                disabled={!canManage || isUploading || uploadQueue.length === 0}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#1d4ed8,#0f172a)] px-5 py-3 text-sm font-bold text-white shadow-[0_18px_35px_-20px_rgba(29,78,216,0.95)] transition hover:translate-y-[-1px] disabled:translate-y-0 disabled:opacity-60"
               >
                 {isUploading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <UploadCloud className="h-4 w-4" />}
-                {isUploading ? "Subiendo..." : "Subir lote"}
+                {!canManage ? "Solo lectura" : isUploading ? "Subiendo..." : "Subir lote"}
               </button>
             </div>
           </div>
@@ -428,9 +461,16 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
               return (
                 <article
                   key={slide.id}
-                  draggable
-                  onDragStart={() => setDraggedId(slide.id)}
+                  draggable={canManage}
+                  onDragStart={() => {
+                    if (canManage) {
+                      setDraggedId(slide.id);
+                    }
+                  }}
                   onDragOver={(event) => {
+                    if (!canManage) {
+                      return;
+                    }
                     event.preventDefault();
                     if (!draggedId || draggedId === slide.id) {
                       return;
@@ -443,7 +483,9 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
                   }}
                   onDragEnd={async () => {
                     setDraggedId(null);
-                    await persistOrder(itemsRef.current);
+                    if (canManage) {
+                      await persistOrder(itemsRef.current);
+                    }
                   }}
                   className={`overflow-hidden rounded-[24px] border bg-white transition ${
                     draggedId === slide.id
@@ -469,7 +511,7 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
                     <div className="absolute bottom-3 left-3">
                       <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-800">
                         <GripVertical className="h-3.5 w-3.5" />
-                        Arrastrar
+                        {canManage ? "Arrastrar" : "Lectura"}
                       </span>
                     </div>
                   </div>
@@ -521,6 +563,7 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
                             })
                           }
                           className={inputCls}
+                          disabled={!canManage}
                         />
                       </div>
                       <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium text-slate-700 sm:self-end">
@@ -533,6 +576,7 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
                             })
                           }
                           className="h-4 w-4 rounded border-slate-300 text-blue-700 focus:ring-blue-500"
+                          disabled={!canManage}
                         />
                         Visible
                       </label>
@@ -542,16 +586,16 @@ export default function SlidesManager({ slides }: SlidesManagerProps) {
                       <button
                         type="button"
                         onClick={() => handleSaveSlide(slide)}
-                        disabled={isSaving || isDeleting}
+                        disabled={!canManage || isSaving || isDeleting}
                         className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-4 py-3 text-sm font-bold text-white transition hover:bg-blue-700 disabled:opacity-60"
                       >
                         {isSaving ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
-                        Guardar
+                        {canManage ? "Guardar" : "Bloqueado"}
                       </button>
                       <button
                         type="button"
                         onClick={() => handleDelete(slide.id)}
-                        disabled={isDeleting}
+                        disabled={!canManage || isDeleting}
                         className="inline-flex items-center justify-center rounded-2xl border border-red-200 bg-white px-4 py-3 text-red-600 transition hover:bg-red-50 disabled:opacity-60"
                         aria-label="Eliminar diapositiva"
                       >

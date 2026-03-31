@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Inbox, Mail, MessageSquareText, Newspaper, PhoneCall } from "lucide-react";
 
+import { requireAdminPermission } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 function formatDate(value: Date) {
@@ -72,6 +73,8 @@ function EmptyState({ message }: { message: string }) {
 }
 
 export default async function SubmissionsPage() {
+  await requireAdminPermission("submissions.read");
+
   const [contacts, professionals, newsletters] = await Promise.all([
     prisma.contactSubmission.findMany({ orderBy: { createdAt: "desc" } }),
     prisma.professionalSubmission.findMany({ orderBy: { createdAt: "desc" } }),

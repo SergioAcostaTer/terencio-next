@@ -39,6 +39,12 @@ const NAV_OVERRIDES: Record<string, NavOverride> = {
     description: "Creatividades del display",
     order: 3,
   },
+  users: {
+    label: "Usuarios",
+    icon: "ShieldCheck",
+    description: "Roles, acceso y sesiones",
+    order: 4,
+  },
 };
 
 const PAGE_FILES = new Set(["page.tsx", "page.ts", "page.jsx", "page.js"]);

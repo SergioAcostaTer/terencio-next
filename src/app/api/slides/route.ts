@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { getSessionFromRequest } from "@/lib/auth";
+import { assertPermission, getSessionFromRequest } from "@/lib/auth";
 import {
   slideFileTypes,
   slideFormSchema,
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const session = await getSessionFromRequest(request);
 
-  if (!session) {
+  if (!session || !assertPermission(session, "slides.write")) {
     return NextResponse.json({ error: "No autorizado." }, { status: 401 });
   }
 
