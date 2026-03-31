@@ -1,10 +1,15 @@
 "use client";
 
+import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 
 import Button from "@/components/ui/Button";
 
-export default function LogoutButton() {
+type LogoutButtonProps = {
+  className?: string;
+};
+
+export default function LogoutButton({ className }: LogoutButtonProps) {
   const router = useRouter();
 
   async function handleLogout() {
@@ -19,7 +24,10 @@ export default function LogoutButton() {
       variant="outline"
       size="sm"
       onClick={handleLogout}
-      className="border-slate-200 bg-white/80 text-slate-900 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-800"
+      className={twMerge(
+        "border-slate-200 bg-white/80 text-slate-900 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-800",
+        className,
+      )}
     >
       Cerrar sesión
     </Button>
