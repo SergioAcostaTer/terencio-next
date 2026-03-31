@@ -125,6 +125,7 @@ export async function POST(request: Request) {
     });
 
     await sendEmail({
+    //   to: siteData.contact.email,
       to: "sergioacostaquintana@gmail.com",
       subject: `Nueva solicitud de socio: ${submission.legalName}`,
       html: emailContent.html,

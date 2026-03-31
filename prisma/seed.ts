@@ -1,16 +1,14 @@
-import { Pool } from "@neondatabase/serverless";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 
-import { getEnv } from "../src/lib/env";
+import { getEnv } from "../src/lib/env-core";
 
 const env = getEnv();
-const pool = new Pool({
-  connectionString: env.DATABASE_URL,
-});
 const prisma = new PrismaClient({
-  adapter: new PrismaNeon(pool),
+  adapter: new PrismaNeon({
+  connectionString: env.DATABASE_URL,
+  }),
 });
 
 async function main() {
@@ -36,5 +34,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-    await pool.end();
   });

@@ -69,36 +69,38 @@ export default function Button(props: ButtonProps) {
 
   if ("href" in props && props.href) {
     if (isExternalHref(props.href) || "target" in props) {
-      const { children, variant: _, size: __, className: ___, ...anchorProps } =
-        props as ButtonAsAnchor;
+      const anchorProps = { ...(props as ButtonAsAnchor) };
+      delete anchorProps.variant;
+      delete anchorProps.size;
+      delete anchorProps.className;
       return (
         <a {...anchorProps} className={className}>
-          {children}
+          {props.children}
         </a>
       );
     }
 
-    const { children, variant: _, size: __, className: ___, ...linkProps } =
-      props as ButtonAsLink;
+    const linkProps = { ...(props as ButtonAsLink) };
+    delete linkProps.variant;
+    delete linkProps.size;
+    delete linkProps.className;
     return (
       <Link {...linkProps} className={className}>
-        {children}
+        {props.children}
       </Link>
     );
   }
 
-  const {
-    children,
-    variant: _,
-    size: __,
-    className: ___,
-    type = "button",
-    ...buttonProps
-  } = props as ButtonAsButton;
+  const buttonProps = { ...(props as ButtonAsButton) };
+  delete buttonProps.variant;
+  delete buttonProps.size;
+  delete buttonProps.className;
+  const type = buttonProps.type ?? "button";
+  delete buttonProps.type;
 
   return (
     <button {...buttonProps} type={type} className={className}>
-      {children}
+      {props.children}
     </button>
   );
 }

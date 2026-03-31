@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CheckCircle, FileText, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import siteData from '../../data/siteData.json';
@@ -12,6 +13,7 @@ import {
 } from '@/lib/form-submissions';
 
 export default function ProfessionalForm() {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -33,7 +35,7 @@ export default function ProfessionalForm() {
 
       if (response.ok) {
         reset();
-        window.location.href = '/gracias';
+        router.push('/gracias');
       } else {
         setSubmitStatus('error');
       }
