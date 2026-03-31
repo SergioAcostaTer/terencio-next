@@ -15,8 +15,8 @@ type BackofficeLayoutShellProps = {
   sessionRole: AdminRole;
 };
 
-const SIDEBAR_EXPANDED_WIDTH = 288;
-const SIDEBAR_COLLAPSED_WIDTH = 96;
+const SIDEBAR_EXPANDED_WIDTH = 256;
+const SIDEBAR_COLLAPSED_WIDTH = 80;
 const COLLAPSE_STORAGE_KEY = "terencio-backoffice-sidebar-collapsed";
 
 export default function BackofficeLayoutShell({
@@ -27,7 +27,6 @@ export default function BackofficeLayoutShell({
 }: BackofficeLayoutShellProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const storedValue = window.localStorage.getItem(COLLAPSE_STORAGE_KEY);
@@ -75,14 +74,14 @@ export default function BackofficeLayoutShell({
 
   return (
     <div className="backoffice-shell h-dvh overflow-hidden text-[var(--backoffice-text)]">
-      <BackofficeSidebar
-        items={navItems}
-        collapsed={collapsed}
-        mobileOpen={mobileOpen}
-        filter={searchValue}
-        onCloseMobile={() => setMobileOpen(false)}
-        onToggleCollapsed={() => setCollapsed((value) => !value)}
-      />
+        <BackofficeSidebar
+          items={navItems}
+          collapsed={collapsed}
+          mobileOpen={mobileOpen}
+          filter=""
+          onCloseMobile={() => setMobileOpen(false)}
+          onToggleCollapsed={() => setCollapsed((value) => !value)}
+        />
 
       <div
         className="flex h-dvh min-w-0 flex-1 flex-col lg:ml-[var(--sidebar-offset)] lg:transition-[margin-left] lg:duration-300"
@@ -91,16 +90,14 @@ export default function BackofficeLayoutShell({
         <BackofficeHeader
           collapsed={collapsed}
           isMobileNavOpen={mobileOpen}
-          searchValue={searchValue}
           sessionEmail={sessionEmail}
           sessionRole={sessionRole}
-          onSearchChange={setSearchValue}
           onToggleMobileNav={() => setMobileOpen((value) => !value)}
         />
 
         <main className="min-h-0 flex-1 overflow-y-auto">
-          <div className="min-h-full px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
-            <div className="mx-auto w-full max-w-[1600px]">{children}</div>
+          <div className="min-h-full px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
+            <div className="mx-auto w-full max-w-[1440px]">{children}</div>
           </div>
         </main>
       </div>

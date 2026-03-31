@@ -174,37 +174,37 @@ export default function UsersManager({
   return (
     <div className="space-y-8">
       <section className="grid gap-4 md:grid-cols-3">
-        <div className="backoffice-stat rounded-[24px] p-5">
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">
+        <div className="backoffice-stat rounded-xl p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
             Usuarios
           </p>
-          <p className="mt-3 text-3xl font-black tracking-tight text-slate-950">{summary.total}</p>
+          <p className="mt-2 text-2xl font-semibold text-slate-950">{summary.total}</p>
         </div>
-        <div className="backoffice-stat rounded-[24px] p-5">
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">
+        <div className="backoffice-stat rounded-xl p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
             Activos
           </p>
-          <p className="mt-3 text-3xl font-black tracking-tight text-emerald-700">
+          <p className="mt-2 text-2xl font-semibold text-emerald-700">
             {summary.active}
           </p>
         </div>
-        <div className="backoffice-stat rounded-[24px] p-5">
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">
+        <div className="backoffice-stat rounded-xl p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
             Suspendidos
           </p>
-          <p className="mt-3 text-3xl font-black tracking-tight text-amber-600">
+          <p className="mt-2 text-2xl font-semibold text-amber-600">
             {summary.suspended}
           </p>
         </div>
       </section>
 
-      <section className="rounded-[28px] border border-slate-200/80 bg-white/90 p-6 shadow-[0_20px_40px_-32px_rgba(15,23,42,0.75)]">
+      <section className="backoffice-card rounded-xl p-5">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
               Seguridad interna
             </p>
-            <h2 className="mt-1 text-2xl font-black tracking-tight text-slate-950">
+            <h2 className="mt-1 text-xl font-semibold text-slate-950">
               Usuarios, roles y sesiones
             </h2>
             <p className="mt-2 text-sm text-slate-500">
@@ -214,7 +214,7 @@ export default function UsersManager({
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="inline-flex items-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#166534,#0f172a)] px-5 py-3 text-sm font-bold text-white shadow-[0_18px_35px_-20px_rgba(22,101,52,0.95)] transition hover:translate-y-[-1px]"
+            className="inline-flex items-center gap-2 rounded-md bg-[var(--brand-green)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800"
           >
             <Plus className="h-4 w-4" />
             Nuevo usuario
@@ -222,15 +222,15 @@ export default function UsersManager({
         </div>
 
         {error ? (
-          <div className="mt-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {error}
           </div>
         ) : null}
 
-        <div className="mt-6 overflow-hidden rounded-[24px] border border-slate-200">
+        <div className="mt-6 overflow-hidden rounded-lg border border-slate-200">
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500">
+              <thead className="bg-slate-50 text-left text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
                 <tr>
                   <th className="px-5 py-4">Usuario</th>
                   <th className="px-5 py-4">Rol</th>
@@ -255,11 +255,11 @@ export default function UsersManager({
                     <tr key={user.id} className="align-top transition hover:bg-slate-50/70">
                       <td className="px-5 py-4">
                         <div className="flex items-start gap-3">
-                          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-white">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-950 text-xs font-bold text-white">
                             {user.email.slice(0, 2).toUpperCase()}
                           </div>
                           <div>
-                            <p className="font-bold text-slate-950">{user.email}</p>
+                            <p className="font-semibold text-slate-950">{user.email}</p>
                             <div className="mt-1 flex flex-wrap gap-2">
                               {user.isRoot ? (
                                 <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
@@ -292,7 +292,7 @@ export default function UsersManager({
                                 },
                               }))
                             }
-                            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-blue-300"
+                            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-blue-300"
                           >
                             {manageableAdminRoles.map((role) => (
                               <option key={role} value={role}>
@@ -309,7 +309,7 @@ export default function UsersManager({
                             Activo fijo
                           </span>
                         ) : (
-                          <label className="inline-flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2">
+                          <label className="inline-flex cursor-pointer items-center gap-3 rounded-md border border-slate-200 bg-white px-3 py-2">
                             <input
                               type="checkbox"
                               checked={draft.isActive}
@@ -349,7 +349,7 @@ export default function UsersManager({
                               type="button"
                               disabled={isSaving}
                               onClick={() => saveUser(user.id)}
-                              className="rounded-xl border border-green-200 bg-green-50 px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-green-800 transition hover:bg-green-100 disabled:opacity-60"
+                              className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-green-800 transition hover:bg-green-100 disabled:opacity-60"
                             >
                               {isSaving ? "Guardando" : "Guardar"}
                             </button>
@@ -359,7 +359,7 @@ export default function UsersManager({
                               type="button"
                               disabled={isDeleting || currentUserRole === "VIEWER"}
                               onClick={() => deleteUser(user.id)}
-                              className="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-red-700 transition hover:bg-red-100 disabled:opacity-60"
+                              className="inline-flex items-center gap-2 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-red-700 transition hover:bg-red-100 disabled:opacity-60"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
                               {isDeleting ? "Eliminando" : "Eliminar"}

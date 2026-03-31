@@ -12,10 +12,10 @@ import { loginSchema } from "@/lib/membership";
 type LoginValues = z.infer<typeof loginSchema>;
 
 const inputCls = (hasError?: boolean) =>
-  `w-full rounded-2xl border bg-slate-50/80 px-4 py-3.5 text-sm text-slate-950 outline-none transition focus:bg-white ${
+  `w-full rounded-md border bg-slate-50 px-4 py-2.5 text-sm text-slate-950 outline-none transition focus:bg-white ${
     hasError
-      ? "border-red-300 ring-4 ring-red-100/80"
-      : "border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100/80"
+      ? "border-red-300 ring-2 ring-red-100"
+      : "border-slate-200 focus:border-green-700 focus:ring-2 focus:ring-green-100"
   }`;
 
 export default function LoginForm() {
@@ -54,9 +54,9 @@ export default function LoginForm() {
   });
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
+    <form onSubmit={onSubmit} className="space-y-4">
       <div>
-        <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+        <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
           Email
         </label>
         <div className="relative">
@@ -73,7 +73,7 @@ export default function LoginForm() {
       </div>
 
       <div>
-        <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+        <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
           Contraseña
         </label>
         <div className="relative">
@@ -100,7 +100,7 @@ export default function LoginForm() {
       </div>
 
       {error ? (
-        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}
         </div>
       ) : null}
@@ -108,7 +108,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-2xl bg-[linear-gradient(135deg,#1d4ed8,#0f172a)] py-3.5 text-sm font-bold text-white shadow-[0_18px_35px_-20px_rgba(29,78,216,0.95)] transition hover:translate-y-[-1px] hover:shadow-[0_22px_42px_-22px_rgba(29,78,216,0.95)] disabled:translate-y-0 disabled:opacity-60"
+        className="w-full rounded-md bg-[var(--brand-green)] py-2.5 text-sm font-semibold text-white transition hover:bg-green-800 disabled:opacity-60"
       >
         {isSubmitting ? "Accediendo" : "Entrar al backoffice"}
       </button>

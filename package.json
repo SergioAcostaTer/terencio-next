@@ -10,6 +10,7 @@
         "db:generate": "prisma generate",
         "db:migrate": "prisma migrate dev",
         "db:push": "prisma db push",
+        "db:backfill-signage": "tsx prisma/backfill-digital-signage.ts",
         "db:seed": "prisma db seed",
         "db:reset": "prisma db push --force-reset && pnpm db:seed"
     },

@@ -24,16 +24,16 @@ function StatCard({
   icon: ReactNode;
 }) {
   return (
-    <div className="backoffice-stat rounded-[24px] p-5">
+    <div className="backoffice-stat rounded-xl p-4">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-400">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
           {label}
         </p>
-        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950 text-white">
+        <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-950 text-white">
           {icon}
         </div>
       </div>
-      <p className="mt-4 text-3xl font-black tracking-tight text-slate-950">{value}</p>
+      <p className="mt-3 text-2xl font-semibold text-slate-950">{value}</p>
     </div>
   );
 }
@@ -50,13 +50,13 @@ function SectionHeader({
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
           Bandeja
         </p>
-        <h2 className="mt-1 text-2xl font-black tracking-tight text-slate-950">{title}</h2>
+        <h2 className="mt-1 text-xl font-semibold text-slate-950">{title}</h2>
         <p className="mt-1 text-sm text-slate-500">{subtitle}</p>
       </div>
-      <span className="w-fit rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-bold text-slate-700">
+      <span className="w-fit rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-semibold text-slate-700">
         {count}
       </span>
     </div>
@@ -65,7 +65,7 @@ function SectionHeader({
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="rounded-[28px] border border-dashed border-slate-200 bg-white/80 py-14 text-center text-sm text-slate-400">
+    <div className="rounded-xl border border-dashed border-slate-200 bg-white py-12 text-center text-sm text-slate-400">
       <Inbox className="mx-auto mb-3 h-7 w-7 text-slate-300" />
       {message}
     </div>
@@ -83,32 +83,32 @@ export default async function SubmissionsPage() {
 
   return (
     <div className="space-y-10">
-      <section className="rounded-[30px] border border-white/70 bg-[linear-gradient(135deg,rgba(15,23,42,0.98),rgba(29,78,216,0.9))] px-6 py-7 text-white shadow-[0_26px_50px_-34px_rgba(15,23,42,0.75)] sm:px-7">
-        <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-100/80">
+      <section className="backoffice-page-header px-4 py-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
           Backoffice / Consultas
         </p>
         <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
+            <h1 className="text-2xl font-semibold text-slate-950 sm:text-3xl">
               Consultas Web
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-blue-100/80">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
               Revisión centralizada de mensajes de contacto, solicitudes HORECA y
               suscripciones a newsletter.
             </p>
           </div>
-          <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur">
-            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-blue-100/70">
+          <div className="border-l border-slate-200 pl-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
               Total registros
             </p>
-            <p className="mt-1 text-3xl font-black">
+            <p className="mt-1 text-2xl font-semibold text-slate-950">
               {contacts.length + professionals.length + newsletters.length}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid gap-3 md:grid-cols-3">
         <StatCard label="Contacto" value={contacts.length} icon={<MessageSquareText className="h-4 w-4" />} />
         <StatCard label="Profesionales" value={professionals.length} icon={<PhoneCall className="h-4 w-4" />} />
         <StatCard label="Newsletter" value={newsletters.length} icon={<Newspaper className="h-4 w-4" />} />
@@ -128,11 +128,11 @@ export default async function SubmissionsPage() {
             {contacts.map((item) => (
               <article
                 key={item.id}
-                className="rounded-[28px] border border-slate-200/80 bg-white/90 p-5 shadow-[0_20px_40px_-32px_rgba(15,23,42,0.75)]"
+                className="backoffice-card rounded-xl p-5"
               >
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                   <div>
-                    <h3 className="text-lg font-black tracking-tight text-slate-950">
+                    <h3 className="text-base font-semibold text-slate-950">
                       {item.name}
                     </h3>
                     <p className="mt-1 text-sm text-slate-500">{item.email}</p>
@@ -162,7 +162,7 @@ export default async function SubmissionsPage() {
                   </a>
                 </div>
 
-                <p className="mt-4 rounded-[22px] border border-slate-200 bg-slate-50/80 px-4 py-4 text-sm leading-6 text-slate-700">
+                <p className="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-4 text-sm leading-6 text-slate-700">
                   {item.message}
                 </p>
               </article>
@@ -185,11 +185,11 @@ export default async function SubmissionsPage() {
             {professionals.map((item) => (
               <article
                 key={item.id}
-                className="rounded-[28px] border border-slate-200/80 bg-white/90 p-5 shadow-[0_20px_40px_-32px_rgba(15,23,42,0.75)]"
+                className="backoffice-card rounded-xl p-5"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="text-lg font-black tracking-tight text-slate-950">
+                    <h3 className="text-base font-semibold text-slate-950">
                       {item.businessName}
                     </h3>
                     <p className="mt-1 text-sm text-slate-500">{item.sector}</p>
@@ -231,7 +231,7 @@ export default async function SubmissionsPage() {
         {newsletters.length === 0 ? (
           <EmptyState message="Sin suscriptores aún." />
         ) : (
-          <div className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/90 shadow-[0_20px_40px_-32px_rgba(15,23,42,0.75)]">
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
                 <thead className="border-b border-slate-200 bg-slate-50/90 text-left text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500">

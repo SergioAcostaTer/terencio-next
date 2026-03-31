@@ -34,9 +34,9 @@ const NAV_OVERRIDES: Record<string, NavOverride> = {
     order: 2,
   },
   slides: {
-    label: "Pantalla TV",
+    label: "Pantallas",
     icon: "MonitorPlay",
-    description: "Creatividades del display",
+    description: "Media, playlists y control",
     order: 3,
   },
   users: {

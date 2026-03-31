@@ -12,7 +12,7 @@ import path from "path";
 
 import { getEnv } from "@/lib/env";
 
-const ALLOWED_FOLDERS = new Set(["memberships", "slides"]);
+const ALLOWED_FOLDERS = new Set(["memberships", "slides", "media"]);
 
 function getR2Client() {
   const env = getEnv();
@@ -52,7 +52,7 @@ export function getPublicUrl(key: string) {
   return `${env.R2_PUBLIC_BASE_URL.replace(/\/$/, "")}/${key}`;
 }
 
-export async function uploadFile(file: File, folder: "memberships" | "slides") {
+export async function uploadFile(file: File, folder: "memberships" | "slides" | "media") {
   if (!ALLOWED_FOLDERS.has(folder)) {
     throw new Error("Invalid upload folder");
   }
@@ -60,7 +60,7 @@ export async function uploadFile(file: File, folder: "memberships" | "slides") {
   const key = `${folder}/${randomUUID()}-${sanitizeFilename(file.name)}`;
   const buffer = Buffer.from(await file.arrayBuffer());
   const bucketName =
-    folder === "slides" ? getPublicBucketName() : getPrivateBucketName();
+    folder === "memberships" ? getPrivateBucketName() : getPublicBucketName();
 
   await getR2Client().send(
     new PutObjectCommand({
@@ -74,7 +74,7 @@ export async function uploadFile(file: File, folder: "memberships" | "slides") {
 
   return {
     key,
-    url: folder === "slides" ? getPublicUrl(key) : undefined,
+    url: folder === "memberships" ? undefined : getPublicUrl(key),
   };
 }
 
@@ -93,9 +93,9 @@ export async function getPrivateSignedUrl(key: string) {
   );
 }
 
-export async function deleteFile(key: string, folder: "memberships" | "slides") {
+export async function deleteFile(key: string, folder: "memberships" | "slides" | "media") {
   const bucketName =
-    folder === "slides" ? getPublicBucketName() : getPrivateBucketName();
+    folder === "memberships" ? getPrivateBucketName() : getPublicBucketName();
 
   await getR2Client().send(
     new DeleteObjectCommand({

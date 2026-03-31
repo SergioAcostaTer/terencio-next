@@ -71,6 +71,12 @@ export default function Header() {
         </div>
         <div className="flex gap-6">
           <Link
+            href="/backoffice/login"
+            className="font-medium text-white/75 transition hover:text-yellow-200"
+          >
+            Acceso empleados
+          </Link>
+          <Link
             href="/profesionales"
             className="font-medium transition hover:text-yellow-200"
           >

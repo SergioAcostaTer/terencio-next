@@ -9,14 +9,6 @@ export const membershipFileTypes = [
   "image/webp",
 ];
 
-export const slideFileTypes = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "video/mp4",
-  "video/webm",
-];
-
 export const membershipTypes = ["autonomo", "empresa"] as const;
 
 export const membershipSchema = z.object({
@@ -32,18 +24,6 @@ export const membershipSchema = z.object({
 export const loginSchema = z.object({
   email: z.string().email("Introduce un email válido."),
   password: z.string().min(1, "Introduce la contraseña."),
-});
-
-export const slideFormSchema = z.object({
-  durationSec: z.coerce.number().int().min(3).max(300),
-  order: z.coerce.number().int().min(0).max(9999).optional(),
-  isActive: z.coerce.boolean().default(true),
-});
-
-export const slideUpdateSchema = z.object({
-  durationSec: z.coerce.number().int().min(3).max(300),
-  order: z.coerce.number().int().min(0).max(9999),
-  isActive: z.boolean(),
 });
 
 export function validateUploadFile(

@@ -13,6 +13,25 @@ enum Role {
   VIEWER
 }
 
+enum MediaAssetType {
+  image
+  video
+}
+
+enum DisplayMode {
+  AUTOPLAY
+  PINNED
+  MANUAL
+}
+
+enum DisplayCommand {
+  CONFIG_SYNC
+  NEXT
+  PREVIOUS
+  RELOAD
+  RESYNC
+}
+
 model AdminUser {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -68,6 +87,66 @@ model NewsletterSubscription {
   email     String   @unique
   status    String   @default("active")
   createdAt DateTime @default(now())
+}
+
+model MediaAsset {
+  id               String            @id @default(cuid())
+  name             String
+  type             MediaAssetType
+  url              String
+  key              String            @unique
+  createdAt        DateTime          @default(now())
+  playlistItems    PlaylistAsset[]
+  pinnedDisplays   DisplayDevice[]   @relation("PinnedAsset")
+}
+
+model Playlist {
+  id        String          @id @default(cuid())
+  name      String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @default(now()) @updatedAt
+  items     PlaylistAsset[]
+  displays  DisplayDevice[]
+}
+
+model PlaylistAsset {
+  id          String     @id @default(cuid())
+  playlistId  String
+  assetId     String
+  order       Int
+  durationSec Int        @default(10)
+  createdAt   DateTime   @default(now())
+  playlist    Playlist   @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  asset       MediaAsset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([playlistId, order])
+  @@index([playlistId, order])
+  @@index([assetId])
+}
+
+model DisplayDevice {
+  id                String         @id @default(cuid())
+  name              String
+  pairingCode       String?        @unique
+  pairingExpiresAt  DateTime?
+  deviceToken       String?        @unique
+  isPaired          Boolean        @default(false)
+  lastPing          DateTime?
+  mode              DisplayMode    @default(AUTOPLAY)
+  playlistId        String?
+  pinnedAssetId     String?
+  manualIndex       Int            @default(0)
+  configVersion     Int            @default(1)
+  lastCommand       DisplayCommand @default(CONFIG_SYNC)
+  lastCommandAt     DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @default(now()) @updatedAt
+  playlist          Playlist?      @relation(fields: [playlistId], references: [id], onDelete: SetNull)
+  pinnedAsset       MediaAsset?    @relation("PinnedAsset", fields: [pinnedAssetId], references: [id], onDelete: SetNull)
+
+  @@index([isPaired, lastPing])
+  @@index([playlistId])
+  @@index([pinnedAssetId])
 }
 
 model Slide {

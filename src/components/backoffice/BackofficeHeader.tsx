@@ -9,10 +9,8 @@ import { roleLabels, type AdminRole } from "@/lib/admin-users";
 type BackofficeHeaderProps = {
   collapsed: boolean;
   isMobileNavOpen: boolean;
-  searchValue: string;
   sessionEmail: string;
   sessionRole: AdminRole;
-  onSearchChange: (value: string) => void;
   onToggleMobileNav: () => void;
 };
 
@@ -35,10 +33,8 @@ function getInitials(name: string) {
 export default function BackofficeHeader({
   collapsed,
   isMobileNavOpen,
-  searchValue,
   sessionEmail,
   sessionRole,
-  onSearchChange,
   onToggleMobileNav,
 }: BackofficeHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -69,12 +65,12 @@ export default function BackofficeHeader({
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-[var(--backoffice-border)] bg-[rgba(248,250,252,0.88)] backdrop-blur-xl">
-      <div className="flex min-h-20 items-center gap-3 px-4 py-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-30 border-b border-[var(--backoffice-border)] bg-white/95">
+      <div className="flex min-h-16 items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <button
           type="button"
           onClick={onToggleMobileNav}
-          className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--backoffice-border)] bg-white text-slate-700 transition hover:border-green-200 hover:bg-green-50 hover:text-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 lg:hidden"
+          className="flex h-9 w-9 items-center justify-center rounded-md border border-[var(--backoffice-border)] bg-white text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 lg:hidden"
           aria-label={isMobileNavOpen ? "Cerrar navegación" : "Abrir navegación"}
           aria-expanded={isMobileNavOpen}
         >
@@ -83,61 +79,29 @@ export default function BackofficeHeader({
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-3">
-            <div className="hidden h-11 w-11 items-center justify-center rounded-2xl bg-green-50 text-green-800 lg:flex">
-              <Icon name={collapsed ? "PanelLeft" : "LayoutDashboard"} className="h-5 w-5" />
+            <div className="hidden h-8 w-8 items-center justify-center rounded-md bg-slate-100 text-slate-700 lg:flex">
+              <Icon name={collapsed ? "PanelLeft" : "LayoutDashboard"} className="h-4 w-4" />
             </div>
             <div className="min-w-0">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--backoffice-muted)]">
-                Backoffice
-              </p>
-              <h1 className="truncate text-lg font-black tracking-tight text-slate-950 sm:text-xl">
+              <h1 className="truncate text-sm font-semibold text-slate-950 sm:text-base">
                 Panel de administración
               </h1>
+              <p className="text-xs text-[var(--backoffice-muted)]">
+                {roleLabels[sessionRole]}
+              </p>
             </div>
           </div>
         </div>
 
-        <form
-          role="search"
-          className="hidden min-w-0 flex-1 justify-center lg:flex"
-          onSubmit={(event) => event.preventDefault()}
-        >
-          <label className="relative w-full max-w-md">
-            <span className="sr-only">Buscar módulos del backoffice</span>
-            <Icon
-              name="Search"
-              className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-slate-400"
-            />
-            <input
-              type="search"
-              value={searchValue}
-              onChange={(event) => onSearchChange(event.target.value)}
-              placeholder="Buscar módulo"
-              className="h-12 w-full rounded-2xl border border-[var(--backoffice-border)] bg-white pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-green-300 focus:ring-2 focus:ring-green-600/20"
-            />
-          </label>
-        </form>
-
         <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--backoffice-border)] bg-white text-slate-600 transition hover:border-green-200 hover:bg-green-50 hover:text-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
-            aria-label="Notificaciones"
-          >
-            <span className="relative flex items-center justify-center">
-              <Icon name="Bell" className="h-5 w-5" />
-              <span className="absolute -top-1.5 -right-1.5 h-2.5 w-2.5 rounded-full bg-red-600" />
-            </span>
-          </button>
-
           <div className="relative" ref={menuRef}>
             <button
               type="button"
               onClick={() => setMenuOpen((value) => !value)}
-              className="flex items-center gap-3 rounded-2xl border border-[var(--backoffice-border)] bg-white px-3 py-2.5 text-left transition hover:border-green-200 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+              className="flex items-center gap-3 rounded-md border border-[var(--backoffice-border)] bg-white px-3 py-2 text-left transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
               aria-expanded={menuOpen}
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--brand-green),var(--brand-green-mid))] text-sm font-black text-white shadow-[0_16px_28px_-18px_rgba(22,101,52,0.7)]">
+              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[var(--brand-green)] text-xs font-bold text-white">
                 {initials}
               </span>
               <span className="hidden min-w-0 sm:block">
@@ -151,15 +115,15 @@ export default function BackofficeHeader({
 
             {menuOpen ? (
               <div
-                className="absolute top-[calc(100%+0.75rem)] right-0 z-20 w-72 rounded-[24px] border border-[var(--backoffice-border)] bg-white p-3 shadow-[0_24px_60px_-36px_rgba(15,23,42,0.45)]"
+                className="absolute top-[calc(100%+0.5rem)] right-0 z-20 w-72 rounded-lg border border-[var(--backoffice-border)] bg-white p-3 shadow-[0_12px_28px_-18px_rgba(15,23,42,0.28)]"
               >
-                <div className="rounded-2xl bg-slate-50 px-4 py-4">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-400">
+                <div className="rounded-md bg-slate-50 px-4 py-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                     Sesión activa
                   </p>
                   <p className="mt-2 text-sm font-bold text-slate-950">{userName}</p>
                   <p className="mt-1 text-sm text-slate-500">{sessionEmail}</p>
-                  <p className="mt-2 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-slate-700">
+                  <p className="mt-2 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-700">
                     {roleLabels[sessionRole]}
                   </p>
                 </div>

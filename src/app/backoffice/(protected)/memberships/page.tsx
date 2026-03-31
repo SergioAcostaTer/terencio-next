@@ -80,66 +80,66 @@ export default async function MembershipsPage() {
 
   return (
     <div className="space-y-8">
-      <section className="rounded-[30px] border border-white/70 bg-[linear-gradient(135deg,#0f172a,#1e3a8a)] px-6 py-7 text-white shadow-[0_26px_50px_-34px_rgba(15,23,42,0.75)] sm:px-7">
-        <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-100/80">
+      <section className="backoffice-page-header px-4 py-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
           Backoffice / Socios
         </p>
         <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Socios</h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-blue-100/80">
+            <h1 className="text-2xl font-semibold text-slate-950 sm:text-3xl">Socios</h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
               Seguimiento visual de solicitudes de alta y documentación adjunta.
             </p>
           </div>
-          <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur">
-            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-blue-100/70">
+          <div className="border-l border-slate-200 pl-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
               Total solicitudes
             </p>
-            <p className="mt-1 text-3xl font-black">{submissions.length}</p>
+            <p className="mt-1 text-2xl font-semibold text-slate-950">{submissions.length}</p>
           </div>
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
-        <div className="backoffice-stat rounded-[24px] p-5">
+      <section className="grid gap-3 md:grid-cols-3">
+        <div className="backoffice-stat rounded-xl p-4">
           <div className="flex items-center justify-between">
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-400">
               Pendientes
             </p>
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500 text-white">
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-amber-500 text-white">
               <FileText className="h-4 w-4" />
             </div>
           </div>
-          <p className="mt-4 text-3xl font-black tracking-tight text-slate-950">{pendingCount}</p>
+          <p className="mt-3 text-2xl font-semibold text-slate-950">{pendingCount}</p>
         </div>
 
-        <div className="backoffice-stat rounded-[24px] p-5">
+        <div className="backoffice-stat rounded-xl p-4">
           <div className="flex items-center justify-between">
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-400">
               Aprobadas
             </p>
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-600 text-white">
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-emerald-600 text-white">
               <BadgeCheck className="h-4 w-4" />
             </div>
           </div>
-          <p className="mt-4 text-3xl font-black tracking-tight text-slate-950">{approvedCount}</p>
+          <p className="mt-3 text-2xl font-semibold text-slate-950">{approvedCount}</p>
         </div>
 
-        <div className="backoffice-stat rounded-[24px] p-5">
+        <div className="backoffice-stat rounded-xl p-4">
           <div className="flex items-center justify-between">
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-400">
               Registros
             </p>
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950 text-white">
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-950 text-white">
               <Users2 className="h-4 w-4" />
             </div>
           </div>
-          <p className="mt-4 text-3xl font-black tracking-tight text-slate-950">{submissions.length}</p>
+          <p className="mt-3 text-2xl font-semibold text-slate-950">{submissions.length}</p>
         </div>
       </section>
 
       {submissions.length === 0 ? (
-        <div className="rounded-[28px] border border-dashed border-slate-200 bg-white/80 py-16 text-center text-sm text-slate-400">
+        <div className="rounded-xl border border-dashed border-slate-200 bg-white py-16 text-center text-sm text-slate-400">
           Aún no se han recibido solicitudes.
         </div>
       ) : (
@@ -147,11 +147,11 @@ export default async function MembershipsPage() {
           {submissions.map((item) => (
             <article
               key={item.id}
-              className="rounded-[28px] border border-slate-200/80 bg-white/90 p-5 shadow-[0_20px_40px_-32px_rgba(15,23,42,0.75)]"
+              className="backoffice-card rounded-xl p-5"
             >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                  <h2 className="text-xl font-black tracking-tight text-slate-950">
+                  <h2 className="text-lg font-semibold text-slate-950">
                     {item.legalName}
                   </h2>
                   {item.commercialName ? (
@@ -190,7 +190,7 @@ export default async function MembershipsPage() {
               </div>
 
               {item.notes ? (
-                <p className="mt-4 rounded-[22px] border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm leading-6 text-slate-700">
+                <p className="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-700">
                   {item.notes}
                 </p>
               ) : null}

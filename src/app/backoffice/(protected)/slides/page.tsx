@@ -1,39 +1,69 @@
-import SlidesManager from "@/components/backoffice/SlidesManager";
+import DigitalSignageManager from "@/components/backoffice/DigitalSignageManager";
 import { assertPermission, requireAdminPermission } from "@/lib/auth";
+import {
+  displayDeviceInclude,
+  playlistInclude,
+  serializeDisplayAdmin,
+  serializeMediaAsset,
+  serializePlaylistDetails,
+} from "@/lib/display";
 import { prisma } from "@/lib/prisma";
 
 export default async function SlidesPage() {
   const session = await requireAdminPermission("slides.read");
-  const slides = await prisma.slide.findMany({
-    orderBy: [{ order: "asc" }, { createdAt: "asc" }],
-  });
+  const [assets, playlists, displays] = await Promise.all([
+    prisma.mediaAsset.findMany({
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.playlist.findMany({
+      include: playlistInclude,
+      orderBy: [{ updatedAt: "desc" }, { createdAt: "desc" }],
+    }),
+    prisma.displayDevice.findMany({
+      where: { isPaired: true },
+      include: displayDeviceInclude,
+      orderBy: [{ createdAt: "desc" }],
+    }),
+  ]);
 
   return (
     <div className="space-y-8">
-      <section className="rounded-[30px] border border-white/70 bg-[linear-gradient(135deg,#0f172a,#1d4ed8)] px-6 py-7 text-white shadow-[0_26px_50px_-34px_rgba(15,23,42,0.75)] sm:px-7">
-        <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-100/80">
-          Backoffice / Pantalla TV
+      <section className="backoffice-page-header px-4 py-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+          Backoffice / Digital Signage
         </p>
         <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
-              Pantalla TV
+            <h1 className="text-2xl font-semibold text-slate-950 sm:text-3xl">
+              Digital Signage
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-blue-100/80">
-              Gestiona las diapositivas que aparecen en la pantalla del
-              supermercado.
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+              Gestiona biblioteca media, playlists y pantallas físicas independientes desde la sección actual del backoffice.
             </p>
           </div>
-          <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur">
-            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-blue-100/70">
-              Elementos
-            </p>
-            <p className="mt-1 text-3xl font-black">{slides.length}</p>
+          <div className="grid gap-4 border-l border-slate-200 pl-4 sm:grid-cols-3">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">Assets</p>
+              <p className="mt-1 text-2xl font-semibold text-slate-950">{assets.length}</p>
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">Playlists</p>
+              <p className="mt-1 text-2xl font-semibold text-slate-950">{playlists.length}</p>
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">Pantallas</p>
+              <p className="mt-1 text-2xl font-semibold text-slate-950">{displays.length}</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <SlidesManager slides={slides} canManage={assertPermission(session, "slides.write")} />
+      <DigitalSignageManager
+        assets={assets.map(serializeMediaAsset)}
+        playlists={playlists.map(serializePlaylistDetails)}
+        displays={displays.map(serializeDisplayAdmin)}
+        canManage={assertPermission(session, "slides.write")}
+      />
     </div>
   );
 }

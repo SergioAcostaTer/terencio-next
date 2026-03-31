@@ -35,27 +35,55 @@ export default function Home() {
       />
 
       <Section className="border-b border-green-100 bg-white py-6">
-        <div className="flex flex-col items-center justify-between gap-4 rounded-[2rem] border border-green-100 bg-gradient-to-r from-green-50 via-white to-yellow-50 px-6 py-6 shadow-sm lg:flex-row">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.24em] text-green-700">
-              Sistema interno
-            </p>
-            <h2 className="mt-2 text-2xl font-black text-gray-900">
-              Alta de socios y acceso de empleados
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-600">
-              Usa el nuevo formulario para altas profesionales o entra al
-              backoffice para gestionar solicitudes y pantallas.
-            </p>
+        <div className="overflow-hidden border border-green-100 bg-gradient-to-r from-green-50 via-white to-emerald-50">
+          <div className="grid gap-6 px-6 py-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-8">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-700">
+                Alta profesional
+              </p>
+              <h2 className="mt-2 text-3xl font-black text-gray-900 md:text-4xl">
+                Hazte socio profesional de Terencio
+              </h2>
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-gray-600">
+                Si compras para tu negocio, solicita tu alta y envía la
+                documentación en unos minutos. El equipo revisará la solicitud y
+                te contactará para activar tu perfil profesional.
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="inline-flex items-center rounded-full bg-white px-3 py-1 text-sm font-medium text-gray-700 ring-1 ring-green-100">
+                  Sin trámites presenciales
+                </span>
+                <span className="inline-flex items-center rounded-full bg-white px-3 py-1 text-sm font-medium text-gray-700 ring-1 ring-green-100">
+                  Documentación online
+                </span>
+                <span className="inline-flex items-center rounded-full bg-white px-3 py-1 text-sm font-medium text-gray-700 ring-1 ring-green-100">
+                  Revisión rápida
+                </span>
+              </div>
+            </div>
+
+            <div className="flex w-full flex-col gap-3 sm:w-auto">
+              <Button href="/register" size="lg" className="min-w-56 justify-center">
+                Solicitar alta profesional
+              </Button>
+              <Link
+                href="/profesionales"
+                className="inline-flex items-center justify-center rounded-xl border border-green-200 bg-white px-5 py-3 text-sm font-bold text-green-800 transition hover:bg-green-50"
+              >
+                Ver ventajas para empresas
+              </Link>
+            </div>
           </div>
 
-          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-            <Button href="/register" size="md">
-              Hazte socio
-            </Button>
-            <Button href="/backoffice/login" variant="outline" size="md">
-              Acceso empleados
-            </Button>
+          <div className="border-t border-green-100 bg-white/70 px-6 py-3 lg:px-8">
+            <p className="text-sm text-gray-600">
+              ¿Ya tienes claro que compras como empresa o autónomo?
+              {" "}
+              <Link href="/register" className="font-bold text-green-700 hover:text-green-800">
+                Empieza aquí tu solicitud
+              </Link>
+            </p>
           </div>
         </div>
       </Section>
