@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "outline" | "ghost" | "white";
+type Variant = "primary" | "secondary" | "outline" | "ghost" | "white" | "danger";
 type Size = "sm" | "md" | "lg";
 
 type SharedProps = {
@@ -29,77 +29,55 @@ type ButtonAsButton = SharedProps &
 
 type ButtonProps = ButtonAsLink | ButtonAsAnchor | ButtonAsButton;
 
-const baseStyles =
-  "inline-flex items-center justify-center rounded-xl font-bold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 disabled:shadow-none";
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-xl font-bold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none select-none";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-green-700 text-white shadow-lg hover:bg-green-800 hover:shadow-xl focus:ring-green-700",
+    "bg-green-700 text-white shadow-md hover:bg-green-800 hover:shadow-lg focus:ring-green-600",
   secondary:
-    "bg-yellow-400 text-slate-950 shadow-lg hover:bg-yellow-300 hover:shadow-xl focus:ring-yellow-400",
+    "bg-yellow-400 text-slate-900 shadow-md hover:bg-yellow-300 hover:shadow-lg focus:ring-yellow-400",
   outline:
-    "border-2 border-green-700 text-green-800 hover:bg-green-50 focus:ring-green-700",
-  ghost: "text-green-700 hover:bg-green-50 focus:ring-green-700",
+    "border-2 border-green-700 text-green-800 bg-white hover:bg-green-50 focus:ring-green-600",
+  ghost:
+    "text-green-700 hover:bg-green-50 focus:ring-green-600",
   white:
-    "bg-white text-green-900 shadow-lg hover:bg-gray-50 hover:shadow-xl focus:ring-white",
+    "bg-white text-gray-900 shadow-md hover:bg-gray-50 hover:shadow-lg focus:ring-gray-300",
+  danger:
+    "bg-red-600 text-white shadow-md hover:bg-red-700 hover:shadow-lg focus:ring-red-600",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "px-4 py-2 text-sm",
-  md: "px-6 py-3 text-base",
-  lg: "px-8 py-4 text-lg",
+  sm: "px-3 py-1.5 text-sm",
+  md: "px-5 py-2.5 text-sm",
+  lg: "px-7 py-3.5 text-base",
 };
 
-function getClasses(variant: Variant, size: Size, className?: string) {
-  return [baseStyles, variants[variant], sizes[size], className]
-    .filter(Boolean)
-    .join(" ");
+function cls(variant: Variant, size: Size, extra?: string) {
+  return [base, variants[variant], sizes[size], extra].filter(Boolean).join(" ");
 }
 
-function isExternalHref(href: string) {
-  return (
-    href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("tel:")
-  );
+function isExternal(href: string) {
+  return href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("tel:");
 }
 
 export default function Button(props: ButtonProps) {
   const variant = props.variant ?? "primary";
   const size = props.size ?? "md";
-  const className = getClasses(variant, size, props.className);
+  const className = cls(variant, size, props.className);
 
   if ("href" in props && props.href) {
-    if (isExternalHref(props.href) || "target" in props) {
-      const anchorProps = { ...(props as ButtonAsAnchor) };
-      delete anchorProps.variant;
-      delete anchorProps.size;
-      delete anchorProps.className;
-      return (
-        <a {...anchorProps} className={className}>
-          {props.children}
-        </a>
-      );
+    if (isExternal(props.href) || "target" in props) {
+      const { variant: _v, size: _s, className: _c, ...rest } = props as ButtonAsAnchor;
+      return <a {...rest} className={className}>{props.children}</a>;
     }
-
-    const linkProps = { ...(props as ButtonAsLink) };
-    delete linkProps.variant;
-    delete linkProps.size;
-    delete linkProps.className;
-    return (
-      <Link {...linkProps} className={className}>
-        {props.children}
-      </Link>
-    );
+    const { variant: _v, size: _s, className: _c, ...rest } = props as ButtonAsLink;
+    return <Link {...rest} className={className}>{props.children}</Link>;
   }
 
-  const buttonProps = { ...(props as ButtonAsButton) };
-  delete buttonProps.variant;
-  delete buttonProps.size;
-  delete buttonProps.className;
-  const type = buttonProps.type ?? "button";
-  delete buttonProps.type;
-
+  const { variant: _v, size: _s, className: _c, type, ...rest } = props as ButtonAsButton;
   return (
-    <button {...buttonProps} type={type} className={className}>
+    <button {...rest} type={type ?? "button"} className={className}>
       {props.children}
     </button>
   );

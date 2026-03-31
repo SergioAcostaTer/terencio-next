@@ -2,8 +2,37 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #f9fafb;
-  --foreground: #1f2937;
+  --background: #f8fafc;
+  --foreground: #111827;
+
+  /* Brand palette */
+  --brand-green: #166534;
+  --brand-green-mid: #16a34a;
+  --brand-green-light: #dcfce7;
+  --brand-red: #b91c1c;
+  --brand-yellow: #ca8a04;
+  --brand-slate: #1e293b;
+
+  /* Surface tokens */
+  --surface-0: #ffffff;
+  --surface-1: #f8fafc;
+  --surface-2: #f1f5f9;
+  --border: #e2e8f0;
+
+  /* Typography scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  /* Spacing rhythm */
+  --section-py: 4rem;
+  --section-py-sm: 2.5rem;
 }
 
 @theme inline {
@@ -37,10 +66,83 @@ body[data-chrome="bare"] {
   -webkit-tap-highlight-color: transparent;
 }
 
+/*  Standard section spacing  */
+.section-standard {
+  padding-top: var(--section-py);
+  padding-bottom: var(--section-py);
+}
+
+/*  Card system  */
+.card {
+  background: var(--surface-0);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+}
+
+.card-hover {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card-hover:hover {
+  box-shadow: 0 8px 24px 0 rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
+}
+
+/*  Badge system  */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-green {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-red {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-yellow {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.badge-slate {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.badge-blue {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+/*  Section label (eyebrow text)  */
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #166534;
+  margin-bottom: 0.5rem;
+}
+
+/*  Animations  */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translate3d(0, 30px, 0);
+    transform: translate3d(0, 24px, 0);
   }
 
   to {
@@ -65,5 +167,5 @@ body[data-chrome="bare"] {
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }

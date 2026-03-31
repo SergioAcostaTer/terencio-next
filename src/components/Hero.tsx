@@ -32,6 +32,7 @@ export default function Hero({
   const isCentered = align === "center";
 
   return (
+    <>
     <section className="relative flex min-h-[350px] items-center overflow-hidden bg-green-900 text-white md:min-h-[450px]">
       <div className="absolute inset-0 z-0">
         <Image
@@ -101,5 +102,32 @@ export default function Hero({
         </div>
       </div>
     </section>
+     <div className="relative z-20 -mt-2 border-b-4 border-green-800 bg-green-700 py-4 text-white shadow-lg md:py-6">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-center text-xs font-bold uppercase tracking-wider md:justify-around md:text-base">
+            <span className="group flex cursor-default items-center gap-2">
+              <span className="rounded-full bg-white/10 p-2 transition group-hover:bg-yellow-400 group-hover:text-green-900">
+                <Icon name="Calendar" size={18} />
+              </span>
+              Abierto Domingos
+            </span>
+            <span className="hidden text-green-400/50 md:inline">|</span>
+            <span className="group flex cursor-default items-center gap-2">
+              <span className="rounded-full bg-white/10 p-2 transition group-hover:bg-yellow-400 group-hover:text-green-900">
+                <Icon name="CarFront" size={18} />
+              </span>
+              Parking Gratis
+            </span>
+            <span className="hidden text-green-400/50 md:inline">|</span>
+            <span className="group flex cursor-default items-center gap-2">
+              <span className="rounded-full bg-white/10 p-2 transition group-hover:bg-yellow-400 group-hover:text-green-900">
+                <Icon name="IdCard" size={18} />
+              </span>
+              Sin Carnet de Socio
+            </span>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
