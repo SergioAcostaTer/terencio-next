@@ -1,3 +1,4 @@
+"use client";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CheckCircle, Loader2, Mail, MessageSquare, Phone, Send, User } from 'lucide-react';
 import { useState } from 'react';
