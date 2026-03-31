@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model MembershipSubmission {
+  id             String   @id @default(cuid())
+  legalName      String
+  commercialName String?
+  email          String
+  phone          String
+  nifCif         String
+  type           String
+  notes          String?
+  dniFileUrl     String?
+  dniFileKey     String?
+  modelFileUrl   String?
+  modelFileKey   String?
+  certificateUrl String?
+  certificateKey String?
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+}
+
+model Slide {
+  id          String   @id @default(cuid())
+  type        String
+  url         String
+  key         String
+  durationSec Int      @default(10)
+  order       Int
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}

@@ -23,6 +23,10 @@ body {
   padding-bottom: calc(75px + env(safe-area-inset-bottom));
 }
 
+body[data-chrome="bare"] {
+  padding-bottom: 0;
+}
+
 @media (min-width: 768px) {
   body {
     padding-bottom: 0;
