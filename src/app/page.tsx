@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import carniceriaImg from "@/assets/images/supermercado-interior.webp";
 import elHierroImg from "@/assets/images/buceo-el-hierro-experiencia.webp";
-import frescoImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
 import heroBg from "@/assets/images/hero-bg.webp";
+import carniceriaImg from "@/assets/images/supermercado-interior.webp";
+import frescoImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
 import Hero from "@/components/Hero";
 import LocationSection from "@/components/LocationSection";
 import NewsletterForm from "@/components/forms/NewsletterForm";
@@ -16,17 +16,17 @@ import GoogleReviews from "@/components/widgets/GoogleReviews";
 
 export const metadata: Metadata = {
   title:
-    "Terencio Cash Market | Supermercado en La Esperanza, San Cristóbal de La Laguna y Mayorista Tenerife",
+    "Terencio Cash Market | Supermercado en La Esperanza y Mayorista Tenerife",
   description:
-    "Tu supermercado en La Esperanza y San Cristóbal de La Laguna abierto los domingos. Cash & Carry sin carnet para particulares y proveedor alimentos al por mayor para HORECA (restaurantes y bares).",
+    "Tu supermercado en La Esperanza y San Cristóbal de La Laguna abierto los domingos. Cash & Carry sin carnet para particulares y proveedor alimentos al por mayor para HORECA.",
 };
 
 export default function Home() {
   return (
     <main>
       <Hero
-        title="Supermercado en <span class='text-green-400'>La Esperanza (San Cristóbal de La Laguna)</span> y Mayorista HORECA en <span class='text-yellow-400'>Tenerife</span>"
-        subtitle="El único Cash & Carry donde familias y profesionales compran al mejor precio. Carnicería propia, quesadillas de El Hierro y abierto los domingos."
+        title="Tu Cash & Carry en <span class='text-yellow-400'>Tenerife</span>"
+        subtitle="Supermercado en La Esperanza y Mayorista HORECA. El único almacén donde familias y profesionales compran al mejor precio. Carnicería al corte y abierto los domingos."
         badge="📍 Ctra. La Esperanza, 22 (La Laguna)"
         primaryCta={{ text: "Ver Horario", href: "/horario" }}
         secondaryCta={{ text: "Zona Profesionales", href: "/profesionales" }}
@@ -65,17 +65,15 @@ export default function Home() {
           <span className="text-sm font-bold uppercase tracking-widest text-green-700">
             Nuestros Departamentos
           </span>
-          <h2 className="mt-2 mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
+          <h2 className="mt-2 mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
             ¿Qué necesitas hoy?
           </h2>
-          <p className="mx-auto mb-4 max-w-3xl text-base leading-relaxed text-gray-600">
+          <p className="mx-auto mb-4 max-w-3xl text-lg leading-relaxed text-gray-600">
             Calidad, frescura y precios de almacén para todos los públicos. En
             Terencio encontrarás una amplia variedad de productos:{" "}
-            <strong>
-              frescos, congelados, bebidas, limpieza y menaje
-            </strong>
-            . Mantenemos <strong>stock permanente</strong> de marcas líderes y
-            apostamos firmemente por el <strong>producto canario</strong>.
+            <strong>frescos, congelados, bebidas y limpieza</strong>.
+            Mantenemos stock permanente de marcas líderes y apostamos
+            firmemente por el <strong>producto canario</strong>.
           </p>
         </div>
 
@@ -145,7 +143,7 @@ export default function Home() {
 
           <Link
             href="/profesionales"
-            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-500 hover:shadow-2xl md:col-span-2 lg:col-span-1"
+            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl md:col-span-2 lg:col-span-1 lg:h-80"
           >
             <div className="absolute inset-0 z-10 rounded-2xl bg-slate-900" />
             <div className="absolute inset-0 z-10 rounded-2xl opacity-10 [background-image:url('https://www.transparenttextures.com/patterns/cubes.png')]" />
@@ -176,7 +174,7 @@ export default function Home() {
             Tu Supermercado Diferente
           </span>
           <h2 className="mt-4 mb-6 text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
-            Por Qué Somos Tu Mejor Opción en Tenerife
+            Por Qué Somos Tu Mejor Opción
           </h2>
           <div className="mx-auto h-1 w-24 rounded-full bg-green-700" />
         </div>
@@ -188,9 +186,8 @@ export default function Home() {
             <strong>Cash & Carry sin carnet de socio</strong> donde
             particulares y profesionales conviven para beneficiarse de precios
             de almacén. Ubicados estratégicamente en la subida a{" "}
-            <strong>La Esperanza (La Laguna)</strong>, a pocos minutos del
-            centro y Santa Cruz, ofrecemos una experiencia de compra cómoda,
-            rápida y económica.
+            <strong>La Esperanza (La Laguna)</strong>, ofrecemos una experiencia
+            de compra cómoda, rápida y económica.
           </p>
 
           <div className="my-8 grid gap-8 text-left md:grid-cols-2">
@@ -204,8 +201,7 @@ export default function Home() {
                 carniceros que realizan{" "}
                 <strong>despiece diario y corte a cuchillo</strong>. Olvídate
                 de las bandejas industriales; aquí eliges el grosor de tu
-                chuleta y te preparamos la <strong>Carne de Fiesta</strong> al
-                momento con nuestro adobo casero.
+                chuleta y te preparamos la Carne de Fiesta al momento.
               </p>
             </div>
             <div className="rounded-2xl border border-gray-100 bg-gray-50 p-6 transition hover:shadow-lg">
@@ -216,19 +212,10 @@ export default function Home() {
                 Somos el puente directo con la Isla del Meridiano. Traemos
                 semanalmente <strong>quesadillas de El Hierro</strong>{" "}
                 artesanas, <strong>queso ahumado de la cooperativa</strong> y
-                la famosa piña tropical de Frontera. Productos exclusivos que
-                difícilmente encontrarás en otros supermercados.
+                la famosa piña tropical de Frontera. Productos exclusivos.
               </p>
             </div>
           </div>
-
-          <p className="text-base leading-relaxed md:text-center md:text-lg">
-            Abrimos <strong>362 días al año</strong>, incluidos domingos y
-            festivos, porque sabemos que tu despensa no entiende de
-            calendarios. Ya sea para llenar el carro de la semana o para
-            abastecer tu restaurante, en Terencio garantizamos calidad,
-            frescura y el trato cercano de una empresa familiar canaria.
-          </p>
         </div>
       </Section>
 
@@ -268,8 +255,7 @@ export default function Home() {
               Tenerife, Terencio es tu aliado estratégico. Como proveedores
               HORECA y de venta al por mayor, ofrecemos{" "}
               <strong>soluciones globales</strong> que incluyen embutidos,
-              carne, alimentación seca, bodega, productos de limpieza
-              industrial y menaje.
+              carne, alimentación seca, bodega, productos de limpieza y menaje.
             </p>
             <ul className="mb-8 space-y-4">
               <li className="flex items-start gap-3">
@@ -312,13 +298,6 @@ export default function Home() {
                 <Icon name="FileText" size={20} />
                 Ver Servicios HORECA
               </Link>
-              <a
-                href="tel:922636026"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-8 py-4 font-bold text-white shadow-lg transition-all hover:border-white/30 hover:bg-white/20"
-              >
-                <Icon name="Phone" size={20} />
-                Llamar Ahora
-              </a>
             </div>
           </div>
 
@@ -340,52 +319,48 @@ export default function Home() {
       </Section>
 
       <Section className="bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-12">
-            <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-green-50">
-              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-green-100 text-4xl text-green-700 shadow-sm transition-all duration-300 group-hover:rotate-6 group-hover:bg-green-600 group-hover:text-white">
-                🥩
-              </div>
-              <h3 className="text-lg font-bold text-gray-900">
-                Corte a Cuchillo
-              </h3>
-              <p className="mt-2 text-sm font-medium text-gray-500">
-                Carniceros expertos, no bandejas industriales.
-              </p>
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-12">
+          <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-green-50">
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-green-100 text-4xl text-green-700 shadow-sm transition-all duration-300 group-hover:rotate-6 group-hover:bg-green-600 group-hover:text-white">
+              🥩
             </div>
-            <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-yellow-50">
-              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-yellow-100 text-4xl text-yellow-700 shadow-sm transition-all duration-300 group-hover:-rotate-6 group-hover:bg-yellow-500 group-hover:text-white">
-                🏷️
-              </div>
-              <h3 className="text-lg font-bold text-gray-900">
-                Precios Mayoristas
-              </h3>
-              <p className="mt-2 text-sm font-medium text-gray-500">
-                Ahorra comprando formatos grandes sin carnet.
-              </p>
+            <h3 className="text-lg font-bold text-gray-900">
+              Corte a Cuchillo
+            </h3>
+            <p className="mt-2 text-sm font-medium text-gray-500">
+              Carniceros expertos, no bandejas industriales.
+            </p>
+          </div>
+          <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-yellow-50">
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-yellow-100 text-4xl text-yellow-700 shadow-sm transition-all duration-300 group-hover:-rotate-6 group-hover:bg-yellow-500 group-hover:text-white">
+              🏷️
             </div>
-            <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-blue-50">
-              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-100 text-4xl text-blue-700 shadow-sm transition-all duration-300 group-hover:rotate-6 group-hover:bg-blue-600 group-hover:text-white">
-                📅
-              </div>
-              <h3 className="text-lg font-bold text-gray-900">
-                Abierto 362 Días
-              </h3>
-              <p className="mt-2 text-sm font-medium text-gray-500">
-                Domingos, festivos... siempre abiertos para ti.
-              </p>
+            <h3 className="text-lg font-bold text-gray-900">
+              Precios Mayoristas
+            </h3>
+            <p className="mt-2 text-sm font-medium text-gray-500">
+              Ahorra comprando formatos grandes sin carnet.
+            </p>
+          </div>
+          <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-blue-50">
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-100 text-4xl text-blue-700 shadow-sm transition-all duration-300 group-hover:rotate-6 group-hover:bg-blue-600 group-hover:text-white">
+              📅
             </div>
-            <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-red-50">
-              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-red-100 text-4xl text-red-700 shadow-sm transition-all duration-300 group-hover:-rotate-6 group-hover:bg-red-600 group-hover:text-white">
-                ❤️
-              </div>
-              <h3 className="text-lg font-bold text-gray-900">
-                100% Canario
-              </h3>
-              <p className="mt-2 text-sm font-medium text-gray-500">
-                Empresa familiar de aquí, cerca de ti.
-              </p>
+            <h3 className="text-lg font-bold text-gray-900">
+              Abierto 362 Días
+            </h3>
+            <p className="mt-2 text-sm font-medium text-gray-500">
+              Domingos, festivos... siempre abiertos para ti.
+            </p>
+          </div>
+          <div className="group rounded-xl p-4 text-center transition duration-300 hover:bg-red-50">
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-red-100 text-4xl text-red-700 shadow-sm transition-all duration-300 group-hover:-rotate-6 group-hover:bg-red-600 group-hover:text-white">
+              ❤️
             </div>
+            <h3 className="text-lg font-bold text-gray-900">100% Canario</h3>
+            <p className="mt-2 text-sm font-medium text-gray-500">
+              Empresa familiar de aquí, cerca de ti.
+            </p>
           </div>
         </div>
       </Section>
@@ -394,27 +369,25 @@ export default function Home() {
         <div className="pointer-events-none absolute top-0 right-0 h-[400px] w-[400px] translate-x-1/3 -translate-y-1/3 rounded-full bg-white opacity-40 blur-3xl mix-blend-overlay" />
         <div className="pointer-events-none absolute bottom-0 left-0 h-[300px] w-[300px] -translate-x-1/2 translate-y-1/2 rounded-full bg-green-200 opacity-50 blur-3xl mix-blend-multiply" />
 
-        <div className="container relative z-10 mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-green-600 shadow-lg">
-              <Icon name="Mail" size={32} />
-            </div>
-            <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 md:text-4xl">
-              Únete a nuestra Comunidad
-            </h2>
-            <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Recibe semanalmente nuestras mejores ofertas en frescos, recetas
-              exclusivas y novedades directamente en tu email.{" "}
-              <strong>¡Solo contenido de valor y cero spam!</strong>
-            </p>
-            <NewsletterForm />
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-green-600 shadow-lg">
+            <Icon name="Mail" size={32} />
           </div>
+          <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 md:text-4xl">
+            Únete a nuestra Comunidad
+          </h2>
+          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-slate-600">
+            Recibe semanalmente nuestras mejores ofertas en frescos, recetas
+            exclusivas y novedades directamente en tu email.{" "}
+            <strong>¡Solo contenido de valor y cero spam!</strong>
+          </p>
+          <NewsletterForm />
         </div>
       </Section>
 
       <GoogleReviews />
 
-      <div className="border-t border-gray-200 bg-gray-50">
+      <Section className="bg-gray-50">
         <ContentWidget
           title="Consejos, Recetas y Actualidad"
           subtitle="Blog Terencio"
@@ -424,7 +397,7 @@ export default function Home() {
           viewAllLink="/blog"
           viewAllText="Ver todo el Blog"
         />
-      </div>
+      </Section>
 
       <Section className="bg-white">
         <div className="mx-auto max-w-4xl">
@@ -457,8 +430,6 @@ export default function Home() {
                 <strong>Cash & Carry abierto a todos</strong>. Tanto
                 particulares como profesionales pueden comprar libremente
                 nuestros productos a precios mayoristas sin cuotas ni carnets.
-                Esta es nuestra gran diferencia frente a otros almacenes
-                mayoristas en Tenerife.
               </div>
             </details>
 
@@ -474,10 +445,10 @@ export default function Home() {
               </summary>
               <div className="border-t border-gray-100 bg-white px-6 pt-4 pb-6 leading-relaxed text-gray-700">
                 Estamos en <strong>Ctra. La Esperanza, 22</strong>, ubicación
-                estratégica entre <strong>La Laguna y Santa Cruz</strong>.
-                Fácil acceso desde la autopista del norte con{" "}
-                <strong>parking gratuito</strong> amplio para coches,
-                furgonetas y vehículos comerciales.
+                estratégica entre <strong>La Laguna y Santa Cruz</strong>. Fácil
+                acceso desde la autopista del norte con{" "}
+                <strong>parking gratuito</strong> amplio para coches y
+                furgonetas.
               </div>
             </details>
 
@@ -493,9 +464,8 @@ export default function Home() {
               </summary>
               <div className="border-t border-gray-100 bg-white px-6 pt-4 pb-6 leading-relaxed text-gray-700">
                 Abrimos <strong>362 días al año</strong>, incluidos{" "}
-                <strong>domingos y festivos</strong> (cerramos solo Navidad,
-                Año Nuevo y Reyes). Nuestro horario es de Lunes a Sábado de
-                08:00 a 21:00 y Domingos de 08:30 a 20:30.
+                <strong>domingos y festivos</strong>. Nuestro horario es de
+                Lunes a Sábado de 08:00 a 21:00 y Domingos de 08:30 a 20:30.
               </div>
             </details>
 
@@ -511,9 +481,8 @@ export default function Home() {
               </summary>
               <div className="border-t border-gray-100 bg-white px-6 pt-4 pb-6 leading-relaxed text-gray-700">
                 Sí, traemos cada semana{" "}
-                <strong>productos exclusivos de El Hierro</strong>:
-                quesadillas artesanales, queso ahumado de Frontera y piña
-                tropical. Somos tu conexión directa con la isla.
+                <strong>productos exclusivos de El Hierro</strong>: quesadillas
+                artesanales, queso ahumado de Frontera y piña tropical.
               </div>
             </details>
           </div>

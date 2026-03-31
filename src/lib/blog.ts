@@ -3,29 +3,29 @@ import path from "node:path";
 
 import type { StaticImageData } from "next/image";
 
-import paisajeImg from "@/assets/images/paisaje.webp";
-import paisaje2Img from "@/assets/images/paisaje-2.webp";
-import quesoMojoImg from "@/assets/images/queso_mojo.webp";
-import cocheImg from "@/assets/images/coche.webp";
-import supermercadoInteriorImg from "@/assets/images/supermercado-interior.webp";
-import visitaEstudiantesImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
-import sostenibilidad2Img from "@/assets/images/sostenibilidad-2.webp";
-import henryAcostaImg from "@/assets/images/henry-acosta-terencio-laguna.webp";
-import quesadillasImg from "@/assets/images/quesadillas.webp";
-import heroBgImg from "@/assets/images/hero-bg.webp";
-import cargadoresElectricosImg from "@/assets/images/cargadores-electricos.webp";
-import elHierroCharcoImg from "@/assets/images/el-hierro-charco.webp";
-import ecomuseoGuineaImg from "@/assets/images/ecomuseo_guinea.webp";
-import faroOrchillaImg from "@/assets/images/faro_orchilla.webp";
 import buceoElHierroExperienciaImg from "@/assets/images/buceo-el-hierro-experiencia.webp";
 import buceoLaRestingaImg from "@/assets/images/buceo_la_restinga.webp";
+import cargadoresElectricosImg from "@/assets/images/cargadores-electricos.webp";
+import cocheImg from "@/assets/images/coche.webp";
+import ecomuseoGuineaImg from "@/assets/images/ecomuseo_guinea.webp";
+import elHierroCharcoImg from "@/assets/images/el-hierro-charco.webp";
+import faroOrchillaImg from "@/assets/images/faro_orchilla.webp";
+import henryAcostaImg from "@/assets/images/henry-acosta-terencio-laguna.webp";
+import heroBgImg from "@/assets/images/hero-bg.webp";
 import miradorIsoraImg from "@/assets/images/mirador-isora.webp";
-import roqueBonanzaImg from "@/assets/images/Roque-Bonanza-El-Hierro.webp";
 import miradorLasPlayasImg from "@/assets/images/mirador_las_playas.webp";
+import paisaje2Img from "@/assets/images/paisaje-2.webp";
+import paisajeImg from "@/assets/images/paisaje.webp";
+import quesadillasImg from "@/assets/images/quesadillas.webp";
+import quesoMojoImg from "@/assets/images/queso_mojo.webp";
+import roqueBonanzaImg from "@/assets/images/Roque-Bonanza-El-Hierro.webp";
+import rutaVolcanesImg from "@/assets/images/ruta_volcanes.webp";
+import sostenibilidad2Img from "@/assets/images/sostenibilidad-2.webp";
+import supermercadoInteriorImg from "@/assets/images/supermercado-interior.webp";
 import terencioAcostaImg from "@/assets/images/terencio-acosta-entrevista.webp";
 import tuboVolcanicoGuineaImg from "@/assets/images/tubo_volcanico_guinea.webp";
-import rutaVolcanesImg from "@/assets/images/ruta_volcanes.webp";
 import vinosElHierroImg from "@/assets/images/vinos_el_hierro.webp";
+import visitaEstudiantesImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
 
 export type BlogPostSummary = {
   slug: string;
@@ -71,7 +71,7 @@ const imageRegistry: Record<string, StaticImageData> = {
   "vinos_el_hierro.webp": vinosElHierroImg,
 };
 
-const blogDir = path.join(process.cwd(), "_astro_staged", "content", "blog");
+const blogDir = path.join(process.cwd(), "content", "blog");
 
 function normalizeSource(source: string) {
   return source.replace(/^\uFEFF/, "");

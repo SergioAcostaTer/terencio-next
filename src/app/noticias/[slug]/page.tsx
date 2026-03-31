@@ -15,7 +15,7 @@ type NewsPostPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-const newsDir = path.join(process.cwd(), "_astro_staged", "content", "noticias");
+const newsDir = path.join(process.cwd(), "content", "noticias");
 
 function formatFullDate(date: Date) {
   return new Intl.DateTimeFormat("es-ES", {

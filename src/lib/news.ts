@@ -3,12 +3,12 @@ import path from "node:path";
 
 import type { StaticImageData } from "next/image";
 
-import visitaEstudiantesImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
+import henryAcostaImg from "@/assets/images/henry-acosta-terencio-laguna.webp";
 import sostenibilidad1Img from "@/assets/images/sostenibilidad-1.webp";
 import sostenibilidad2Img from "@/assets/images/sostenibilidad-2.webp";
-import henryAcostaImg from "@/assets/images/henry-acosta-terencio-laguna.webp";
 import terencioAcostaImg from "@/assets/images/terencio-acosta-entrevista.webp";
 import traspasoHiperDinoImg from "@/assets/images/traspasohiperdinoterencio.webp";
+import visitaEstudiantesImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
 
 export type NewsPostSummary = {
   slug: string;
@@ -37,7 +37,7 @@ const imageRegistry: Record<string, StaticImageData> = {
   "traspasohiperdinoterencio.webp": traspasoHiperDinoImg,
 };
 
-const newsDir = path.join(process.cwd(), "_astro_staged", "content", "noticias");
+const newsDir = path.join(process.cwd(), "content", "noticias");
 
 function normalizeSource(source: string) {
   return source.replace(/^\uFEFF/, "");
