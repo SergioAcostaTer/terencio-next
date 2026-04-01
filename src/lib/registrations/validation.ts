@@ -77,6 +77,13 @@ export function getStepErrors(step: number, data: RegistrationDraftData): StepVa
     });
   }
 
+  if (step === 4) {
+    const missingDocuments = getMissingRequiredDocuments(data);
+    if (missingDocuments.length > 0) {
+      fieldErrors.documents = "Sube todos los documentos obligatorios para continuar.";
+    }
+  }
+
   if (step === 5) {
     const aggregate = getAllValidationErrors(data, data.documents);
     aggregate.fields.forEach((field) => {

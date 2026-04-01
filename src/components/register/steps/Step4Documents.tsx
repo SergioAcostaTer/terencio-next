@@ -5,6 +5,7 @@ import { getRequiredDocuments } from "@/lib/registrations/requiredDocuments";
 
 type Step4DocumentsProps = {
   data: RegistrationDraftData;
+  errors?: Record<string, string>;
   uploadingType: DocumentType | null;
   uploadErrors: Partial<Record<DocumentType, string>>;
   onUpload: (type: DocumentType, file: File) => Promise<UploadedDocument>;
@@ -125,6 +126,7 @@ function UploadCard({
 
 export default function Step4Documents({
   data,
+  errors,
   uploadingType,
   uploadErrors,
   onUpload,
@@ -155,8 +157,17 @@ export default function Step4Documents({
       ) : null}
 
       {missingRequired.length > 0 ? (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-          Te faltan {missingRequired.length} documentos obligatorios. Puedes continuar y añadirlos después, pero no podremos revisar tu solicitud hasta recibirlos.
+        <div
+          data-error={errors?.documents ? "true" : undefined}
+          className={`rounded-xl px-4 py-3 text-sm ${
+            errors?.documents
+              ? "border border-red-200 bg-red-50 text-red-700"
+              : "border border-amber-200 bg-amber-50 text-amber-800"
+          }`}
+        >
+          {errors?.documents
+            ? "Te faltan documentos obligatorios. Súbelos antes de continuar."
+            : `Te faltan ${missingRequired.length} documentos obligatorios para completar el alta.`}
         </div>
       ) : null}
 

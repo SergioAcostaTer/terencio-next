@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import RegistrationStatusActions from "@/components/backoffice/RegistrationStatusActions";
 import { requireAdminPermission } from "@/lib/auth";
+import { getPrivateSignedUrl } from "@/lib/r2";
 import { getRequiredDocumentLabel } from "@/lib/registrations/requiredDocuments";
 import { getRegistrationDetail } from "@/lib/registrations/service";
 import { registrationStatusLabels, registrationStatusTone } from "@/lib/registrations/types";
@@ -38,6 +39,12 @@ export default async function MembershipDetailPage({
   }
 
   const { record, missingFields, missingDocuments, readyForReview } = detail;
+  const documentsWithUrls = await Promise.all(
+    record.data.documents.map(async (document) => ({
+      ...document,
+      resolvedUrl: document.fileKey ? await getPrivateSignedUrl(document.fileKey) : document.fileUrl,
+    })),
+  );
 
   return (
     <div className="space-y-6">
@@ -125,10 +132,10 @@ export default async function MembershipDetailPage({
             </div>
             <div className="mt-4 space-y-3">
               {record.data.documents.length > 0 ? (
-                record.data.documents.map((document) => (
+                documentsWithUrls.map((document) => (
                   <a
                     key={document.id}
-                    href={document.fileUrl}
+                    href={document.resolvedUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="block rounded-xl bg-slate-50 px-4 py-4 text-sm transition hover:bg-slate-100"

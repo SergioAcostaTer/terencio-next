@@ -1,7 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { FieldError, FieldLabel, inputClass, labelClass } from "@/components/register/formUi";
 import type { RegistrationDraftData } from "@/lib/registrations/types";
@@ -19,27 +19,41 @@ export default function Step2Contact({ data, errors, onBlur, onChange }: Step2Co
   const [postalLookupState, setPostalLookupState] = useState<PostalLookupState>("idle");
   const [postalOptions, setPostalOptions] = useState<string[]>([]);
   const hasCityOptions = postalOptions.length > 1;
-  const applyPostalLookup = useEffectEvent((payload: { cities: string[]; province: string | null }) => {
-    setPostalOptions(payload.cities);
-    if (payload.cities.length === 1 && !data.poblacion.trim()) {
-      onChange("poblacion", payload.cities[0]);
-    }
-    if (payload.province && !data.provincia.trim()) {
-      onChange("provincia", payload.province);
-    }
-  });
+  const lookupCacheRef = useRef<Map<string, { cities: string[]; province: string | null }>>(new Map());
+  const lastRequestedPostalCodeRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!/^\d{5}$/.test(data.codigoPostal.trim())) {
+    const postalCode = data.codigoPostal.trim();
+
+    if (!/^\d{5}$/.test(postalCode)) {
       setPostalLookupState("idle");
       setPostalOptions([]);
+      lastRequestedPostalCodeRef.current = null;
+      return;
+    }
+
+    const cached = lookupCacheRef.current.get(postalCode);
+    if (cached) {
+      setPostalOptions(cached.cities);
+      if (cached.cities.length === 1 && !data.poblacion.trim()) {
+        onChange("poblacion", cached.cities[0]);
+      }
+      if (cached.province && !data.provincia.trim()) {
+        onChange("provincia", cached.province);
+      }
+      setPostalLookupState("idle");
+      return;
+    }
+
+    if (lastRequestedPostalCodeRef.current === postalCode) {
       return;
     }
 
     let active = true;
+    lastRequestedPostalCodeRef.current = postalCode;
     setPostalLookupState("loading");
 
-    void fetch(`/api/postal-code/${data.codigoPostal.trim()}`, { cache: "no-store" })
+    void fetch(`/api/postal-code/${postalCode}`, { cache: "no-store" })
       .then(async (response) => {
         if (!response.ok) {
           throw new Error("Postal lookup failed");
@@ -52,13 +66,21 @@ export default function Step2Contact({ data, errors, onBlur, onChange }: Step2Co
           return;
         }
 
-        applyPostalLookup(payload);
+        lookupCacheRef.current.set(postalCode, payload);
+        setPostalOptions(payload.cities);
+        if (payload.cities.length === 1 && !data.poblacion.trim()) {
+          onChange("poblacion", payload.cities[0]);
+        }
+        if (payload.province && !data.provincia.trim()) {
+          onChange("provincia", payload.province);
+        }
       })
       .catch(() => {
         if (!active) {
           return;
         }
         setPostalOptions([]);
+        lastRequestedPostalCodeRef.current = null;
       })
       .finally(() => {
         if (!active) {
@@ -70,7 +92,7 @@ export default function Step2Contact({ data, errors, onBlur, onChange }: Step2Co
     return () => {
       active = false;
     };
-  }, [applyPostalLookup, data.codigoPostal]);
+  }, [data.codigoPostal, data.poblacion, data.provincia, onChange]);
 
   return (
     <div className="space-y-5">
@@ -165,7 +187,9 @@ export default function Step2Contact({ data, errors, onBlur, onChange }: Step2Co
       <div className="space-y-5">
         <div>
           <p className="text-sm font-semibold text-slate-800">Contacto</p>
-          <p className="mt-1 text-xs text-slate-500">Necesitamos un email y al menos un teléfono. Los campos obligatorios llevan <span className="font-semibold text-red-600">*</span>.</p>
+          <p className="mt-1 text-xs text-slate-500">
+            Necesitamos un email y al menos un teléfono. Los campos obligatorios llevan <span className="font-semibold text-red-600">*</span>.
+          </p>
         </div>
 
         {errors.contact ? (
@@ -176,14 +200,15 @@ export default function Step2Contact({ data, errors, onBlur, onChange }: Step2Co
 
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <label className={labelClass()}>Teléfono</label>
+            <label className={labelClass()}>Teléfono fijo</label>
             <input
               value={data.telefono}
               onBlur={() => onBlur("telefono")}
               onChange={(event) => onChange("telefono", event.target.value)}
               className={inputClass(false)}
-              placeholder="922 000 000"
+              placeholder="Ej: 922 123 456"
             />
+            <p className="mt-1.5 text-xs text-slate-500">Puedes indicar fijo o dejar este campo vacío y usar el móvil.</p>
           </div>
 
           <div>
@@ -193,8 +218,9 @@ export default function Step2Contact({ data, errors, onBlur, onChange }: Step2Co
               onBlur={() => onBlur("movil")}
               onChange={(event) => onChange("movil", event.target.value)}
               className={inputClass(false)}
-              placeholder="600 000 000"
+              placeholder="Ej: 600 123 456"
             />
+            <p className="mt-1.5 text-xs text-slate-500">Con uno de los dos teléfonos es suficiente.</p>
           </div>
         </div>
 
@@ -205,9 +231,10 @@ export default function Step2Contact({ data, errors, onBlur, onChange }: Step2Co
             onBlur={() => onBlur("email")}
             onChange={(event) => onChange("email", event.target.value)}
             className={inputClass(Boolean(errors.email || (!data.email.trim() && errors.contact)))}
-            placeholder="cliente@empresa.com"
+            placeholder="Ej: compras@tuempresa.com"
             autoComplete="email"
           />
+          <p className="mt-1.5 text-xs text-slate-500">Usaremos este email para avisos y para la revisión del alta.</p>
           <FieldError message={errors.email || (!data.email.trim() && errors.contact ? "El email es obligatorio." : undefined)} />
         </div>
       </div>

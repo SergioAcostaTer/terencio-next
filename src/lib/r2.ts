@@ -1,8 +1,10 @@
 import "server-only";
 
 import {
+  CreateBucketCommand,
   DeleteObjectCommand,
   GetObjectCommand,
+  HeadBucketCommand,
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
@@ -13,6 +15,7 @@ import path from "path";
 import { getEnv } from "@/lib/env";
 
 const ALLOWED_FOLDERS = new Set(["memberships", "slides", "media"]);
+const ensuredBuckets = new Map<string, Promise<void>>();
 
 function getR2Client() {
   const env = getEnv();
@@ -47,6 +50,51 @@ function sanitizeFilename(filename: string) {
   return `${base || "file"}${extension}`;
 }
 
+async function ensureBucketExists(bucketName: string) {
+  const existing = ensuredBuckets.get(bucketName);
+  if (existing) {
+    return existing;
+  }
+
+  const pending = (async () => {
+    const client = getR2Client();
+
+    try {
+      await client.send(
+        new HeadBucketCommand({
+          Bucket: bucketName,
+        }),
+      );
+      return;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      const name = typeof error === "object" && error !== null && "name" in error ? String(error.name) : "";
+      const missingBucket =
+        name === "NotFound" ||
+        name === "NoSuchBucket" ||
+        message.includes("does not exist") ||
+        message.includes("NotFound") ||
+        message.includes("NoSuchBucket");
+
+      if (!missingBucket) {
+        throw error;
+      }
+    }
+
+    await client.send(
+      new CreateBucketCommand({
+        Bucket: bucketName,
+      }),
+    );
+  })().catch((error) => {
+    ensuredBuckets.delete(bucketName);
+    throw error;
+  });
+
+  ensuredBuckets.set(bucketName, pending);
+  return pending;
+}
+
 export function getPublicUrl(key: string) {
   const env = getEnv();
   return `${env.R2_PUBLIC_BASE_URL.replace(/\/$/, "")}/${key}`;
@@ -61,6 +109,7 @@ export async function uploadFile(file: File, folder: "memberships" | "slides" | 
   const buffer = Buffer.from(await file.arrayBuffer());
   const bucketName =
     folder === "memberships" ? getPrivateBucketName() : getPublicBucketName();
+  await ensureBucketExists(bucketName);
 
   await getR2Client().send(
     new PutObjectCommand({
@@ -80,6 +129,7 @@ export async function uploadFile(file: File, folder: "memberships" | "slides" | 
 
 export async function getPrivateSignedUrl(key: string) {
   const env = getEnv();
+  await ensureBucketExists(getPrivateBucketName());
 
   return getSignedUrl(
     getR2Client(),
@@ -96,6 +146,7 @@ export async function getPrivateSignedUrl(key: string) {
 export async function deleteFile(key: string, folder: "memberships" | "slides" | "media") {
   const bucketName =
     folder === "memberships" ? getPrivateBucketName() : getPublicBucketName();
+  await ensureBucketExists(bucketName);
 
   await getR2Client().send(
     new DeleteObjectCommand({

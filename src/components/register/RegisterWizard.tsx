@@ -1,7 +1,6 @@
 "use client";
 
 import { startTransition, useMemo, useState } from "react";
-import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import DraftRecoveryModal from "@/components/register/DraftRecoveryModal";
@@ -128,17 +127,6 @@ export default function RegisterWizard() {
     draft.setCurrentStep(step);
   }
 
-  if (!draft.hydrated) {
-    return (
-      <div className="flex min-h-screen items-center justify-center px-4">
-        <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm text-slate-600 shadow-sm">
-          <Loader2 className="h-4 w-4 animate-spin text-green-700" />
-          Recuperando tu sesión...
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-[calc(100vh-58px)] bg-slate-50 md:min-h-[calc(100vh-74px)]">
       <div className="mx-auto max-w-2xl px-4 pb-32 pt-6 md:pt-8">
@@ -186,6 +174,7 @@ export default function RegisterWizard() {
             {draft.currentStep === 4 ? (
               <Step4Documents
                 data={draft.data}
+                errors={visibleErrors}
                 uploadingType={draft.uploadingType}
                 uploadErrors={draft.uploadErrors}
                 onUpload={draft.uploadDocument}

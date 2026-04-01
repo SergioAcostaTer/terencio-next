@@ -24,6 +24,7 @@ export type UploadedDocument = {
   type: DocumentType;
   fileName: string;
   fileUrl: string;
+  fileKey?: string;
   mimeType: string;
   size: number;
   uploadedAt: string;
