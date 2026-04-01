@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 type DraftRecoveryModalProps = {
   currentStep: number;
   lastSavedAt: string | null;
@@ -27,11 +29,53 @@ export default function DraftRecoveryModal({
   onContinue,
   onReset,
 }: DraftRecoveryModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const focusables = dialogRef.current?.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    focusables?.[0]?.focus();
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key !== "Tab" || !focusables || focusables.length === 0) {
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-xl">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="draft-recovery-title"
+        className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-xl"
+      >
         <p className="text-2xl">📋</p>
-        <h2 className="mt-3 text-lg font-semibold text-slate-950">Tienes un borrador guardado</h2>
+        <h2 id="draft-recovery-title" className="mt-3 text-lg font-semibold text-slate-950">Tienes un borrador guardado</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600">
           Guardado el {formatDraftDate(lastSavedAt)} · Paso {currentStep} de 5
         </p>

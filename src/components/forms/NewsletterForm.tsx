@@ -13,10 +13,11 @@ import {
 } from '@/lib/form-submissions';
 
 export default function NewsletterForm() {
-  const { isSubmitting, submitStatus, submit, resetStatus } = useFormSubmit<NewsletterSubscriptionInput>('/api/newsletter');
-
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<NewsletterSubscriptionInput>({
+  const { register, handleSubmit, setError, formState: { errors }, reset } = useForm<NewsletterSubscriptionInput>({
     resolver: zodResolver(newsletterSubscriptionSchema),
+  });
+  const { isSubmitting, submitStatus, submitError, submit, resetStatus } = useFormSubmit<NewsletterSubscriptionInput>('/api/newsletter', {
+    setError,
   });
 
   useEffect(() => {
@@ -42,7 +43,13 @@ export default function NewsletterForm() {
   return (
     <div className="w-full max-w-xl mx-auto">
         <form onSubmit={handleSubmit(onSubmit)} className="relative flex flex-col sm:flex-row gap-3">
-            <input type="text" className="hidden" {...register("honeypot")} />
+            <input
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              className="absolute -z-50 opacity-0"
+              {...register("honeypot")}
+            />
     
             <div className="flex-grow">
                 <input
@@ -59,6 +66,7 @@ export default function NewsletterForm() {
             <button
                 type="submit"
                 disabled={isSubmitting || submitStatus === 'success'}
+                aria-disabled={isSubmitting || submitStatus === 'success'}
                 className="bg-green-700 hover:bg-green-800 text-white font-bold text-base px-8 py-4 rounded-xl transition shadow-lg hover:shadow-xl hover:-translate-y-0.5 whitespace-nowrap flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none min-w-[140px]"
             >
                 {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : 'Suscribirme'}
@@ -82,7 +90,7 @@ export default function NewsletterForm() {
             {submitStatus === 'error' && (
                 <div className="text-red-600 font-medium flex items-center gap-2 text-sm animate-fade-in-up">
                     <AlertCircle size={16} />
-                    Hubo un error al suscribirte. Inténtalo de nuevo.
+                    {submitError ?? 'Hubo un error al suscribirte. Inténtalo de nuevo.'}
                 </div>
             )}
         </div>

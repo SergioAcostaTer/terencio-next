@@ -7,10 +7,11 @@ import { useFormSubmit } from '@/hooks/useFormSubmit';
 import { contactSubmissionSchema, type ContactSubmissionInput } from '@/lib/form-submissions';
 
 export default function ContactForm() {
-  const { isSubmitting, submitStatus, submit } = useFormSubmit<ContactSubmissionInput>('/api/contact');
-
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactSubmissionInput>({
+  const { register, handleSubmit, setError, formState: { errors }, reset } = useForm<ContactSubmissionInput>({
     resolver: zodResolver(contactSubmissionSchema),
+  });
+  const { isSubmitting, submitStatus, submitError, submit } = useFormSubmit<ContactSubmissionInput>('/api/contact', {
+    setError,
   });
 
   const onSubmit = (data: ContactSubmissionInput) => {
@@ -21,7 +22,13 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-      <input type="text" className="hidden" {...register("honeypot")} />
+      <input
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        className="absolute -z-50 opacity-0"
+        {...register("honeypot")}
+      />
 
         {/* Name Field */}
         <div className="space-y-1">
@@ -122,6 +129,7 @@ export default function ContactForm() {
         <button
             type="submit"
             disabled={isSubmitting}
+            aria-disabled={isSubmitting}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-700 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-green-800 hover:shadow-xl active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 disabled:transform-none"
         >
             {isSubmitting ? <Loader2 className="animate-spin" /> : <Send size={20} />}
@@ -144,7 +152,7 @@ export default function ContactForm() {
                 <AlertCircle className="shrink-0 text-red-600" size={20} />
                 <div>
                     <p className="font-bold">Hubo un error al enviar</p>
-                    <p className="text-sm">Por favor, revisa tu conexión o llámanos directamente.</p>
+                    <p className="text-sm">{submitError ?? 'Por favor, revisa tu conexión o llámanos directamente.'}</p>
                 </div>
             </div>
         )}

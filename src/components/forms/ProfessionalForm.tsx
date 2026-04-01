@@ -14,10 +14,11 @@ import {
 
 export default function ProfessionalForm() {
   const router = useRouter();
-  const { isSubmitting, submitStatus, submit } = useFormSubmit<ProfessionalSubmissionInput>('/api/professional');
-
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ProfessionalSubmissionInput>({
+  const { register, handleSubmit, setError, formState: { errors }, reset } = useForm<ProfessionalSubmissionInput>({
     resolver: zodResolver(professionalSubmissionSchema),
+  });
+  const { isSubmitting, submitStatus, submitError, submit } = useFormSubmit<ProfessionalSubmissionInput>('/api/professional', {
+    setError,
   });
 
   const onSubmit = (data: ProfessionalSubmissionInput) => {
@@ -29,7 +30,13 @@ export default function ProfessionalForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-        <input type="text" className="hidden" {...register("honeypot")} />
+        <input
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          className="absolute -z-50 opacity-0"
+          {...register("honeypot")}
+        />
 
         <div className="space-y-1">
             <label htmlFor="businessName" className="font-bold text-gray-700 text-sm">Nombre del Negocio</label>
@@ -93,6 +100,7 @@ export default function ProfessionalForm() {
         <button
             type="submit"
             disabled={isSubmitting}
+            aria-disabled={isSubmitting}
             className="w-full bg-[#185d26] text-white font-bold text-base py-2.5 rounded-xl hover:bg-green-800 transition shadow-md flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-2"
         >
             {isSubmitting ? <Loader2 className="animate-spin" /> : <FileText size={20} />}
@@ -143,7 +151,7 @@ export default function ProfessionalForm() {
         {submitStatus === 'error' && (
             <div className="mt-4 p-3 bg-red-50 text-red-700 rounded-lg flex items-center gap-2 text-center justify-center text-sm border border-red-200">
                 <AlertCircle size={16} />
-                <p>Hubo un error. Inténtalo de nuevo.</p>
+                <p>{submitError ?? 'Hubo un error. Inténtalo de nuevo.'}</p>
             </div>
         )}
     </form>

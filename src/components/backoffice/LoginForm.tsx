@@ -108,6 +108,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={isSubmitting}
+        aria-disabled={isSubmitting}
         className="w-full rounded-md bg-[var(--brand-green)] py-2.5 text-sm font-semibold text-white transition hover:bg-green-800 disabled:opacity-60"
       >
         {isSubmitting ? "Accediendo" : "Entrar al backoffice"}

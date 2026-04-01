@@ -96,6 +96,7 @@ export default function WizardFooter({
               type="button"
               onClick={onBack}
               disabled={isSubmitting}
+              aria-disabled={isSubmitting}
               className="px-0 py-3 text-sm font-medium text-slate-600 transition hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-40"
             >
               Atrás
@@ -116,6 +117,7 @@ export default function WizardFooter({
             type="button"
             onClick={onSubmit}
             disabled={!canSubmit || isSubmitting}
+            aria-disabled={!canSubmit || isSubmitting}
             className="inline-flex min-w-[148px] items-center justify-center rounded-xl bg-green-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isSubmitting ? (
@@ -132,6 +134,7 @@ export default function WizardFooter({
             type="button"
             onClick={onNext}
             disabled={!canContinue}
+            aria-disabled={!canContinue}
             className="inline-flex min-w-[136px] items-center justify-center rounded-xl bg-green-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Continuar

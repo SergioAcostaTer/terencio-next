@@ -42,6 +42,7 @@ export default function Hero({
             alt="Fondo de Terencio Supermercado"
             fill
             priority
+            placeholder="blur"
             sizes="100vw"
             className="object-cover opacity-20"
           />

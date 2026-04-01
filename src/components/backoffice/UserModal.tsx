@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { manageableAdminRoles, roleLabels } from "@/lib/admin-users";
 
@@ -14,6 +14,7 @@ const inputCls =
   "w-full rounded-md border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-950 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100";
 
 export default function UserModal({ open, onClose, onCreated }: UserModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<(typeof manageableAdminRoles)[number]>("EDITOR");
@@ -29,6 +30,50 @@ export default function UserModal({ open, onClose, onCreated }: UserModalProps) 
       setIsSubmitting(false);
     }
   }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const focusables = dialogRef.current?.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    focusables?.[0]?.focus();
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !focusables || focusables.length === 0) {
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose, open]);
 
   if (!open) {
     return null;
@@ -59,13 +104,19 @@ export default function UserModal({ open, onClose, onCreated }: UserModalProps) 
 
   return (
     <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/45 px-4 py-6">
-      <div className="w-full max-w-xl rounded-xl border border-[var(--backoffice-border)] bg-white p-6 shadow-[0_12px_28px_-18px_rgba(15,23,42,0.28)] sm:p-6">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="user-modal-title"
+        className="w-full max-w-xl rounded-xl border border-[var(--backoffice-border)] bg-white p-6 shadow-[0_12px_28px_-18px_rgba(15,23,42,0.28)] sm:p-6"
+      >
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
               Acceso interno
             </p>
-            <h2 className="mt-1 text-xl font-semibold text-slate-950">
+            <h2 id="user-modal-title" className="mt-1 text-xl font-semibold text-slate-950">
               Invitar usuario
             </h2>
             <p className="mt-2 text-sm text-slate-500">
@@ -150,6 +201,7 @@ export default function UserModal({ open, onClose, onCreated }: UserModalProps) 
             <button
               type="submit"
               disabled={isSubmitting}
+              aria-disabled={isSubmitting}
               className="rounded-md bg-[var(--brand-green)] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800 disabled:opacity-60"
             >
               {isSubmitting ? "Creando" : "Crear usuario"}
