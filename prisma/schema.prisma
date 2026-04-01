@@ -61,6 +61,7 @@ model MembershipSubmission {
   zone           String?
   authorizedPersons Json?
   documentationStatus Json?
+  onboardingDocuments Json?
   legalAccepted  Boolean  @default(false)
   source         String?  @default("qr")
   notes          String?
@@ -71,8 +72,11 @@ model MembershipSubmission {
   certificateUrl String?
   certificateKey String?
   status         String   @default("pending")
+  currentStep    Int      @default(1)
+  completionPercentage Int @default(0)
   submittedAt    DateTime @default(now())
   createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
 }
 
 model ContactSubmission {
