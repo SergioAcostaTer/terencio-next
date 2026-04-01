@@ -395,20 +395,34 @@ export function useRegisterDraft() {
     touch();
   }
 
-  async function submit() {
-    if (!draftId) {
-      setSubmitError("Todavía estamos guardando tu solicitud. Espera un momento y vuelve a intentarlo.");
-      return null;
-    }
+  async function persistCurrentDraft() {
+    const payload = await draftSync.saveDraft({
+      id: draftId ?? undefined,
+      currentStep,
+      data,
+    });
 
+    setDraftId(payload.record.id);
+    setCurrentStep(payload.record.currentStep);
+    setData(payload.record.data);
+    setLastSavedAt(payload.record.updatedAt);
+    setSaveState("saved");
+    setPendingSync(false);
+
+    return payload.record;
+  }
+
+  async function submit() {
     setIsSubmitting(true);
     setSubmitError(null);
 
     try {
-      const payload = await draftSync.submitDraft(draftId);
+      setSaveState("saving");
+      const savedRecord = await persistCurrentDraft();
+      const payload = await draftSync.submitDraft(savedRecord.id);
       if (!payload.success) {
         setSubmitValidation(payload.errors ?? { fields: [], documents: [] });
-        setSubmitError(payload.error ?? "Todavía faltan algunos datos para enviar la solicitud.");
+        setSubmitError(payload.error ?? "No se pudo enviar la solicitud.");
         return null;
       }
 

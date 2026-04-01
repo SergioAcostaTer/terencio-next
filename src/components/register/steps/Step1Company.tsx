@@ -1,4 +1,4 @@
-import { Building2, ChevronDown, Circle, Dot, UserRound } from "lucide-react";
+import { Building2, ChevronDown, UserRound } from "lucide-react";
 import { useEffect, useEffectEvent } from "react";
 
 import { FieldError, FieldLabel, helperClass, inputClass, labelClass } from "@/components/register/formUi";
@@ -49,7 +49,7 @@ export default function Step1Company({
   return (
     <div className="space-y-5">
       <div data-error={errors.clientType ? "true" : undefined}>
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-2 gap-3">
           {[
             {
               value: "autonomo" as const,
@@ -74,12 +74,24 @@ export default function Step1Company({
                 onClick={() => onClientTypeChange(option.value)}
                 onBlur={() => onBlur("clientType")}
                 className={[
-                  "rounded-xl p-4 text-left transition-all",
+                  "relative rounded-xl p-4 pr-12 text-left transition-all",
                   selected
                     ? "border border-green-600 bg-green-50 ring-2 ring-green-100"
                     : "border border-slate-200 bg-white",
                 ].join(" ")}
               >
+                <span
+                  className={`absolute top-4 right-4 flex h-5 w-5 items-center justify-center rounded-full border ${
+                    selected ? "border-green-700 bg-white" : "border-slate-300 bg-white"
+                  }`}
+                  aria-hidden="true"
+                >
+                  <span
+                    className={`h-2.5 w-2.5 rounded-full ${
+                      selected ? "bg-green-700" : "bg-transparent"
+                    }`}
+                  />
+                </span>
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3">
                     <Icon className={`mt-0.5 h-5 w-5 ${selected ? "text-green-700" : "text-slate-500"}`} />
@@ -88,11 +100,6 @@ export default function Step1Company({
                       <p className="mt-1 text-sm text-slate-500">{option.description}</p>
                     </div>
                   </div>
-                  {selected ? (
-                    <Dot className="h-5 w-5 text-green-700" />
-                  ) : (
-                    <Circle className="h-5 w-5 text-slate-300" />
-                  )}
                 </div>
               </button>
             );
