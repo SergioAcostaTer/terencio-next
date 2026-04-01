@@ -46,6 +46,7 @@ export type RegistrationDraftData = {
   direccion: string;
   codigoPostal: string;
   poblacion: string;
+  provincia: string;
   zona: string;
   telefono: string;
   movil: string;
@@ -132,6 +133,7 @@ export function createEmptyRegistrationDraftData(): RegistrationDraftData {
     direccion: "",
     codigoPostal: "",
     poblacion: "",
+    provincia: "",
     zona: "",
     telefono: "",
     movil: "",

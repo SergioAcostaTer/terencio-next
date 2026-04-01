@@ -1,135 +1,131 @@
-import { CheckCircle2, CircleAlert, FileText } from "lucide-react";
-
-import { getRequiredDocumentLabel } from "@/lib/registrations/requiredDocuments";
+import { getRequiredDocumentLabel, getRequiredDocuments } from "@/lib/registrations/requiredDocuments";
 import type { RegistrationDraftData } from "@/lib/registrations/types";
 import { getMissingRequirements } from "@/lib/registrations/validation";
 
 type Step5ReviewProps = {
   data: RegistrationDraftData;
-  submitError: string | null;
   submitValidation: { fields: string[]; documents: string[] } | null;
+  onEditStep: (step: number) => void;
 };
 
-function SummaryBlock({ title, rows }: { title: string; rows: Array<[string, string]> }) {
+function SummarySection({
+  title,
+  rows,
+  onEdit,
+}: {
+  title: string;
+  rows: Array<[string, string]>;
+  onEdit: () => void;
+}) {
   return (
-    <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4">
-      <p className="font-semibold text-slate-950">{title}</p>
-      <dl className="mt-4 space-y-3 text-sm">
+    <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="text-sm font-semibold text-slate-800">{title}</h2>
+        <button type="button" onClick={onEdit} className="text-sm font-medium text-green-700 transition hover:text-green-800">
+          Editar
+        </button>
+      </div>
+      <dl className="mt-4 grid grid-cols-[140px_1fr] gap-y-3">
         {rows.map(([label, value]) => (
-          <div key={label} className="flex flex-col gap-1 border-b border-slate-100 pb-3 last:border-b-0 last:pb-0">
-            <dt className="font-medium text-slate-500">{label}</dt>
-            <dd className="text-slate-900">{value || "Sin indicar"}</dd>
+          <div key={label} className="contents">
+            <dt className="text-sm text-slate-500">{label}</dt>
+            <dd className="text-sm font-medium text-slate-900">{value || "Sin indicar"}</dd>
           </div>
         ))}
       </dl>
-    </div>
+    </section>
   );
 }
 
-export default function Step5Review({ data, submitError, submitValidation }: Step5ReviewProps) {
+export default function Step5Review({ data, submitValidation, onEditStep }: Step5ReviewProps) {
   const missing = getMissingRequirements(data);
+  const requiredDocuments = getRequiredDocuments(data.clientType);
+  const allComplete = missing.missingFields.length === 0 && missing.missingDocuments.length === 0;
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-[1.75rem] bg-slate-950 p-5 text-white">
-        <p className="text-lg font-bold">Antes de enviar</p>
-        <p className="mt-2 text-sm leading-6 text-slate-300">
-          Revisa el resumen. Si falta algo, puedes volver atrás sin perder progreso.
-        </p>
-      </div>
-
-      {missing.missingFields.length === 0 && missing.missingDocuments.length === 0 ? (
-        <div className="rounded-[1.75rem] border border-emerald-200 bg-emerald-50 px-4 py-4 text-sm text-emerald-800">
-          <div className="flex items-center gap-2 font-semibold">
-            <CheckCircle2 className="h-4 w-4" />
-            Todo listo para enviar.
-          </div>
+    <div className="space-y-4">
+      {allComplete ? (
+        <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-green-800">
+          <p className="text-sm font-semibold">Todo listo para enviar</p>
+          <p className="mt-1 text-sm">Hemos revisado tus datos y todo parece correcto.</p>
         </div>
       ) : (
-        <div className="rounded-[1.75rem] border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-800">
-          <div className="flex items-center gap-2 font-semibold">
-            <CircleAlert className="h-4 w-4" />
-            Aún faltan algunos elementos antes de enviar.
-          </div>
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-800">
+          <p className="text-sm font-semibold">Faltan algunos datos</p>
           {missing.missingFields.length > 0 ? (
-            <p className="mt-3">Datos pendientes: {missing.missingFields.join(", ")}.</p>
+            <p className="mt-1 text-sm">Campos: {missing.missingFields.join(", ")}</p>
           ) : null}
           {missing.missingDocuments.length > 0 ? (
-            <p className="mt-2">Documentos pendientes: {missing.missingDocuments.join(", ")}.</p>
+            <p className="mt-1 text-sm">Documentos: {missing.missingDocuments.join(", ")}</p>
+          ) : null}
+          {submitValidation?.documents?.length ? (
+            <p className="mt-1 text-sm">Pendiente en envío: {submitValidation.documents.join(", ")}</p>
           ) : null}
         </div>
       )}
 
-      {submitError ? (
-        <div className="rounded-[1.75rem] border border-rose-200 bg-rose-50 px-4 py-4 text-sm text-rose-700">
-          {submitError}
-          {submitValidation?.documents?.length ? ` Documentos: ${submitValidation.documents.join(", ")}.` : ""}
-        </div>
-      ) : null}
+      <SummarySection
+        title="Empresa o autónomo"
+        onEdit={() => onEditStep(1)}
+        rows={[
+          ["Tipo", data.clientType === "empresa" ? "Empresa" : data.clientType === "autonomo" ? "Autónomo" : ""],
+          ["NIF", data.nifCif],
+          ["Razón social", data.razonSocial],
+          ["Nombre comercial", data.nombreComercial],
+          ["Actividad", data.actividad],
+          ["Código IAE", data.codigoIAE],
+          ["Tarifa", data.tarifa],
+        ]}
+      />
 
-      <div className="grid gap-4 xl:grid-cols-2">
-        <SummaryBlock
-          title="Empresa o autónomo"
-          rows={[
-            ["Tipo", data.clientType === "empresa" ? "Empresa" : data.clientType === "autonomo" ? "Autónomo" : ""],
-            ["Razón social", data.razonSocial],
-            ["Nombre comercial", data.nombreComercial],
-            ["Actividad", data.actividad],
-            ["Código IAE", data.codigoIAE],
-            ["Tarifa", data.tarifa],
-            ["NIF/CIF", data.nifCif],
-          ]}
-        />
-        <SummaryBlock
-          title="Dirección y contacto"
-          rows={[
-            ["Dirección", data.direccion],
-            ["Código postal", data.codigoPostal],
-            ["Población", data.poblacion],
-            ["Zona", data.zona],
-            ["Teléfono", data.telefono],
-            ["Móvil", data.movil],
-            ["Email", data.email],
-          ]}
-        />
-      </div>
+      <SummarySection
+        title="Dirección y contacto"
+        onEdit={() => onEditStep(2)}
+        rows={[
+          ["Dirección", data.direccion],
+          ["Código postal", data.codigoPostal],
+          ["Población", data.poblacion],
+          ["Provincia", data.provincia],
+          ["Zona", data.zona],
+          ["Teléfono", data.telefono],
+          ["Móvil", data.movil],
+          ["Email", data.email],
+        ]}
+      />
 
-      <SummaryBlock
+      <SummarySection
         title="Personas autorizadas"
+        onEdit={() => onEditStep(3)}
         rows={[
           ["Contacto principal", data.contactoPrincipal],
           [
             "Autorizadas",
             data.personasAutorizadas.length > 0
               ? data.personasAutorizadas.map((person) => `${person.nombre} (${person.nif})`).join(", ")
-              : "Sin personas autorizadas",
+              : "Ninguna",
           ],
         ]}
       />
 
-      <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4">
-        <div className="flex items-center gap-2">
-          <FileText className="h-4 w-4 text-slate-500" />
-          <p className="font-semibold text-slate-950">Documentación subida</p>
-        </div>
-        <div className="mt-4 space-y-3">
-          {data.documents.length > 0 ? (
-            data.documents.map((document) => (
-              <div key={document.id} className="rounded-2xl bg-slate-50 px-4 py-3 text-sm">
-                <p className="font-semibold text-slate-900">{document.fileName}</p>
-                <p className="text-slate-500">{getRequiredDocumentLabel(document.type)}</p>
-              </div>
-            ))
-          ) : (
-            <p className="text-sm text-slate-500">Todavía no hay documentos adjuntos.</p>
-          )}
-        </div>
-      </div>
+      <SummarySection
+        title="Documentación"
+        onEdit={() => onEditStep(4)}
+        rows={[
+          ...requiredDocuments.map((document) => {
+            const uploaded = data.documents.find((item) => item.type === document.type);
+            return [document.label, uploaded?.fileName ?? "Pendiente de subir"] as [string, string];
+          }),
+          ...data.documents
+            .filter((document) => document.type === "other")
+            .map((document) => [getRequiredDocumentLabel(document.type), document.fileName] as [string, string]),
+        ]}
+      />
 
-      <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4">
-        <p className="font-semibold text-slate-950">Observaciones</p>
-        <p className="mt-3 text-sm leading-6 text-slate-600">{data.observaciones || "Sin observaciones."}</p>
-      </div>
+      <SummarySection
+        title="Observaciones"
+        onEdit={() => onEditStep(4)}
+        rows={[["Notas", data.observaciones || "Sin observaciones"]]}
+      />
     </div>
   );
 }

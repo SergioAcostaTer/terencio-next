@@ -27,8 +27,8 @@ const REQUIRED_DOCUMENTS: Record<Exclude<ClientType, "">, RequiredDocumentDefini
   empresa: [
     {
       type: "nif",
-      label: "Fotocopia del NIF",
-      description: "NIF del representante o documento equivalente si aplica.",
+      label: "NIF del representante",
+      description: "Imagen o PDF legible del documento de la persona representante.",
     },
     {
       type: "cif_empresa",

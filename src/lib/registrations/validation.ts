@@ -30,6 +30,8 @@ export function getStepErrors(step: number, data: RegistrationDraftData): StepVa
     }
     if (!hasValue(data.razonSocial)) {
       fieldErrors.razonSocial = "La razón social es obligatoria.";
+    } else if (data.razonSocial.trim().length < 2) {
+      fieldErrors.razonSocial = "Indica un nombre o razón social con al menos 2 caracteres.";
     }
     if (!hasValue(data.nifCif)) {
       fieldErrors.nifCif = "El NIF/CIF es obligatorio.";
@@ -42,12 +44,17 @@ export function getStepErrors(step: number, data: RegistrationDraftData): StepVa
     }
     if (!hasValue(data.codigoPostal)) {
       fieldErrors.codigoPostal = "El código postal es obligatorio.";
+    } else if (!/^\d{5}$/.test(data.codigoPostal.trim())) {
+      fieldErrors.codigoPostal = "El código postal debe tener 5 dígitos.";
     }
     if (!hasValue(data.poblacion)) {
       fieldErrors.poblacion = "La población es obligatoria.";
     }
-    if (!hasValue(data.telefono) && !hasValue(data.movil) && !hasValue(data.email)) {
-      fieldErrors.contact = "Indica al menos un teléfono, móvil o email.";
+    if (!hasValue(data.telefono) && !hasValue(data.movil)) {
+      fieldErrors.contact = "Indica al menos un teléfono o móvil.";
+    }
+    if (!hasValue(data.email)) {
+      fieldErrors.contact = "Indica un email y al menos un teléfono o móvil.";
     }
     if (hasValue(data.email) && !isValidEmail(data.email)) {
       fieldErrors.email = "Introduce un email válido.";
@@ -68,13 +75,6 @@ export function getStepErrors(step: number, data: RegistrationDraftData): StepVa
         fieldErrors[`personasAutorizadas.${index}.nif`] = "Completa el NIF.";
       }
     });
-  }
-
-  if (step === 4) {
-    const missingDocumentLabels = getMissingRequiredDocuments(data);
-    if (missingDocumentLabels.length > 0) {
-      fieldErrors.documents = "Falta documentación obligatoria para continuar.";
-    }
   }
 
   if (step === 5) {
@@ -120,12 +120,17 @@ export function getMissingRequirements(data: RegistrationDraftData): MissingRequ
   }
   if (!hasValue(data.codigoPostal)) {
     missingFields.push("Código postal");
+  } else if (!/^\d{5}$/.test(data.codigoPostal.trim())) {
+    missingFields.push("Código postal válido");
   }
   if (!hasValue(data.poblacion)) {
     missingFields.push("Población");
   }
-  if (!hasValue(data.telefono) && !hasValue(data.movil) && !hasValue(data.email)) {
-    missingFields.push("Al menos una vía de contacto");
+  if (!hasValue(data.telefono) && !hasValue(data.movil)) {
+    missingFields.push("Teléfono o móvil");
+  }
+  if (!hasValue(data.email)) {
+    missingFields.push("Email");
   }
   if (hasValue(data.email) && !isValidEmail(data.email)) {
     missingFields.push("Email válido");
@@ -176,6 +181,7 @@ export function sanitizeRegistrationData(data: RegistrationDraftData): Registrat
     telefono: data.telefono.trim(),
     movil: data.movil.trim(),
     codigoPostal: data.codigoPostal.trim(),
+    provincia: data.provincia.trim(),
     personasAutorizadas: data.personasAutorizadas.map((person) => ({
       ...person,
       nombre: person.nombre.trim(),

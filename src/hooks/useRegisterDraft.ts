@@ -15,7 +15,7 @@ import {
   type RegistrationRecord,
   type UploadedDocument,
 } from "@/lib/registrations/types";
-import { getStepErrors } from "@/lib/registrations/validation";
+import { getMissingRequirements, getStepErrors } from "@/lib/registrations/validation";
 
 type SaveState = "idle" | "saving" | "saved" | "error" | "local_only";
 
@@ -57,13 +57,38 @@ function getMostRecentRecord(args: {
   return { source: "remote" as const, record: args.remote };
 }
 
+function buildSnapshot(args: {
+  draftId: string | null;
+  currentStep: number;
+  data: RegistrationDraftData;
+  saveState: SaveState;
+}) {
+  const timestamp = new Date().toISOString();
+
+  return {
+    draftId: args.draftId,
+    currentStep: args.currentStep,
+    data: args.data,
+    updatedAt: timestamp,
+    lastServerSyncAt: args.saveState === "saved" ? timestamp : null,
+  } satisfies DraftStorageSnapshot;
+}
+
 export function useRegisterDraft() {
   const draftSync = useDraftSync();
   const [draftId, setDraftId] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [data, setData] = useState<RegistrationDraftData>(createEmptyRegistrationDraftData());
-  const [hydrated, setHydrated] = useState(false);
-  const [restoredFromDraft, setRestoredFromDraft] = useState(false);
+  const [hydrated, setHydrated] = useState(true);
+  const [draftFound, setDraftFound] = useState(false);
+  const [draftChoiceResolved, setDraftChoiceResolved] = useState(false);
+  const [pendingDraft, setPendingDraft] = useState<{
+    draftId: string | null;
+    currentStep: number;
+    data: RegistrationDraftData;
+    lastSavedAt: string | null;
+    pendingSync: boolean;
+  } | null>(null);
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -71,9 +96,10 @@ export function useRegisterDraft() {
   const [submitValidation, setSubmitValidation] = useState<{ fields: string[]; documents: string[] } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadingType, setUploadingType] = useState<DocumentType | null>(null);
-  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadErrors, setUploadErrors] = useState<Partial<Record<DocumentType, string>>>({});
   const [version, setVersion] = useState(0);
   const [pendingSync, setPendingSync] = useState(false);
+  const [legalAccepted, setLegalAccepted] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -100,26 +126,29 @@ export function useRegisterDraft() {
       const latest = getMostRecentRecord({ local, remote });
 
       if (!latest) {
-        setHydrated(true);
+        setDraftChoiceResolved(true);
         return;
       }
 
       if (latest.source === "local") {
-        setDraftId(latest.snapshot.draftId);
-        setCurrentStep(latest.snapshot.currentStep);
-        setData(latest.snapshot.data);
-        setLastSavedAt(latest.snapshot.updatedAt);
-        setRestoredFromDraft(true);
-        setPendingSync(true);
+        setPendingDraft({
+          draftId: latest.snapshot.draftId,
+          currentStep: latest.snapshot.currentStep,
+          data: latest.snapshot.data,
+          lastSavedAt: latest.snapshot.updatedAt,
+          pendingSync: true,
+        });
       } else {
-        setDraftId(latest.record.id);
-        setCurrentStep(latest.record.currentStep);
-        setData(latest.record.data);
-        setLastSavedAt(latest.record.updatedAt);
-        setRestoredFromDraft(true);
+        setPendingDraft({
+          draftId: latest.record.id,
+          currentStep: latest.record.currentStep,
+          data: latest.record.data,
+          lastSavedAt: latest.record.updatedAt,
+          pendingSync: false,
+        });
       }
 
-      setHydrated(true);
+      setDraftFound(true);
     }
 
     void restore().catch(() => {
@@ -127,7 +156,7 @@ export function useRegisterDraft() {
         return;
       }
       setLoadError("No se pudo recuperar tu borrador. Puedes continuar y se volverá a guardar.");
-      setHydrated(true);
+      setDraftChoiceResolved(true);
     });
 
     return () => {
@@ -135,21 +164,43 @@ export function useRegisterDraft() {
     };
   }, [draftSync]);
 
-  useAutosave(
-    () => {
-      const snapshot: DraftStorageSnapshot = {
+  useEffect(() => {
+    if (!hydrated) {
+      return;
+    }
+
+    const handleBeforeUnload = () => {
+      const snapshot = buildSnapshot({
         draftId,
         currentStep,
         data,
-        updatedAt: new Date().toISOString(),
-        lastServerSyncAt: saveState === "saved" ? new Date().toISOString() : null,
-      };
+        saveState,
+      });
+      window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(snapshot));
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [currentStep, data, draftId, hydrated, saveState]);
+
+  useAutosave(
+    () => {
+      const snapshot = buildSnapshot({
+        draftId,
+        currentStep,
+        data,
+        saveState,
+      });
       window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(snapshot));
       setLastSavedAt(snapshot.updatedAt);
+      setSaveState((current) => (current === "local_only" ? "local_only" : "saved"));
     },
-    120,
-    [draftId, currentStep, data, version],
-    hydrated && version > 0,
+    200,
+    [draftId, currentStep, data, version, saveState],
+    hydrated && draftChoiceResolved && version > 0,
   );
 
   useAutosave(
@@ -174,9 +225,9 @@ export function useRegisterDraft() {
           setSaveState("local_only");
         });
     },
-    900,
+    1000,
     [draftId, currentStep, data, version, pendingSync],
-    hydrated && (version > 0 || pendingSync),
+    hydrated && draftChoiceResolved && (version > 0 || pendingSync),
   );
 
   function touch() {
@@ -185,12 +236,46 @@ export function useRegisterDraft() {
     setSaveState("saving");
   }
 
+  function dismissDraft() {
+    if (pendingDraft) {
+      setDraftId(pendingDraft.draftId);
+      setCurrentStep(pendingDraft.currentStep);
+      setData(pendingDraft.data);
+      setLastSavedAt(pendingDraft.lastSavedAt);
+      setPendingSync(pendingDraft.pendingSync);
+      setSaveState(pendingDraft.pendingSync ? "local_only" : "saved");
+    }
+
+    setPendingDraft(null);
+    setDraftFound(false);
+    setDraftChoiceResolved(true);
+  }
+
+  function clearDraft() {
+    window.localStorage.removeItem(LOCAL_STORAGE_KEY);
+    setDraftId(null);
+    setCurrentStep(1);
+    setData(createEmptyRegistrationDraftData());
+    setLastSavedAt(null);
+    setDraftFound(false);
+    setDraftChoiceResolved(true);
+    setPendingDraft(null);
+    setPendingSync(false);
+    setVersion(0);
+    setSaveState("idle");
+    setSubmitError(null);
+    setSubmitValidation(null);
+    setUploadErrors({});
+    setLegalAccepted(false);
+  }
+
   function updateField<K extends keyof RegistrationDraftData>(field: K, value: RegistrationDraftData[K]) {
     setData((current) => ({
       ...current,
       [field]: value,
     }));
     setSubmitValidation(null);
+    setSubmitError(null);
     touch();
   }
 
@@ -198,9 +283,30 @@ export function useRegisterDraft() {
     setData((current) => ({
       ...current,
       clientType,
-      documents: current.documents.filter((document) => document.type === "other" || document.type === "nif"),
+      documents: current.documents.filter((document) => {
+        if (document.type === "other") {
+          return true;
+        }
+
+        if (clientType === "autonomo") {
+          return document.type === "nif" || document.type === "modelo_036_037" || document.type === "alta_autonomo";
+        }
+
+        if (clientType === "empresa") {
+          return document.type === "nif" || document.type === "cif_empresa";
+        }
+
+        return false;
+      }),
     }));
     setSubmitValidation(null);
+    setSubmitError(null);
+    setUploadErrors((current) => ({
+      ...current,
+      modelo_036_037: undefined,
+      alta_autonomo: undefined,
+      cif_empresa: undefined,
+    }));
     touch();
   }
 
@@ -236,7 +342,10 @@ export function useRegisterDraft() {
   }
 
   async function uploadDocument(type: DocumentType, file: File) {
-    setUploadError(null);
+    setUploadErrors((current) => ({
+      ...current,
+      [type]: undefined,
+    }));
     setUploadingType(type);
 
     try {
@@ -247,7 +356,11 @@ export function useRegisterDraft() {
       });
 
       setData((current) => {
-        const filtered = current.documents.filter((item) => !(item.type === type && type !== "other"));
+        const filtered =
+          type === "other"
+            ? current.documents
+            : current.documents.filter((item) => item.type !== type);
+
         return {
           ...current,
           documents: [...filtered, document],
@@ -256,11 +369,22 @@ export function useRegisterDraft() {
       touch();
       return document;
     } catch (error) {
-      setUploadError(error instanceof Error ? error.message : "No se pudo subir el documento.");
+      const message = error instanceof Error ? error.message : "No se pudo subir el documento.";
+      setUploadErrors((current) => ({
+        ...current,
+        [type]: message,
+      }));
       throw error;
     } finally {
       setUploadingType(null);
     }
+  }
+
+  function setUploadError(type: DocumentType, message: string | null) {
+    setUploadErrors((current) => ({
+      ...current,
+      [type]: message ?? undefined,
+    }));
   }
 
   function removeDocument(documentId: string) {
@@ -291,8 +415,8 @@ export function useRegisterDraft() {
       window.localStorage.removeItem(LOCAL_STORAGE_KEY);
       setSaveState("saved");
       return payload.record;
-    } catch {
-      setSubmitError("No se pudo enviar la solicitud. Tu borrador sigue guardado.");
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "No se pudo enviar la solicitud.");
       return null;
     } finally {
       setIsSubmitting(false);
@@ -300,6 +424,7 @@ export function useRegisterDraft() {
   }
 
   const currentStepValidation = getStepErrors(currentStep, data);
+  const missingRequirements = getMissingRequirements(data);
 
   function updateCurrentStep(step: number) {
     setCurrentStep(step);
@@ -311,7 +436,7 @@ export function useRegisterDraft() {
     currentStep,
     data,
     hydrated,
-    restoredFromDraft,
+    draftFound,
     saveState,
     lastSavedAt,
     loadError,
@@ -319,8 +444,10 @@ export function useRegisterDraft() {
     submitValidation,
     isSubmitting,
     uploadingType,
-    uploadError,
+    uploadErrors,
+    legalAccepted,
     currentStepValidation,
+    missingRequirements,
     setCurrentStep: updateCurrentStep,
     updateField,
     setClientType,
@@ -328,7 +455,11 @@ export function useRegisterDraft() {
     updateAuthorizedPerson,
     removeAuthorizedPerson,
     uploadDocument,
+    setUploadError,
     removeDocument,
+    setLegalAccepted,
+    dismissDraft,
+    clearDraft,
     submit,
   };
 }

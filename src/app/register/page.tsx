@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
+import Header from "@/components/Header";
 import RegisterWizard from "@/components/register/RegisterWizard";
-import Section from "@/components/ui/Section";
 
 export const metadata: Metadata = {
   title: "Alta de cliente",
@@ -10,12 +10,11 @@ export const metadata: Metadata = {
 
 export default function RegisterPage() {
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#f8fafc_0%,#eef7f1_45%,#f8fafc_100%)]">
-      <Section className="pb-24 pt-6 md:pb-12 md:pt-10">
-        <div className="mx-auto max-w-5xl">
-          <RegisterWizard />
-        </div>
-      </Section>
+    <main className="min-h-screen bg-slate-50">
+      <Header showTopStrip={false} showStoreStatus={false} />
+      <div className="pt-[58px] md:pt-[74px]">
+        <RegisterWizard />
+      </div>
     </main>
   );
 }

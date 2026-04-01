@@ -17,6 +17,11 @@ type NavItem = {
   children?: { label: string; href: string }[];
 };
 
+type HeaderProps = {
+  showTopStrip?: boolean;
+  showStoreStatus?: boolean;
+};
+
 function childNavIcon(label: string) {
   if (label.includes("Carnicería")) {
     return "Beef";
@@ -37,49 +42,55 @@ function childNavIcon(label: string) {
   return "ChevronRight";
 }
 
-export default function Header() {
+export default function Header({
+  showTopStrip = true,
+  showStoreStatus = true,
+}: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const mobileHeaderHeight = showTopStrip ? "top-[97px] h-[calc(100dvh-97px)]" : "top-[58px] h-[calc(100dvh-58px)]";
 
   return (
     <header className="fixed top-0 z-[100] flex w-full flex-col bg-white font-sans shadow-md transition-all duration-300">
-      <div className="hidden justify-between border-b border-green-800 bg-green-700 px-6 py-2 text-xs text-white md:flex lg:px-8">
-        <div className="flex gap-6">
-          <a
-            href={siteData.social.googleMaps}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-1 font-medium transition hover:text-yellow-200"
-          >
-            <Icon name="MapPin" size={14} /> Ctra. La Esperanza 22, La Laguna
-          </a>
-          <span className="flex items-center gap-1 font-bold text-yellow-300">
-            <Icon name="Calendar" size={14} /> ¡ABIERTO DOMINGOS!
-          </span>
+      {showTopStrip ? (
+        <div className="hidden justify-between border-b border-green-800 bg-green-700 px-6 py-1.5 text-xs text-white md:flex lg:px-8">
+          <div className="flex gap-6">
+            <a
+              href={siteData.social.googleMaps}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1 font-medium transition hover:text-yellow-200"
+            >
+              <Icon name="MapPin" size={14} /> Ctra. La Esperanza 22, La Laguna
+            </a>
+            <span className="flex items-center gap-1 font-bold text-yellow-300">
+              <Icon name="Calendar" size={14} /> ¡ABIERTO DOMINGOS!
+            </span>
+          </div>
+          <div className="flex gap-6">
+            <Link
+              href="/backoffice/login"
+              className="font-medium text-white/75 transition hover:text-yellow-200"
+            >
+              Acceso empleados
+            </Link>
+            <Link
+              href="/profesionales"
+              className="font-medium transition hover:text-yellow-200"
+            >
+              Profesionales HORECA
+            </Link>
+            <a
+              href={`tel:${siteData.contact.phoneRaw}`}
+              className="flex items-center gap-1 font-bold transition hover:text-yellow-200"
+            >
+              <Icon name="Phone" size={14} /> {siteData.contact.phone}
+            </a>
+          </div>
         </div>
-        <div className="flex gap-6">
-          <Link
-            href="/backoffice/login"
-            className="font-medium text-white/75 transition hover:text-yellow-200"
-          >
-            Acceso empleados
-          </Link>
-          <Link
-            href="/profesionales"
-            className="font-medium transition hover:text-yellow-200"
-          >
-            Profesionales HORECA
-          </Link>
-          <a
-            href={`tel:${siteData.contact.phoneRaw}`}
-            className="flex items-center gap-1 font-bold transition hover:text-yellow-200"
-          >
-            <Icon name="Phone" size={14} /> {siteData.contact.phone}
-          </a>
-        </div>
-      </div>
+      ) : null}
 
-      <div className="relative z-50 flex h-[62px] w-full items-center justify-between gap-2 bg-white px-3 md:mx-auto md:h-[80px] md:max-w-6xl md:px-4 lg:px-6">
+      <div className="relative z-50 flex h-[58px] w-full items-center justify-between gap-2 bg-white px-3 md:mx-auto md:h-[74px] md:max-w-6xl md:px-4 lg:px-6">
         <button
           type="button"
           onClick={() => setMobileMenuOpen((value) => !value)}
@@ -179,11 +190,11 @@ export default function Header() {
         </Link>
       </div>
 
-      <StoreStatus />
+      {showStoreStatus ? <StoreStatus /> : null}
 
       <nav
         aria-label="Navegación Móvil Principal"
-        className={`fixed top-[97px] left-0 z-[70] h-[calc(100dvh-97px)] w-full overflow-hidden bg-white pb-6 shadow-inner transition-transform duration-300 md:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed left-0 z-[70] w-full overflow-hidden bg-white pb-6 shadow-inner transition-transform duration-300 md:hidden ${mobileHeaderHeight} ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="flex h-full flex-col overflow-y-auto p-4">
           <ul className="m-0 flex list-none flex-col gap-2">

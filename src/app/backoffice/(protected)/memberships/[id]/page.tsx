@@ -82,6 +82,7 @@ export default async function MembershipDetailPage({
               ["Dirección", record.data.direccion],
               ["Código postal", record.data.codigoPostal],
               ["Población", record.data.poblacion],
+              ["Provincia", record.data.provincia],
               ["Zona", record.data.zona],
               ["Teléfono", record.data.telefono],
               ["Móvil", record.data.movil],

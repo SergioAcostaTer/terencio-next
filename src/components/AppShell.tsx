@@ -14,7 +14,7 @@ type AppShellProps = {
   children: ReactNode;
 };
 
-const CHROMELESS_PREFIXES = ["/backoffice", "/display"];
+const CHROMELESS_PREFIXES = ["/backoffice", "/display", "/register"];
 
 export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
