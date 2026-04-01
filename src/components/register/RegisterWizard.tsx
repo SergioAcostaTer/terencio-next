@@ -11,6 +11,7 @@ import Step2Contact from "@/components/register/steps/Step2Contact";
 import Step3Authorized from "@/components/register/steps/Step3Authorized";
 import Step4Documents from "@/components/register/steps/Step4Documents";
 import Step5Review from "@/components/register/steps/Step5Review";
+import Icon from "@/components/ui/Icon";
 import { useRegisterDraft } from "@/hooks/useRegisterDraft";
 import { calculateCompletionPercentage } from "@/lib/registrations/completion";
 import { REGISTRATION_STEPS } from "@/lib/registrations/types";
@@ -137,6 +138,31 @@ export default function RegisterWizard() {
         ) : null}
 
         <div className="space-y-4">
+          {draft.currentStep === 1 ? (
+            <div className="rounded-2xl bg-gradient-to-br from-green-900 to-green-800 p-6 text-white shadow-lg md:p-8">
+              <h2 className="text-2xl font-black tracking-tight text-white md:text-3xl">
+                Únete a Terencio Profesional
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-green-50 md:text-base">
+                Completa tu alta en menos de 3 minutos y accede a ventajas exclusivas para tu negocio. Guardaremos tu progreso automáticamente.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-bold text-green-50 backdrop-blur-sm md:text-sm">
+                  <Icon name="BadgePercent" size={16} className="text-yellow-400" />
+                  Hasta 10% Dto.
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-bold text-green-50 backdrop-blur-sm md:text-sm">
+                  <Icon name="Euro" size={16} className="text-yellow-400" />
+                  Tarifas netas
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-bold text-green-50 backdrop-blur-sm md:text-sm">
+                  <Icon name="Gift" size={16} className="text-yellow-400" />
+                  Promociones HORECA
+                </span>
+              </div>
+            </div>
+          ) : null}
+
           <StepHeader title={stepMeta.title} description={stepMeta.description} />
 
           <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">

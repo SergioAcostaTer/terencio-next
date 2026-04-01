@@ -74,6 +74,19 @@ function buildSnapshot(args: {
   } satisfies DraftStorageSnapshot;
 }
 
+function ensureDraftId(currentDraftId: string | null) {
+  return currentDraftId ?? crypto.randomUUID();
+}
+
+function isSameDraftState(args: {
+  leftStep: number;
+  leftData: RegistrationDraftData;
+  rightStep: number;
+  rightData: RegistrationDraftData;
+}) {
+  return args.leftStep === args.rightStep && JSON.stringify(args.leftData) === JSON.stringify(args.rightData);
+}
+
 export function useRegisterDraft() {
   const draftSync = useDraftSync();
   const [draftId, setDraftId] = useState<string | null>(null);
@@ -130,7 +143,21 @@ export function useRegisterDraft() {
         return;
       }
 
+      const emptyData = createEmptyRegistrationDraftData();
+
       if (latest.source === "local") {
+        const matchesCurrentState = isSameDraftState({
+          leftStep: latest.snapshot.currentStep,
+          leftData: latest.snapshot.data,
+          rightStep: 1,
+          rightData: emptyData,
+        });
+
+        if (matchesCurrentState) {
+          setDraftChoiceResolved(true);
+          return;
+        }
+
         setPendingDraft({
           draftId: latest.snapshot.draftId,
           currentStep: latest.snapshot.currentStep,
@@ -139,6 +166,18 @@ export function useRegisterDraft() {
           pendingSync: true,
         });
       } else {
+        const matchesCurrentState = isSameDraftState({
+          leftStep: latest.record.currentStep,
+          leftData: latest.record.data,
+          rightStep: 1,
+          rightData: emptyData,
+        });
+
+        if (matchesCurrentState) {
+          setDraftChoiceResolved(true);
+          return;
+        }
+
         setPendingDraft({
           draftId: latest.record.id,
           currentStep: latest.record.currentStep,
@@ -231,6 +270,7 @@ export function useRegisterDraft() {
   );
 
   function touch() {
+    setDraftId((current) => ensureDraftId(current));
     setVersion((value) => value + 1);
     setPendingSync(true);
     setSaveState("saving");

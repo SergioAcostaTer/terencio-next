@@ -28,7 +28,7 @@ function buildRecord(input: {
   });
 
   return {
-    id: input.existing?.id ?? crypto.randomUUID(),
+    id: input.existing?.id ?? input.payload.id ?? crypto.randomUUID(),
     status: input.status ?? input.existing?.status ?? "draft",
     completionPercentage: calculateCompletionPercentage(sanitizedData),
     currentStep: clampStep(input.payload.currentStep),
@@ -44,12 +44,13 @@ export async function saveRegistrationDraft(payload: RegistrationDraftPayload) {
 
   if (payload.id) {
     const existing = await repository.getById(payload.id);
-    if (!existing) {
-      throw new Error("Draft not found");
+    if (existing) {
+      const nextRecord = buildRecord({ existing, payload, status: "draft" });
+      return repository.updateDraft(existing.id, nextRecord);
     }
 
-    const nextRecord = buildRecord({ existing, payload, status: "draft" });
-    return repository.updateDraft(existing.id, nextRecord);
+    const newRecord = buildRecord({ payload, status: "draft" });
+    return repository.createDraft(newRecord);
   }
 
   const newRecord = buildRecord({ payload, status: "draft" });

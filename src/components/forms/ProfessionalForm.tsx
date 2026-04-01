@@ -3,10 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CheckCircle, FileText, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import siteData from '../../data/siteData.json';
 
+import { useFormSubmit } from '@/hooks/useFormSubmit';
 import {
   professionalSubmissionSchema,
   type ProfessionalSubmissionInput,
@@ -14,36 +14,17 @@ import {
 
 export default function ProfessionalForm() {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const { isSubmitting, submitStatus, submit } = useFormSubmit<ProfessionalSubmissionInput>('/api/professional');
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ProfessionalSubmissionInput>({
     resolver: zodResolver(professionalSubmissionSchema),
   });
 
-  const onSubmit = async (data: ProfessionalSubmissionInput) => {
-    if (data.honeypot) return;
-
-    setIsSubmitting(true);
-    
-    try {
-      const response = await fetch('/api/professional', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        reset();
-        router.push('/gracias');
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
+  const onSubmit = (data: ProfessionalSubmissionInput) => {
+    void submit(data, () => {
+      reset();
+      router.push('/gracias');
+    });
   };
 
   return (

@@ -3,50 +3,40 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useFormSubmit } from '@/hooks/useFormSubmit';
 import {
   newsletterSubscriptionSchema,
   type NewsletterSubscriptionInput,
 } from '@/lib/form-submissions';
 
 export default function NewsletterForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const { isSubmitting, submitStatus, submit, resetStatus } = useFormSubmit<NewsletterSubscriptionInput>('/api/newsletter');
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<NewsletterSubscriptionInput>({
     resolver: zodResolver(newsletterSubscriptionSchema),
   });
 
-  const onSubmit = async (data: NewsletterSubscriptionInput) => {
-    if (data.honeypot) return;
-
-    setIsSubmitting(true);
-    
-    try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        reset();
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-      
-      // Reset success/error message after a few seconds
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 5000);
+  useEffect(() => {
+    if (submitStatus === 'idle') {
+      return;
     }
+
+    const timeout = window.setTimeout(() => {
+      resetStatus();
+    }, 5000);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [resetStatus, submitStatus]);
+
+  const onSubmit = (data: NewsletterSubscriptionInput) => {
+    void submit(data, () => {
+      reset();
+    });
   };
 
   return (

@@ -1,42 +1,22 @@
 "use client";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CheckCircle, Loader2, Mail, MessageSquare, Phone, Send, User } from 'lucide-react';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useFormSubmit } from '@/hooks/useFormSubmit';
 import { contactSubmissionSchema, type ContactSubmissionInput } from '@/lib/form-submissions';
 
 export default function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const { isSubmitting, submitStatus, submit } = useFormSubmit<ContactSubmissionInput>('/api/contact');
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactSubmissionInput>({
     resolver: zodResolver(contactSubmissionSchema),
   });
 
-  const onSubmit = async (data: ContactSubmissionInput) => {
-    if (data.honeypot) return;
-
-    setIsSubmitting(true);
-    
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        reset();
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
+  const onSubmit = (data: ContactSubmissionInput) => {
+    void submit(data, () => {
+      reset();
+    });
   };
 
   return (

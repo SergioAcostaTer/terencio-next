@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
+import Section from "@/components/ui/Section";
 import siteData from "@/data/siteData.json";
 
 export const metadata: Metadata = {
@@ -30,8 +31,7 @@ export default function AtencionAlClientePage() {
         </div>
       </section>
 
-      <section className="bg-white py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-4">
+      <Section className="bg-white">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div className="group rounded-2xl border border-gray-100 bg-gray-50 p-8 transition-all hover:shadow-lg">
               <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-white text-green-700 shadow-sm transition group-hover:scale-110">
@@ -112,8 +112,7 @@ export default function AtencionAlClientePage() {
               </Button>
             </div>
           </div>
-        </div>
-      </section>
+      </Section>
     </main>
   );
 }
