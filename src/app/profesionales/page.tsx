@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 
 import proImage from "@/assets/images/supermercado-interior.webp";
 import ProfessionalForm from "@/components/forms/ProfessionalForm";
@@ -45,7 +44,7 @@ const advantages = [
 export default function ProfesionalesPage() {
   return (
     <main>
-      <section className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 pt-20 pb-12 lg:pt-24 lg:pb-16">
+      <section className="relative flex min-h-[78vh] items-center overflow-hidden bg-slate-900 pt-14 pb-8 lg:min-h-[84vh] lg:pt-18 lg:pb-12">
         <div className="absolute inset-0 z-0">
           <Image
             src={proImage}
@@ -58,52 +57,55 @@ export default function ProfesionalesPage() {
         </div>
 
         <div className="relative z-10 mx-auto max-w-6xl px-4">
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
-            <div className="space-y-6 lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-4 py-1.5 text-sm font-bold tracking-wider text-green-400 uppercase">
+          <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-6">
+            <div className="space-y-4 lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1 text-[11px] font-bold tracking-[0.2em] text-green-400 uppercase">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
                 Canal B2B
               </div>
 
-              <h1 className="text-4xl font-extrabold leading-tight text-white md:text-5xl">
-                El Partner Integral para tu{" "}
+              <h1 className="text-3xl font-extrabold leading-tight text-white md:text-4xl lg:text-[3.2rem]">
+                Alta profesional rápida para{" "}
                 <span className="bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
-                  Negocio HORECA
+                  empresa o autónomo
                 </span>
               </h1>
 
-              <p className="max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
-                Centraliza tus compras. Olvídate de gestionar 10 proveedores.{" "}
-                <strong>Alimentación, Bebidas, Limpieza y Menaje</strong> en un
-                solo pedido, una sola factura y con precios netos desde la
-                primera unidad.
+              <p className="max-w-2xl text-sm leading-6 text-slate-300 md:text-base">
+                Rellena el formulario desde el móvil y deja la solicitud lista para revisión con datos fiscales, contacto y documentación.
               </p>
 
-              <div className="flex flex-col gap-3 pt-4 sm:flex-row">
-                <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
+              <div className="flex flex-wrap gap-2 pt-1">
+                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-white backdrop-blur-sm md:text-sm">
                   <Icon name="Package" className="h-5 w-5 text-green-400" />
                   Muelle de Carga
                 </div>
-                <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
+                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-white backdrop-blur-sm md:text-sm">
                   <Icon name="Clock" className="h-5 w-5 text-green-400" />
                   Servicio 362 días
                 </div>
-                <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
+                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-white backdrop-blur-sm md:text-sm">
                   <Icon name="Euro" className="h-5 w-5 text-green-400" />
                   Tarifas Netas
                 </div>
+              </div>
+
+              <div className="pt-2">
+                <Button href="/register" size="lg">
+                  Solicitar alta profesional
+                </Button>
               </div>
             </div>
 
             <div className="relative lg:col-span-5">
               <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-700 opacity-30 blur-lg" />
-              <div className="relative rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl md:p-6">
-                <div className="mb-5 text-center">
-                  <h3 className="text-xl font-bold text-slate-900">
-                    Solicita Tarifas para tu Negocio
+              <div className="relative rounded-2xl border border-slate-100 bg-white p-4 shadow-2xl md:p-5">
+                <div className="mb-4 text-center">
+                  <h3 className="text-lg font-bold text-slate-900">
+                    Solicitud de alta
                   </h3>
-                  <p className="mt-1.5 text-xs text-slate-500">
-                    Acceso a precios mayoristas y condiciones especiales.
+                  <p className="mt-1 text-xs text-slate-500">
+                    Completa el formulario y el equipo revisará el alta.
                   </p>
                 </div>
                 <ProfessionalForm />
@@ -184,12 +186,6 @@ export default function ProfesionalesPage() {
               <Button href="/profesionales/optimizacion-escandallos">
                 Ver Guía de Escandallos
               </Button>
-              <Link
-                href="/contacto"
-                className="inline-flex items-center justify-center rounded-xl border border-white/20 px-6 py-3 font-bold text-white transition hover:bg-white/10"
-              >
-                Ir a Contacto
-              </Link>
             </div>
           </div>
         </div>

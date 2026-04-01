@@ -26,11 +26,11 @@ export default function Home() {
   return (
     <main>
       <Hero
-        title="Supermercado en <span class='text-green-400'>La Esperanza (San Cristóbal de La Laguna)</span> y Mayorista HORECA en <span class='text-yellow-400'>Tenerife</span>"
-        subtitle="Compra diaria para particulares y solución mayorista para hostelería, autónomos y empresas. Carnicería al corte, precios competitivos y apertura los domingos."
+        title="Supermercado en <span class='text-green-400'>La Esperanza</span> y compra profesional en <span class='text-yellow-400'>Tenerife</span>"
+        subtitle="Compra para casa o solicita tu alta profesional desde el móvil en pocos minutos."
         badge="Ctra. La Esperanza, 22 (La Laguna)"
-        primaryCta={{ text: "Ver Horario", href: "/horario" }}
-        secondaryCta={{ text: "Empresas y Autónomos", href: "/profesionales" }}
+        compact
+        primaryCta={{ text: "Solicitar alta profesional", href: "/register" }}
         backgroundImage={heroBg}
       />
 

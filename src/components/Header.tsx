@@ -91,15 +91,15 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="relative z-50 flex h-[70px] w-full items-center justify-between gap-3 bg-white px-3 md:mx-auto md:h-[80px] md:max-w-6xl md:px-4 lg:px-6">
+      <div className="relative z-50 flex h-[62px] w-full items-center justify-between gap-2 bg-white px-3 md:mx-auto md:h-[80px] md:max-w-6xl md:px-4 lg:px-6">
         <button
           type="button"
           onClick={() => setMobileMenuOpen((value) => !value)}
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-gray-800 transition hover:bg-gray-100 md:hidden"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-gray-800 transition hover:bg-gray-100 md:hidden"
           aria-label="Menú Principal"
           aria-expanded={mobileMenuOpen}
         >
-          <Icon name={mobileMenuOpen ? "X" : "Menu"} className="h-8 w-8" />
+          <Icon name={mobileMenuOpen ? "X" : "Menu"} className="h-6 w-6" />
         </button>
 
         <Link
@@ -107,7 +107,7 @@ export default function Header() {
           className="group relative flex min-w-0 flex-1 items-center justify-center gap-2 md:flex-none md:justify-start"
           aria-label="Terencio Cash Market Inicio"
         >
-          <div className="flex h-7 shrink-0 items-center md:h-12">
+          <div className="flex h-6 shrink-0 items-center md:h-12">
             <Image
               className="h-full w-auto object-contain transition-transform group-hover:scale-105"
               src={logo}
@@ -118,10 +118,10 @@ export default function Header() {
             />
           </div>
           <div className="flex min-w-0 flex-col justify-center">
-            <span className="truncate text-[1.45rem] leading-none font-black tracking-tight text-[#c81010] capitalize md:text-3xl lg:text-4xl">
+            <span className="truncate text-[1.2rem] leading-none font-black tracking-tight text-[#c81010] capitalize md:text-3xl lg:text-4xl">
               Terencio
             </span>
-            <span className="truncate pt-0.5 text-[0.72rem] leading-none font-extrabold italic tracking-wide text-[#007236] capitalize md:text-base">
+            <span className="truncate pt-0.5 text-[0.62rem] leading-none font-extrabold italic tracking-wide text-[#007236] capitalize md:text-base">
               Cash Market
             </span>
           </div>
@@ -184,10 +184,10 @@ export default function Header() {
 
         <Link
           href="/contacto"
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-700 transition active:scale-95 md:hidden"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-700 transition active:scale-95 md:hidden"
           aria-label="Contactar con Terencio"
         >
-          <Icon name="MessageSquare" className="h-7 w-7" />
+          <Icon name="MessageSquare" className="h-5.5 w-5.5" />
         </Link>
       </div>
 
@@ -195,7 +195,7 @@ export default function Header() {
 
       <nav
         aria-label="Navegación Móvil Principal"
-        className={`fixed top-[105px] left-0 z-[70] h-[calc(100dvh-105px)] w-full overflow-hidden bg-white pb-6 shadow-inner transition-transform duration-300 md:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed top-[97px] left-0 z-[70] h-[calc(100dvh-97px)] w-full overflow-hidden bg-white pb-6 shadow-inner transition-transform duration-300 md:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="flex h-full flex-col overflow-y-auto p-6">
           <ul className="m-0 flex list-none flex-col gap-2">
