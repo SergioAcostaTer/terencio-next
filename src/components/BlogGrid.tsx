@@ -22,7 +22,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
         <Link
           key={post.slug}
           href={`/blog/${post.slug}`}
-          className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-green-100 active:translate-y-0"
+          className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-green-100 active:translate-y-0"
         >
           <div className="relative h-48 overflow-hidden sm:h-56">
             {post.image ? (
@@ -34,7 +34,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
             ) : null}
-            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/85 via-black/40 to-transparent p-4 opacity-100 transition-opacity duration-300 sm:p-6">
+            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/85 via-black/40 to-transparent p-4 opacity-100 transition-opacity duration-300 sm:p-5 lg:p-6">
               <span className="rounded-full bg-green-600 px-3 py-1.5 text-sm font-bold text-white">
                 Leer artículo →
               </span>

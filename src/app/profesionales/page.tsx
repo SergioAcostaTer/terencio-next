@@ -3,7 +3,9 @@ import Image from "next/image";
 
 import proImage from "@/assets/images/supermercado-interior.webp";
 import ProfessionalForm from "@/components/forms/ProfessionalForm";
+import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
+import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
 import Section from "@/components/ui/Section";
 
@@ -59,10 +61,10 @@ export default function ProfesionalesPage() {
         <div className="relative z-10 mx-auto max-w-6xl px-4">
           <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-6">
             <div className="space-y-4 lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1 text-[11px] font-bold tracking-[0.2em] text-green-400 uppercase">
+              <Badge className="gap-2 border border-green-500/30 bg-green-500/10 text-[11px] text-green-400 ring-0">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
                 Canal B2B
-              </div>
+              </Badge>
 
               <h1 className="text-3xl font-extrabold leading-tight text-white md:text-4xl lg:text-[3.2rem]">
                 Alta profesional rápida para{" "}
@@ -99,7 +101,7 @@ export default function ProfesionalesPage() {
 
             <div className="relative lg:col-span-5">
               <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-700 opacity-30 blur-lg" />
-              <div className="relative rounded-2xl border border-slate-100 bg-white p-4 shadow-2xl md:p-5">
+              <div className="relative rounded-2xl border border-slate-100 bg-white p-4 shadow-md md:p-5">
                 <div className="mb-4 text-center">
                   <h3 className="text-lg font-bold text-slate-900">
                     Solicitud de alta
@@ -127,15 +129,15 @@ export default function ProfesionalesPage() {
 
         <div className="grid gap-6 md:grid-cols-2">
           {advantages.map((item) => (
-            <div
+            <Card
               key={item}
-              className="flex items-start gap-4 rounded-2xl border border-gray-100 bg-gray-50 p-6"
+              className="flex items-start gap-4 bg-gray-50"
             >
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-700">
                 <Icon name="CircleCheck" size={24} />
               </div>
               <p className="font-medium text-gray-800">{item}</p>
-            </div>
+            </Card>
           ))}
         </div>
       </Section>
@@ -152,9 +154,9 @@ export default function ProfesionalesPage() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {categories.map((category) => (
-            <div
+            <Card
               key={category.title}
-              className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm"
+              className="p-4 md:p-6"
             >
               <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-slate-100 text-slate-800">
                 <Icon name={category.icon} size={28} />
@@ -165,14 +167,14 @@ export default function ProfesionalesPage() {
               <p className="leading-relaxed text-gray-600">
                 {category.description}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
       </Section>
 
       <section className="bg-slate-900 py-16 text-white">
         <div className="mx-auto max-w-6xl px-4">
-          <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm md:flex-row md:items-center md:p-10">
+          <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm md:flex-row md:items-center md:p-10">
             <div className="max-w-2xl">
               <h2 className="text-2xl font-bold md:text-3xl">
                 ¿Quieres optimizar compras y escandallos?

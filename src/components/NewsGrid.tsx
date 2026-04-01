@@ -52,7 +52,7 @@ export default async function NewsGrid({
 
       {heroNews ? (
         <div className="mb-8 grid gap-6 sm:mb-12 sm:gap-8 lg:grid-cols-3">
-          <article className="group relative h-[350px] overflow-hidden rounded-xl shadow-lg sm:h-[450px] lg:col-span-2 lg:h-[500px]">
+          <article className="group relative h-[350px] overflow-hidden rounded-xl shadow-sm sm:h-[450px] lg:col-span-2 lg:h-[500px]">
             <Link href={`/noticias/${heroNews.slug}`} className="block h-full w-full">
               {heroNews.image ? (
                 <Image
@@ -66,7 +66,7 @@ export default async function NewsGrid({
                 />
               ) : null}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/10" />
-              <div className="absolute bottom-0 left-0 w-full p-8">
+              <div className="absolute bottom-0 left-0 w-full p-4 sm:p-6 lg:p-8">
                 <span className="mb-2 inline-block rounded-sm bg-green-700 px-3 py-1.5 text-xs font-bold tracking-wide text-white uppercase sm:mb-3">
                   {heroNews.category || "Actualidad"}
                 </span>

@@ -17,18 +17,6 @@ type NavItem = {
   children?: { label: string; href: string }[];
 };
 
-function desktopNavClass(color?: string) {
-  if (color === "red") {
-    return "bg-red-50 text-red-700 hover:bg-red-100";
-  }
-
-  if (color === "slate") {
-    return "bg-slate-100 text-slate-800 hover:bg-slate-200";
-  }
-
-  return "text-gray-800 hover:bg-gray-50 hover:text-green-700";
-}
-
 function childNavIcon(label: string) {
   if (label.includes("Carnicería")) {
     return "Beef";
@@ -133,7 +121,7 @@ export default function Header() {
               <li key={link.label} className="group relative">
                 <Link
                   href={link.href}
-                  className={`flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-bold transition-all lg:text-[15px] ${desktopNavClass(link.color)}`}
+                  className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-bold text-gray-800 transition-all hover:bg-green-50 hover:text-green-700 lg:text-[15px]"
                 >
                   {link.label}
                   {link.children ? (
@@ -197,7 +185,7 @@ export default function Header() {
         aria-label="Navegación Móvil Principal"
         className={`fixed top-[97px] left-0 z-[70] h-[calc(100dvh-97px)] w-full overflow-hidden bg-white pb-6 shadow-inner transition-transform duration-300 md:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <div className="flex h-full flex-col overflow-y-auto p-6">
+        <div className="flex h-full flex-col overflow-y-auto p-4">
           <ul className="m-0 flex list-none flex-col gap-2">
           {(navigation.main as NavItem[]).map((link) => (
             <li key={link.label} className="mb-2">
@@ -206,7 +194,7 @@ export default function Header() {
                   <button
                     type="button"
                     onClick={() => setMobileProductsOpen((value) => !value)}
-                    className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-4 text-left text-gray-800 shadow-sm"
+                    className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-4 text-left text-gray-800 transition hover:bg-green-50"
                   >
                     <span className="font-bold">{link.label}</span>
                     <Icon
@@ -235,7 +223,7 @@ export default function Header() {
                 <Link
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block rounded-xl border px-4 py-4 font-bold shadow-sm transition ${link.color === "red" ? "border-red-500 bg-red-700 text-white" : link.color === "slate" ? "border-slate-600 bg-slate-900 text-white" : "border-gray-200 bg-white text-gray-800"}`}
+                  className="block rounded-xl border border-gray-200 bg-white px-4 py-4 font-bold text-gray-800 transition hover:bg-green-50 hover:text-green-800"
                 >
                   {link.label}
                 </Link>

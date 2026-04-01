@@ -9,7 +9,9 @@ import frescoImg from "@/assets/images/visita-estudiantes-bachillerato.webp";
 import Hero from "@/components/Hero";
 import LocationSection from "@/components/LocationSection";
 import NewsletterForm from "@/components/forms/NewsletterForm";
+import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
+import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
 import Section from "@/components/ui/Section";
 import ContentWidget from "@/components/widgets/ContentWidget";
@@ -36,7 +38,7 @@ export default function Home() {
 
       <Section className="border-b border-green-100 bg-white py-6">
         <div className="overflow-hidden border border-green-100 bg-gradient-to-r from-green-50 via-white to-emerald-50">
-          <div className="grid gap-6 px-6 py-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-8">
+          <div className="grid gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-8">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-700">
                 Alta profesional
@@ -76,7 +78,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="border-t border-green-100 bg-white/70 px-6 py-3 lg:px-8">
+          <div className="border-t border-green-100 bg-white/70 px-4 py-3 sm:px-6 lg:px-8">
             <p className="text-sm text-gray-600">
               ¿Ya tienes claro que compras como empresa o autónomo?
               {" "}
@@ -110,7 +112,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-2 md:grid-cols-2 lg:grid-cols-3">
           <Link
             href="/carniceria-tenerife"
-            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 lg:h-80"
+            className="group relative block h-72 overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 lg:h-80"
           >
             <div className="absolute inset-0 z-10 rounded-2xl bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
             <Image
@@ -120,10 +122,10 @@ export default function Home() {
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
               className="rounded-2xl object-cover transition duration-700 group-hover:scale-110"
             />
-            <div className="absolute bottom-0 left-0 z-20 w-full p-6 text-white">
-              <span className="mb-3 inline-block rounded-full border border-white/20 bg-green-700/90 px-3 py-1 text-xs font-bold text-white shadow-sm backdrop-blur-sm">
+            <div className="absolute bottom-0 left-0 z-20 w-full p-4 text-white md:p-6">
+              <Badge className="mb-3 border border-white/20 bg-green-700/90 text-white ring-0 backdrop-blur-sm">
                 Corte a Cuchillo
-              </span>
+              </Badge>
               <h3 className="mb-2 flex items-center gap-2 text-2xl font-bold">
                 Carnicería
                 <Icon
@@ -142,7 +144,7 @@ export default function Home() {
 
           <Link
             href="/productos-el-hierro-tenerife"
-            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 lg:h-80"
+            className="group relative block h-72 overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 lg:h-80"
           >
             <div className="absolute inset-0 z-10 rounded-2xl bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
             <Image
@@ -152,10 +154,10 @@ export default function Home() {
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
               className="rounded-2xl object-cover transition duration-700 group-hover:scale-110"
             />
-            <div className="absolute bottom-0 left-0 z-20 w-full p-6 text-white">
-              <div className="mb-3 inline-block rounded-full border border-white/20 bg-yellow-500/90 px-3 py-1 text-xs font-bold text-black shadow-sm backdrop-blur-sm">
+            <div className="absolute bottom-0 left-0 z-20 w-full p-4 text-white md:p-6">
+              <Badge variant="warning" className="mb-3 border border-white/20 bg-yellow-500/90 text-black ring-0 backdrop-blur-sm">
                 Exclusivo
-              </div>
+              </Badge>
               <h3 className="mb-2 flex items-center gap-2 text-2xl font-bold">
                 Sabor Herreño
                 <Icon
@@ -173,12 +175,12 @@ export default function Home() {
 
           <Link
             href="/profesionales"
-            className="group relative block h-72 overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 md:col-span-2 lg:col-span-1 lg:h-80"
+            className="group relative block h-72 overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-green-200 active:translate-y-0 md:col-span-2 lg:col-span-1 lg:h-80"
           >
             <div className="absolute inset-0 z-10 rounded-2xl bg-slate-900" />
             <div className="absolute inset-0 z-10 rounded-2xl opacity-10 [background-image:url('https://www.transparenttextures.com/patterns/cubes.png')]" />
-            <div className="pointer-events-none absolute inset-0 z-30 rounded-2xl border-4 border-transparent transition-colors duration-300 group-hover:border-green-500" />
-            <div className="absolute inset-0 z-20 flex h-full flex-col items-center justify-center p-6 text-center text-white">
+            <div className="pointer-events-none absolute inset-0 z-30 rounded-2xl border border-transparent transition-colors duration-300 group-hover:border-green-300" />
+            <div className="absolute inset-0 z-20 flex h-full flex-col items-center justify-center p-4 text-center text-white md:p-6">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-green-800 bg-green-700 shadow-[0_0_20px_rgba(21,128,61,0.5)] transition-transform duration-300 group-hover:scale-110">
                 <Icon name="Store" size={32} className="text-white" />
               </div>
@@ -197,9 +199,9 @@ export default function Home() {
 
       <Section className="bg-white">
         <div className="relative z-10 mx-auto mb-12 max-w-4xl text-center">
-          <span className="rounded-full bg-green-100 px-4 py-1 text-sm font-bold uppercase tracking-widest text-green-700">
+          <Badge className="px-4 py-1 text-sm">
             Tu Supermercado Diferente
-          </span>
+          </Badge>
           <h2 className="mt-4 mb-6 text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
             Por Qué Somos Tu Mejor Opción
           </h2>
@@ -218,7 +220,7 @@ export default function Home() {
           </p>
 
           <div className="my-8 grid gap-8 text-left md:grid-cols-2">
-            <div className="rounded-2xl border border-gray-100 bg-gray-50 p-6 transition hover:shadow-lg">
+            <Card className="bg-gray-50" hover>
               <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-gray-900">
                 <Icon name="Beef" className="text-green-700" /> Carnicería
                 Tradicional
@@ -230,8 +232,8 @@ export default function Home() {
                 de las bandejas industriales; aquí eliges el grosor de tu
                 chuleta y te preparamos la Carne de Fiesta al momento.
               </p>
-            </div>
-            <div className="rounded-2xl border border-gray-100 bg-gray-50 p-6 transition hover:shadow-lg">
+            </Card>
+            <Card className="bg-gray-50" hover>
               <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-gray-900">
                 <Icon name="Wheat" className="text-yellow-600" /> Sabor Herreño
               </h3>
@@ -241,7 +243,7 @@ export default function Home() {
                 artesanas, <strong>queso ahumado de la cooperativa</strong> y
                 la famosa piña tropical de Frontera. Productos exclusivos.
               </p>
-            </div>
+            </Card>
           </div>
         </div>
       </Section>
@@ -320,7 +322,7 @@ export default function Home() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link
                 href="/profesionales"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-700 px-8 py-4 font-bold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-green-800 hover:shadow-green-900/50"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-700 px-8 py-4 font-bold text-white shadow-sm transition-all hover:-translate-y-1 hover:bg-green-800 hover:shadow-md"
               >
                 <Icon name="FileText" size={20} />
                 Ver Servicios HORECA
@@ -333,9 +335,9 @@ export default function Home() {
             <Image
               src={frescoImg}
               alt="Profesional cargando mercancía en Terencio"
-              className="relative hidden h-[500px] w-full rounded-3xl border border-slate-700/60 object-cover shadow-2xl md:block"
+              className="relative hidden h-[500px] w-full rounded-3xl border border-slate-700/60 object-cover shadow-md md:block"
             />
-            <div className="absolute right-6 bottom-6 hidden max-w-xs rounded-2xl border border-slate-200 bg-white/95 p-6 text-slate-900 shadow-xl md:block">
+            <div className="absolute right-6 bottom-6 hidden max-w-xs rounded-2xl border border-slate-200 bg-white/95 p-4 text-slate-900 shadow-md md:block md:p-6">
               <p className="mb-1 text-lg font-bold">¿Pedido Urgente?</p>
               <p className="text-sm text-gray-600">
                 Abrimos sábados y domingos para salvarte el servicio.
@@ -394,7 +396,7 @@ export default function Home() {
 
       <Section className="bg-gradient-to-br from-green-50 to-yellow-50">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-green-600 shadow-lg">
+          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-green-600 shadow-sm">
             <Icon name="Mail" size={32} />
           </div>
           <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 md:text-4xl">
@@ -440,7 +442,7 @@ export default function Home() {
 
           <div className="space-y-4">
             <details className="group overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
-              <summary className="flex cursor-pointer list-none items-center justify-between p-6 text-lg font-bold text-gray-900 transition hover:bg-gray-100">
+              <summary className="flex cursor-pointer list-none items-center justify-between p-4 text-lg font-bold text-gray-900 transition hover:bg-gray-100 md:p-6">
                 <span className="flex items-center gap-3">
                   <Icon name="IdCard" className="text-green-600" />
                   ¿Necesito carnet de socio para comprar?
@@ -449,7 +451,7 @@ export default function Home() {
                   <Icon name="ChevronDown" />
                 </span>
               </summary>
-              <div className="border-t border-gray-100 bg-white px-6 pt-4 pb-6 leading-relaxed text-gray-700">
+              <div className="border-t border-gray-100 bg-white px-4 pt-4 pb-4 leading-relaxed text-gray-700 md:px-6 md:pb-6">
                 <strong>No</strong>, somos un{" "}
                 <strong>Cash & Carry abierto a todos</strong>. Tanto
                 particulares, autonomos y empresas pueden comprar libremente
@@ -458,7 +460,7 @@ export default function Home() {
             </details>
 
             <details className="group overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
-              <summary className="flex cursor-pointer list-none items-center justify-between p-6 text-lg font-bold text-gray-900 transition hover:bg-gray-100">
+              <summary className="flex cursor-pointer list-none items-center justify-between p-4 text-lg font-bold text-gray-900 transition hover:bg-gray-100 md:p-6">
                 <span className="flex items-center gap-3">
                   <Icon name="MapPin" className="text-green-600" />
                   ¿Dónde está ubicado Terencio?
@@ -467,7 +469,7 @@ export default function Home() {
                   <Icon name="ChevronDown" />
                 </span>
               </summary>
-              <div className="border-t border-gray-100 bg-white px-6 pt-4 pb-6 leading-relaxed text-gray-700">
+              <div className="border-t border-gray-100 bg-white px-4 pt-4 pb-4 leading-relaxed text-gray-700 md:px-6 md:pb-6">
                 Estamos en <strong>Ctra. La Esperanza, 22</strong>, ubicación
                 estratégica entre <strong>La Laguna y Santa Cruz</strong>. Fácil
                 acceso desde la autopista del norte con{" "}
@@ -477,7 +479,7 @@ export default function Home() {
             </details>
 
             <details className="group overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
-              <summary className="flex cursor-pointer list-none items-center justify-between p-6 text-lg font-bold text-gray-900 transition hover:bg-gray-100">
+              <summary className="flex cursor-pointer list-none items-center justify-between p-4 text-lg font-bold text-gray-900 transition hover:bg-gray-100 md:p-6">
                 <span className="flex items-center gap-3">
                   <Icon name="Clock" className="text-green-600" />
                   ¿Qué días y horarios abren?
@@ -486,7 +488,7 @@ export default function Home() {
                   <Icon name="ChevronDown" />
                 </span>
               </summary>
-              <div className="border-t border-gray-100 bg-white px-6 pt-4 pb-6 leading-relaxed text-gray-700">
+              <div className="border-t border-gray-100 bg-white px-4 pt-4 pb-4 leading-relaxed text-gray-700 md:px-6 md:pb-6">
                 Abrimos <strong>362 días al año</strong>, incluidos{" "}
                 <strong>domingos y festivos</strong>. Nuestro horario es de
                 Lunes a Sábado de 08:00 a 21:00 y Domingos de 08:30 a 20:30.
@@ -494,7 +496,7 @@ export default function Home() {
             </details>
 
             <details className="group overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
-              <summary className="flex cursor-pointer list-none items-center justify-between p-6 text-lg font-bold text-gray-900 transition hover:bg-gray-100">
+              <summary className="flex cursor-pointer list-none items-center justify-between p-4 text-lg font-bold text-gray-900 transition hover:bg-gray-100 md:p-6">
                 <span className="flex items-center gap-3">
                   <Icon name="TreePalm" className="text-green-600" />
                   ¿Venden productos de El Hierro?
@@ -503,7 +505,7 @@ export default function Home() {
                   <Icon name="ChevronDown" />
                 </span>
               </summary>
-              <div className="border-t border-gray-100 bg-white px-6 pt-4 pb-6 leading-relaxed text-gray-700">
+              <div className="border-t border-gray-100 bg-white px-4 pt-4 pb-4 leading-relaxed text-gray-700 md:px-6 md:pb-6">
                 Sí, traemos cada semana{" "}
                 <strong>productos exclusivos de El Hierro</strong>: quesadillas
                 artesanales, queso ahumado de Frontera y piña tropical.
